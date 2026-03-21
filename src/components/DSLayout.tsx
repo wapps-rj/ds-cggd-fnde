@@ -69,6 +69,7 @@ const navItems: NavItem[] = [
       { label: "Stepper (Etapas)", path: "/componentes#steps" },
       { label: "Lista Descritiva", path: "/componentes#lista-descritiva" },
       { label: "Cards de Estatísticas", path: "/componentes#stats" },
+      { label: "Métricas", path: "/componentes#metricas" },
     ],
   },
   { label: "Templates", path: "/templates", icon: <LayoutTemplate size={18} /> },
