@@ -244,10 +244,14 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
             {!isCollapsed && item.children && expanded[item.label] && (
               <div id={`subnav-${item.label}`} role="region" aria-label={`Subnavegação de ${item.label}`} className="ml-7 mt-0.5 space-y-0.5">
                 {item.children
-                  .filter(c => !searchQuery || c.label.toLowerCase().includes(searchQuery.toLowerCase()))
+                  .filter(c => !query || c.label.toLowerCase().includes(query))
                   .map(child => (
-                    <button key={child.path} onClick={() => handleNav(child.path)}
-                      className="block w-full text-left text-xs px-3 py-1.5 rounded text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
+                    <button key={child.path} onClick={() => { handleNav(child.path); setSearchQuery(""); }}
+                      className={`block w-full text-left text-xs px-3 py-1.5 rounded transition-colors ${
+                        query && child.label.toLowerCase().includes(query)
+                          ? "text-sidebar-foreground bg-sidebar-accent/70 font-medium"
+                          : "text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
+                      }`}>
                       {child.label}
                     </button>
                   ))}
