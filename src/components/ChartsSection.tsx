@@ -86,15 +86,15 @@ const lineMultiData = [
 
 /* ========== COLUMN CHART DATA ========== */
 const basicColumnData = [
-  { name: "Fev", lucro: 44, receita: 76, fluxo: 35 },
-  { name: "Mar", lucro: 55, receita: 85, fluxo: 41 },
-  { name: "Abr", lucro: 57, receita: 101, fluxo: 36 },
-  { name: "Mai", lucro: 56, receita: 98, fluxo: 26 },
-  { name: "Jun", lucro: 61, receita: 87, fluxo: 45 },
-  { name: "Jul", lucro: 58, receita: 105, fluxo: 48 },
-  { name: "Ago", lucro: 63, receita: 91, fluxo: 52 },
-  { name: "Set", lucro: 60, receita: 114, fluxo: 53 },
-  { name: "Out", lucro: 66, receita: 94, fluxo: 41 },
+  { name: "Fev", pnae: 44, pnate: 76, pdde: 35 },
+  { name: "Mar", pnae: 55, pnate: 85, pdde: 41 },
+  { name: "Abr", pnae: 57, pnate: 101, pdde: 36 },
+  { name: "Mai", pnae: 56, pnate: 98, pdde: 26 },
+  { name: "Jun", pnae: 61, pnate: 87, pdde: 45 },
+  { name: "Jul", pnae: 58, pnate: 105, pdde: 48 },
+  { name: "Ago", pnae: 63, pnate: 91, pdde: 52 },
+  { name: "Set", pnae: 60, pnate: 114, pdde: 53 },
+  { name: "Out", pnae: 66, pnate: 94, pdde: 41 },
 ];
 
 const dataLabelsData = [
