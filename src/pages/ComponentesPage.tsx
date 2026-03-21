@@ -513,66 +513,616 @@ function CardSection() {
 }
 
 /* ==================== TABLE ==================== */
-function TableSection() {
+
+const tableProducts = [
+  { name: "PNAE", category: "Alimentação", price: "R$ 99.000", stock: 120, rating: 4.5, status: "Ativo" },
+  { name: "PNATE", category: "Transporte", price: "R$ 59.990", stock: 80, rating: 4.2, status: "Ativo" },
+  { name: "PDDE", category: "Dinheiro Direto", price: "R$ 129.000", stock: 0, rating: 4.0, status: "Suspenso" },
+  { name: "PNLD", category: "Livro Didático", price: "R$ 39.500", stock: 250, rating: 4.7, status: "Ativo" },
+  { name: "Caminho da Escola", category: "Transporte", price: "R$ 149.000", stock: 35, rating: 4.3, status: "Ativo" },
+];
+
+const tableProducts2 = [
+  { name: "Proinfância", category: "Infraestrutura", price: "R$ 49.000", stock: 200, rating: 4.6, status: "Ativo" },
+  { name: "Brasil Alfabetizado", category: "Alfabetização", price: "R$ 29.990", stock: 150, rating: 4.3, status: "Ativo" },
+  { name: "Formação", category: "Capacitação", price: "R$ 89.000", stock: 60, rating: 4.1, status: "Estoque Limitado" },
+  { name: "PAR", category: "Planejamento", price: "R$ 349.000", stock: 30, rating: 4.8, status: "Ativo" },
+  { name: "FUNDEB", category: "Financiamento", price: "R$ 499.000", stock: 10, rating: 4.4, status: "Novo" },
+];
+
+function StatusBadge({ status }: { status: string }) {
+  const map: Record<string, string> = {
+    "Ativo": "fnde-badge-success",
+    "Suspenso": "fnde-badge-error",
+    "Estoque Limitado": "fnde-badge-warning",
+    "Novo": "fnde-badge-info",
+  };
+  return <span className={map[status] || "fnde-badge-secondary"}>{status}</span>;
+}
+
+function KebabMenu({ onEdit, onDelete, onView }: { onEdit?: () => void; onDelete?: () => void; onView?: () => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
   return (
-    <ComponentPreview
-      title="Tabela"
-      description="Apresentação de dados tabulares com semântica HTML correta."
-      whenToUse={["Dados comparativos", "Listagens com múltiplos atributos"]}
-      accessibility={["Use th com scope", "Caption ou aria-label na tabela", "Não use tabela para layout"]}
-      code={`<table>
-  <caption>Lista de programas</caption>
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="p-1.5 rounded-md hover:bg-muted transition-colors"
+        aria-label="Ações"
+      >
+        <MoreVertical size={16} className="text-muted-foreground" />
+      </button>
+      {open && (
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div className="absolute right-0 top-8 z-50 min-w-[140px] bg-popover border border-border rounded-lg shadow-lg py-1 animate-fade-in">
+            {onView && (
+              <button onClick={() => { onView(); setOpen(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted transition-colors text-foreground">
+                <Eye size={14} className="text-muted-foreground" /> Visualizar
+              </button>
+            )}
+            {onEdit && (
+              <button onClick={() => { onEdit(); setOpen(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted transition-colors text-foreground">
+                <Edit size={14} className="text-muted-foreground" /> Editar
+              </button>
+            )}
+            {onDelete && (
+              <button onClick={() => { onDelete(); setOpen(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted transition-colors text-destructive">
+                <Trash2 size={14} /> Excluir
+              </button>
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+function TableSection() {
+  const [expandedRow, setExpandedRow] = useState<number | null>(null);
+
+  const thClass = "text-left py-3 px-4 font-semibold text-xs uppercase tracking-wide text-muted-foreground";
+  const tdClass = "py-3 px-4 text-sm";
+
+  return (
+    <>
+      {/* ---- TABELA BÁSICA ---- */}
+      <ComponentPreview
+        title="Tabela Básica"
+        description="Tabela simples com cabeçalho, dados e ações via menu kebab."
+        whenToUse={["Listagens de dados com ações rápidas", "Dashboards administrativos"]}
+        accessibility={["Use th com scope='col'", "Caption ou aria-label na tabela", "Menu kebab acessível com teclado"]}
+        code={`<table>
+  <caption class="sr-only">Programas do FNDE</caption>
   <thead>
     <tr>
       <th scope="col">Programa</th>
-      <th scope="col">Status</th>
+      <th scope="col">Categoria</th>
       <th scope="col">Valor</th>
+      <th scope="col">Qtd</th>
+      <th scope="col">Avaliação</th>
+      <th scope="col">Status</th>
+      <th scope="col">Ações</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>PNAE</td>
-      <td><span class="badge badge-success">Ativo</span></td>
-      <td>R$ 1.200.000</td>
+      <td>Alimentação</td>
+      <td>R$ 99.000</td>
+      <td>120</td>
+      <td>4.5 ★</td>
+      <td><span class="badge-success">Ativo</span></td>
+      <td><!-- menu kebab com ícones --></td>
     </tr>
   </tbody>
 </table>`}
-    >
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <caption className="sr-only">Programas do FNDE</caption>
-          <thead>
-            <tr className="border-b-2 border-primary/20">
-              <th scope="col" className="text-left py-3 pr-4 font-semibold text-xs uppercase tracking-wide text-muted-foreground">Programa</th>
-              <th scope="col" className="text-left py-3 pr-4 font-semibold text-xs uppercase tracking-wide text-muted-foreground">Status</th>
-              <th scope="col" className="text-left py-3 pr-4 font-semibold text-xs uppercase tracking-wide text-muted-foreground">Valor</th>
-              <th scope="col" className="text-left py-3 font-semibold text-xs uppercase tracking-wide text-muted-foreground">Ação</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              { name: "PNAE", status: "Ativo", value: "R$ 1.200.000" },
-              { name: "PDDE", status: "Pendente", value: "R$ 890.000" },
-              { name: "Caminho da Escola", status: "Concluído", value: "R$ 2.450.000" },
-              { name: "PNLD", status: "Ativo", value: "R$ 3.100.000" },
-            ].map((row, i) => (
-              <tr key={i} className="border-b border-border hover:bg-muted/30 transition-colors">
-                <td className="py-3 pr-4 font-medium">{row.name}</td>
-                <td className="py-3 pr-4">
-                  <span className={`fnde-badge-${row.status === "Ativo" ? "success" : row.status === "Pendente" ? "warning" : "info"}`}>
-                    {row.status}
-                  </span>
-                </td>
-                <td className="py-3 pr-4 text-muted-foreground">{row.value}</td>
-                <td className="py-3">
-                  <button className="text-primary text-xs font-medium hover:underline">Detalhes</button>
-                </td>
+      >
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <caption className="sr-only">Programas do FNDE</caption>
+            <thead>
+              <tr className="border-b-2 border-border">
+                <th scope="col" className={thClass}>Programa</th>
+                <th scope="col" className={thClass}>Categoria</th>
+                <th scope="col" className={thClass}>Valor</th>
+                <th scope="col" className={thClass}>Qtd</th>
+                <th scope="col" className={thClass}>Avaliação</th>
+                <th scope="col" className={thClass}>Status</th>
+                <th scope="col" className={`${thClass} text-right`}>Ações</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </ComponentPreview>
+            </thead>
+            <tbody>
+              {tableProducts.map((r, i) => (
+                <tr key={i} className="border-b border-border hover:bg-muted/30 transition-colors">
+                  <td className={`${tdClass} font-medium`}>{r.name}</td>
+                  <td className={`${tdClass} text-muted-foreground`}>{r.category}</td>
+                  <td className={tdClass}>{r.price}</td>
+                  <td className={tdClass}>{r.stock}</td>
+                  <td className={tdClass}>{r.rating} ★</td>
+                  <td className={tdClass}><StatusBadge status={r.status} /></td>
+                  <td className={`${tdClass} text-right`}>
+                    <KebabMenu onView={() => {}} onEdit={() => {}} onDelete={() => {}} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </ComponentPreview>
+
+      {/* ---- TABELA CUSTOMIZADA ---- */}
+      <ComponentPreview
+        title="Tabela Customizada"
+        description="Tabela com espaçamento especial, bordas arredondadas e ações via menu kebab."
+        code={`<table class="table-custom">
+  <!-- Mesma estrutura da tabela básica,
+       com classes de espaçamento customizado -->
+</table>`}
+      >
+        <div className="overflow-x-auto border border-border rounded-lg">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-muted/50">
+                <th scope="col" className={thClass}>Programa</th>
+                <th scope="col" className={thClass}>Categoria</th>
+                <th scope="col" className={thClass}>Valor</th>
+                <th scope="col" className={thClass}>Qtd</th>
+                <th scope="col" className={thClass}>Avaliação</th>
+                <th scope="col" className={thClass}>Status</th>
+                <th scope="col" className={`${thClass} text-right`}>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableProducts2.map((r, i) => (
+                <tr key={i} className="border-b border-border last:border-0 hover:bg-muted/20 transition-colors">
+                  <td className={`${tdClass} font-medium`}>{r.name}</td>
+                  <td className={`${tdClass} text-muted-foreground`}>{r.category}</td>
+                  <td className={tdClass}>{r.price}</td>
+                  <td className={tdClass}>{r.stock}</td>
+                  <td className={tdClass}>{r.rating} ★</td>
+                  <td className={tdClass}><StatusBadge status={r.status} /></td>
+                  <td className={`${tdClass} text-right`}>
+                    <KebabMenu onView={() => {}} onEdit={() => {}} onDelete={() => {}} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </ComponentPreview>
+
+      {/* ---- LINHAS LISTRADAS ---- */}
+      <ComponentPreview
+        title="Tabela com Linhas Listradas"
+        description="Zebra-striping para melhorar a legibilidade em tabelas com muitas linhas."
+        code={`<table class="table-striped">
+  <!-- Linhas ímpares recebem bg alternado -->
+</table>`}
+      >
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b-2 border-border">
+                <th scope="col" className={thClass}>Programa</th>
+                <th scope="col" className={thClass}>Categoria</th>
+                <th scope="col" className={thClass}>Valor</th>
+                <th scope="col" className={thClass}>Qtd</th>
+                <th scope="col" className={thClass}>Status</th>
+                <th scope="col" className={`${thClass} text-right`}>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableProducts2.slice(0, 3).map((r, i) => (
+                <tr key={i} className={`border-b border-border ${i % 2 === 0 ? "bg-muted/30" : ""}`}>
+                  <td className={`${tdClass} font-medium`}>{r.name}</td>
+                  <td className={`${tdClass} text-muted-foreground`}>{r.category}</td>
+                  <td className={tdClass}>{r.price}</td>
+                  <td className={tdClass}>{r.stock}</td>
+                  <td className={tdClass}><StatusBadge status={r.status} /></td>
+                  <td className={`${tdClass} text-right`}>
+                    <KebabMenu onEdit={() => {}} onDelete={() => {}} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </ComponentPreview>
+
+      {/* ---- TABELA COM BORDAS ---- */}
+      <ComponentPreview
+        title="Tabela com Bordas"
+        description="Bordas em todas as células para máxima delimitação visual."
+        code={`<table class="table-bordered">
+  <!-- Todas as células possuem borda -->
+</table>`}
+      >
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border border-border">
+            <thead>
+              <tr className="bg-muted/50">
+                <th scope="col" className={`${thClass} border border-border`}>Programa</th>
+                <th scope="col" className={`${thClass} border border-border`}>Categoria</th>
+                <th scope="col" className={`${thClass} border border-border`}>Valor</th>
+                <th scope="col" className={`${thClass} border border-border`}>Qtd</th>
+                <th scope="col" className={`${thClass} border border-border`}>Avaliação</th>
+                <th scope="col" className={`${thClass} border border-border`}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableProducts2.slice(0, 3).map((r, i) => (
+                <tr key={i}>
+                  <td className={`${tdClass} border border-border font-medium`}>{r.name}</td>
+                  <td className={`${tdClass} border border-border text-muted-foreground`}>{r.category}</td>
+                  <td className={`${tdClass} border border-border`}>{r.price}</td>
+                  <td className={`${tdClass} border border-border`}>{r.stock}</td>
+                  <td className={`${tdClass} border border-border`}>{r.rating} ★</td>
+                  <td className={`${tdClass} border border-border`}><StatusBadge status={r.status} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </ComponentPreview>
+
+      {/* ---- TABELA SEM BORDAS ---- */}
+      <ComponentPreview
+        title="Tabela sem Bordas"
+        description="Tabela limpa sem bordas para layouts minimalistas."
+        code={`<table class="table-borderless">
+  <!-- Nenhuma borda nas células -->
+</table>`}
+      >
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr>
+                <th scope="col" className={thClass}>Programa</th>
+                <th scope="col" className={thClass}>Categoria</th>
+                <th scope="col" className={thClass}>Valor</th>
+                <th scope="col" className={thClass}>Qtd</th>
+                <th scope="col" className={thClass}>Avaliação</th>
+                <th scope="col" className={thClass}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableProducts2.slice(0, 3).map((r, i) => (
+                <tr key={i} className="hover:bg-muted/20 transition-colors">
+                  <td className={`${tdClass} font-medium`}>{r.name}</td>
+                  <td className={`${tdClass} text-muted-foreground`}>{r.category}</td>
+                  <td className={tdClass}>{r.price}</td>
+                  <td className={tdClass}>{r.stock}</td>
+                  <td className={tdClass}>{r.rating} ★</td>
+                  <td className={tdClass}><StatusBadge status={r.status} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </ComponentPreview>
+
+      {/* ---- TABELA COMPACTA ---- */}
+      <ComponentPreview
+        title="Tabela Compacta"
+        description="Tabela com padding reduzido para exibir mais dados em menos espaço."
+        code={`<table class="table-sm">
+  <!-- Padding reduzido nas células -->
+</table>`}
+      >
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="border-b-2 border-border">
+                <th scope="col" className="text-left py-1.5 px-2 font-semibold uppercase tracking-wide text-muted-foreground">Programa</th>
+                <th scope="col" className="text-left py-1.5 px-2 font-semibold uppercase tracking-wide text-muted-foreground">Categoria</th>
+                <th scope="col" className="text-left py-1.5 px-2 font-semibold uppercase tracking-wide text-muted-foreground">Valor</th>
+                <th scope="col" className="text-left py-1.5 px-2 font-semibold uppercase tracking-wide text-muted-foreground">Qtd</th>
+                <th scope="col" className="text-left py-1.5 px-2 font-semibold uppercase tracking-wide text-muted-foreground">Avaliação</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableProducts2.slice(0, 3).map((r, i) => (
+                <tr key={i} className="border-b border-border">
+                  <td className="py-1.5 px-2 font-medium">{r.name}</td>
+                  <td className="py-1.5 px-2 text-muted-foreground">{r.category}</td>
+                  <td className="py-1.5 px-2">{r.price}</td>
+                  <td className="py-1.5 px-2">{r.stock}</td>
+                  <td className="py-1.5 px-2">{r.rating} ★</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </ComponentPreview>
+
+      {/* ---- TABELA COM HOVER ---- */}
+      <ComponentPreview
+        title="Tabela com Hover"
+        description="Destaque visual ao passar o mouse sobre as linhas."
+        code={`<table class="table-hover">
+  <!-- Linhas com efeito hover -->
+</table>`}
+      >
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b-2 border-border">
+                <th scope="col" className={thClass}>Programa</th>
+                <th scope="col" className={thClass}>Categoria</th>
+                <th scope="col" className={thClass}>Valor</th>
+                <th scope="col" className={thClass}>Qtd</th>
+                <th scope="col" className={thClass}>Avaliação</th>
+                <th scope="col" className={thClass}>Status</th>
+                <th scope="col" className={`${thClass} text-right`}>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableProducts2.slice(0, 3).map((r, i) => (
+                <tr key={i} className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer">
+                  <td className={`${tdClass} font-medium`}>{r.name}</td>
+                  <td className={`${tdClass} text-muted-foreground`}>{r.category}</td>
+                  <td className={tdClass}>{r.price}</td>
+                  <td className={tdClass}>{r.stock}</td>
+                  <td className={tdClass}>{r.rating} ★</td>
+                  <td className={tdClass}><StatusBadge status={r.status} /></td>
+                  <td className={`${tdClass} text-right`}>
+                    <KebabMenu onView={() => {}} onEdit={() => {}} onDelete={() => {}} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </ComponentPreview>
+
+      {/* ---- TABELA COM CABEÇALHO ESCURO ---- */}
+      <ComponentPreview
+        title="Tabela com Cabeçalho Destacado"
+        description="Cabeçalho com fundo escuro para maior contraste e hierarquia visual."
+        code={`<thead class="bg-primary text-primary-foreground">
+  <tr>
+    <th>Programa</th>
+    ...
+  </tr>
+</thead>`}
+      >
+        <div className="overflow-x-auto rounded-lg overflow-hidden border border-border">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-primary text-primary-foreground">
+                <th scope="col" className="text-left py-3 px-4 font-semibold text-xs uppercase tracking-wide">Programa</th>
+                <th scope="col" className="text-left py-3 px-4 font-semibold text-xs uppercase tracking-wide">Categoria</th>
+                <th scope="col" className="text-left py-3 px-4 font-semibold text-xs uppercase tracking-wide">Valor</th>
+                <th scope="col" className="text-left py-3 px-4 font-semibold text-xs uppercase tracking-wide">Status</th>
+                <th scope="col" className="text-right py-3 px-4 font-semibold text-xs uppercase tracking-wide">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableProducts2.slice(0, 3).map((r, i) => (
+                <tr key={i} className="border-b border-border hover:bg-muted/30 transition-colors">
+                  <td className={`${tdClass} font-medium`}>{r.name}</td>
+                  <td className={`${tdClass} text-muted-foreground`}>{r.category}</td>
+                  <td className={tdClass}>{r.price}</td>
+                  <td className={tdClass}><StatusBadge status={r.status} /></td>
+                  <td className={`${tdClass} text-right`}>
+                    <KebabMenu onView={() => {}} onEdit={() => {}} onDelete={() => {}} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </ComponentPreview>
+
+      {/* ---- TABELA ANINHADA (NESTING) ---- */}
+      <ComponentPreview
+        title="Tabela Aninhada (Nesting)"
+        description="Linhas expansíveis que revelam detalhes adicionais em sub-tabela."
+        whenToUse={["Detalhamento de itens", "Variantes de produtos/programas"]}
+        code={`<tr onClick="toggleExpand(0)">
+  <td>PNAE</td>
+  <!-- ... colunas ... -->
+  <td><ChevronDown /></td>
+</tr>
+<!-- Sub-tabela condicional -->
+<tr class="expanded-row">
+  <td colspan="7">
+    <table>
+      <thead><tr><th>Variante</th>...</tr></thead>
+      <tbody><tr><td>Regional Norte</td>...</tr></tbody>
+    </table>
+  </td>
+</tr>`}
+      >
+        <div className="overflow-x-auto border border-border rounded-lg">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-muted/50">
+                <th scope="col" className={thClass}>Programa</th>
+                <th scope="col" className={thClass}>Categoria</th>
+                <th scope="col" className={thClass}>Valor</th>
+                <th scope="col" className={thClass}>Qtd</th>
+                <th scope="col" className={thClass}>Avaliação</th>
+                <th scope="col" className={thClass}>Status</th>
+                <th scope="col" className={`${thClass} text-right`}>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableProducts.slice(0, 3).map((r, i) => (
+                <>
+                  <tr
+                    key={`row-${i}`}
+                    className="border-b border-border hover:bg-muted/20 transition-colors cursor-pointer"
+                    onClick={() => setExpandedRow(expandedRow === i ? null : i)}
+                  >
+                    <td className={`${tdClass} font-medium flex items-center gap-2`}>
+                      <ChevronRight size={14} className={`transition-transform text-muted-foreground ${expandedRow === i ? "rotate-90" : ""}`} />
+                      {r.name}
+                    </td>
+                    <td className={`${tdClass} text-muted-foreground`}>{r.category}</td>
+                    <td className={tdClass}>{r.price}</td>
+                    <td className={tdClass}>{r.stock}</td>
+                    <td className={tdClass}>{r.rating} ★</td>
+                    <td className={tdClass}><StatusBadge status={r.status} /></td>
+                    <td className={`${tdClass} text-right`}>
+                      <KebabMenu onView={() => {}} onEdit={() => {}} onDelete={() => {}} />
+                    </td>
+                  </tr>
+                  {expandedRow === i && (
+                    <tr key={`detail-${i}`} className="bg-muted/20">
+                      <td colSpan={7} className="p-4">
+                        <table className="w-full text-xs">
+                          <thead>
+                            <tr className="border-b border-border">
+                              <th className="text-left py-2 px-3 font-semibold text-muted-foreground">Variante</th>
+                              <th className="text-left py-2 px-3 font-semibold text-muted-foreground">Região</th>
+                              <th className="text-left py-2 px-3 font-semibold text-muted-foreground">Código</th>
+                              <th className="text-left py-2 px-3 font-semibold text-muted-foreground">Qtd</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="border-b border-border/50">
+                              <td className="py-2 px-3">Regional Norte</td>
+                              <td className="py-2 px-3">Norte</td>
+                              <td className="py-2 px-3 font-mono text-muted-foreground">{r.name}-N-001</td>
+                              <td className="py-2 px-3">80</td>
+                            </tr>
+                            <tr>
+                              <td className="py-2 px-3">Regional Sudeste</td>
+                              <td className="py-2 px-3">Sudeste</td>
+                              <td className="py-2 px-3 font-mono text-muted-foreground">{r.name}-SE-002</td>
+                              <td className="py-2 px-3">120</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  )}
+                </>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </ComponentPreview>
+
+      {/* ---- TABELA COM CAPTION ---- */}
+      <ComponentPreview
+        title="Tabela com Caption"
+        description="Caption visível para contextualizar o conteúdo da tabela — essencial para acessibilidade."
+        code={`<table>
+  <caption>Lista de programas educacionais do FNDE</caption>
+  <thead>...</thead>
+  <tbody>...</tbody>
+</table>`}
+      >
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b-2 border-border">
+                <th scope="col" className={thClass}>Programa</th>
+                <th scope="col" className={thClass}>Categoria</th>
+                <th scope="col" className={thClass}>Valor</th>
+                <th scope="col" className={thClass}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableProducts2.slice(0, 3).map((r, i) => (
+                <tr key={i} className="border-b border-border">
+                  <td className={`${tdClass} font-medium`}>{r.name}</td>
+                  <td className={`${tdClass} text-muted-foreground`}>{r.category}</td>
+                  <td className={tdClass}>{r.price}</td>
+                  <td className={tdClass}><StatusBadge status={r.status} /></td>
+                </tr>
+              ))}
+            </tbody>
+            <caption className="caption-bottom mt-3 text-xs text-muted-foreground text-left">
+              Lista de programas educacionais do FNDE
+            </caption>
+          </table>
+        </div>
+      </ComponentPreview>
+
+      {/* ---- TABELA COM CHECKBOX E SELEÇÃO ---- */}
+      <ComponentPreview
+        title="Tabela com Seleção (Checkbox)"
+        description="Tabela com checkboxes para seleção múltipla e ações em lote."
+        whenToUse={["Exclusão em lote", "Exportação selecionada", "Ações em massa"]}
+        code={`<table>
+  <thead>
+    <tr>
+      <th><input type="checkbox" /></th>
+      <th>Programa</th>
+      ...
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><input type="checkbox" /></td>
+      <td>PNAE</td>
+      ...
+    </tr>
+  </tbody>
+</table>`}
+      >
+        <TableWithCheckbox />
+      </ComponentPreview>
+    </>
+  );
+}
+
+function TableWithCheckbox() {
+  const [selected, setSelected] = useState<number[]>([]);
+  const data = tableProducts.slice(0, 4);
+  const allSelected = selected.length === data.length;
+
+  const toggleAll = () => setSelected(allSelected ? [] : data.map((_, i) => i));
+  const toggle = (i: number) => setSelected(prev => prev.includes(i) ? prev.filter(x => x !== i) : [...prev, i]);
+
+  const thClass = "text-left py-3 px-4 font-semibold text-xs uppercase tracking-wide text-muted-foreground";
+  const tdClass = "py-3 px-4 text-sm";
+
+  return (
+    <div className="overflow-x-auto">
+      {selected.length > 0 && (
+        <div className="flex items-center gap-3 mb-3 p-2 bg-primary/5 rounded-lg text-xs">
+          <span className="font-medium">{selected.length} item(ns) selecionado(s)</span>
+          <button className="flex items-center gap-1 text-destructive hover:underline"><Trash2 size={12} /> Excluir</button>
+          <button className="flex items-center gap-1 text-primary hover:underline"><Download size={12} /> Exportar</button>
+        </div>
+      )}
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="border-b-2 border-border">
+            <th className="py-3 px-4 w-10">
+              <input type="checkbox" checked={allSelected} onChange={toggleAll} className="rounded border-border" />
+            </th>
+            <th scope="col" className={thClass}>Programa</th>
+            <th scope="col" className={thClass}>Categoria</th>
+            <th scope="col" className={thClass}>Valor</th>
+            <th scope="col" className={thClass}>Status</th>
+            <th scope="col" className={`${thClass} text-right`}>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((r, i) => (
+            <tr key={i} className={`border-b border-border transition-colors ${selected.includes(i) ? "bg-primary/5" : "hover:bg-muted/30"}`}>
+              <td className="py-3 px-4">
+                <input type="checkbox" checked={selected.includes(i)} onChange={() => toggle(i)} className="rounded border-border" />
+              </td>
+              <td className={`${tdClass} font-medium`}>{r.name}</td>
+              <td className={`${tdClass} text-muted-foreground`}>{r.category}</td>
+              <td className={tdClass}>{r.price}</td>
+              <td className={tdClass}><StatusBadge status={r.status} /></td>
+              <td className={`${tdClass} text-right`}>
+                <KebabMenu onView={() => {}} onEdit={() => {}} onDelete={() => {}} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
