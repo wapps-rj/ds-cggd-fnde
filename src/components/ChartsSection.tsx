@@ -86,15 +86,15 @@ const lineMultiData = [
 
 /* ========== COLUMN CHART DATA ========== */
 const basicColumnData = [
-  { name: "Fev", lucro: 44, receita: 76, fluxo: 35 },
-  { name: "Mar", lucro: 55, receita: 85, fluxo: 41 },
-  { name: "Abr", lucro: 57, receita: 101, fluxo: 36 },
-  { name: "Mai", lucro: 56, receita: 98, fluxo: 26 },
-  { name: "Jun", lucro: 61, receita: 87, fluxo: 45 },
-  { name: "Jul", lucro: 58, receita: 105, fluxo: 48 },
-  { name: "Ago", lucro: 63, receita: 91, fluxo: 52 },
-  { name: "Set", lucro: 60, receita: 114, fluxo: 53 },
-  { name: "Out", lucro: 66, receita: 94, fluxo: 41 },
+  { name: "Fev", pnae: 44, pnate: 76, pdde: 35 },
+  { name: "Mar", pnae: 55, pnate: 85, pdde: 41 },
+  { name: "Abr", pnae: 57, pnate: 101, pdde: 36 },
+  { name: "Mai", pnae: 56, pnate: 98, pdde: 26 },
+  { name: "Jun", pnae: 61, pnate: 87, pdde: 45 },
+  { name: "Jul", pnae: 58, pnate: 105, pdde: 48 },
+  { name: "Ago", pnae: 63, pnate: 91, pdde: 52 },
+  { name: "Set", pnae: 60, pnate: 114, pdde: 53 },
+  { name: "Out", pnae: 66, pnate: 94, pdde: 41 },
 ];
 
 const dataLabelsData = [
@@ -142,8 +142,8 @@ const tooltipStyle = { background: "hsl(var(--card))", border: "1px solid hsl(va
 const codeBasicColumn = `import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "Fev", lucro: 44, receita: 76, fluxo: 35 },
-  { name: "Mar", lucro: 55, receita: 85, fluxo: 41 },
+  { name: "Fev", pnae: 44, pnate: 76, pdde: 35 },
+  { name: "Mar", pnae: 55, pnate: 85, pdde: 41 },
   // ...
 ];
 
@@ -151,12 +151,12 @@ const data = [
   <BarChart data={data}>
     <CartesianGrid strokeDasharray="3 3" />
     <XAxis dataKey="name" />
-    <YAxis label={{ value: "$ (milhares)", angle: -90, position: "insideLeft" }} />
+    <YAxis label={{ value: "R$ (milhões)", angle: -90, position: "insideLeft" }} />
     <Tooltip />
     <Legend />
-    <Bar dataKey="lucro" name="Net Profit" fill="hsl(var(--success))" radius={[2,2,0,0]} />
-    <Bar dataKey="receita" name="Revenue" fill="hsl(var(--primary))" radius={[2,2,0,0]} />
-    <Bar dataKey="fluxo" name="Free Cash Flow" fill="hsl(var(--info))" radius={[2,2,0,0]} />
+    <Bar dataKey="pnae" name="PNAE" fill="hsl(var(--success))" radius={[2,2,0,0]} />
+    <Bar dataKey="pnate" name="PNATE" fill="hsl(var(--primary))" radius={[2,2,0,0]} />
+    <Bar dataKey="pdde" name="PDDE" fill="hsl(var(--info))" radius={[2,2,0,0]} />
   </BarChart>
 </ResponsiveContainer>`;
 
@@ -180,13 +180,13 @@ const codeStackedColumn = `// Colunas empilhadas com labels internos
     <YAxis />
     <Tooltip />
     <Legend />
-    <Bar dataKey="produto_a" name="iPhone 16" stackId="a"
+    <Bar dataKey="produto_a" name="PNAE" stackId="a"
       fill="hsl(var(--success))"
       label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
-    <Bar dataKey="produto_b" name="iPhone 16 Pro" stackId="a"
+    <Bar dataKey="produto_b" name="PNATE" stackId="a"
       fill="hsl(var(--primary))"
       label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
-    <Bar dataKey="produto_c" name="iPhone 15" stackId="a"
+    <Bar dataKey="produto_c" name="PDDE" stackId="a"
       fill="hsl(var(--info))" radius={[4,4,0,0]}
       label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
   </BarChart>
@@ -200,15 +200,15 @@ const codeStacked100 = `// Colunas 100% empilhadas (valores em %)
     <YAxis tickFormatter={(v) => \`\${v}%\`} />
     <Tooltip formatter={(value) => \`\${value}%\`} />
     <Legend />
-    <Bar dataKey="produto_a" name="iPhone 16" stackId="a"
+    <Bar dataKey="produto_a" name="PNAE" stackId="a"
       fill="hsl(var(--success))"
       label={{ position: "inside", fontSize: 10, fill: "#fff",
         formatter: (v) => \`\${v}%\` }} />
-    <Bar dataKey="produto_b" name="iPhone 16 Pro" stackId="a"
+    <Bar dataKey="produto_b" name="PNATE" stackId="a"
       fill="hsl(var(--primary))"
       label={{ position: "inside", fontSize: 10, fill: "#fff",
         formatter: (v) => \`\${v}%\` }} />
-    <Bar dataKey="produto_c" name="iPhone 15" stackId="a"
+    <Bar dataKey="produto_c" name="PDDE" stackId="a"
       fill="hsl(var(--info))" radius={[4,4,0,0]}
       label={{ position: "inside", fontSize: 10, fill: "#fff",
         formatter: (v) => \`\${v}%\` }} />
@@ -699,22 +699,22 @@ export default function ChartsSection() {
       {/* 11. Basic Column */}
       <ComponentPreview
         title="Colunas Básicas (Múltiplas séries)"
-        description="Barras agrupadas para comparar múltiplas métricas por período, como lucro, receita e fluxo de caixa."
+        description="Barras agrupadas para comparar investimentos por programa FNDE em cada período."
         code={codeBasicColumn}
-        whenToUse={["Comparar 2-3 métricas por categoria", "Análise financeira por período"]}
+        whenToUse={["Comparar 2-3 programas por período", "Análise de repasses por programa"]}
         whenNotToUse={["Mais de 4 séries (fica poluído)", "Dados contínuos (use linha/área)"]}
       >
-        <ChartCard title="Basic Column Charts">
+        <ChartCard title="Colunas Básicas — Programas FNDE">
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={basicColumnData}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
               <XAxis dataKey="name" className="text-xs fill-muted-foreground" />
-              <YAxis className="text-xs fill-muted-foreground" label={{ value: "$ (milhares)", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "hsl(var(--muted-foreground))" } }} />
+              <YAxis className="text-xs fill-muted-foreground" label={{ value: "R$ (milhões)", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "hsl(var(--muted-foreground))" } }} />
               <Tooltip contentStyle={tooltipStyle} />
               <Legend />
-              <Bar dataKey="lucro" name="Net Profit" fill="hsl(var(--success))" radius={[2, 2, 0, 0]} />
-              <Bar dataKey="receita" name="Revenue" fill="hsl(var(--primary))" radius={[2, 2, 0, 0]} />
-              <Bar dataKey="fluxo" name="Free Cash Flow" fill="hsl(var(--info))" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="pnae" name="PNAE" fill="hsl(var(--success))" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="pnate" name="PNATE" fill="hsl(var(--primary))" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="pdde" name="PDDE" fill="hsl(var(--info))" radius={[2, 2, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -749,7 +749,7 @@ export default function ChartsSection() {
         whenToUse={["Exibir composição de um total por período", "Vendas por produto/trimestre"]}
         whenNotToUse={["Comparar valores individuais entre categorias", "Quando a contribuição de cada parte é pequena"]}
       >
-        <ChartCard title="Stacked Column Charts">
+        <ChartCard title="Colunas Empilhadas — Programas FNDE">
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={stackedColumnData}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
@@ -757,9 +757,9 @@ export default function ChartsSection() {
               <YAxis className="text-xs fill-muted-foreground" />
               <Tooltip contentStyle={tooltipStyle} />
               <Legend />
-              <Bar dataKey="produto_a" name="iPhone 16" stackId="a" fill="hsl(var(--success))" label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
-              <Bar dataKey="produto_b" name="iPhone 16 Pro" stackId="a" fill="hsl(var(--primary))" label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
-              <Bar dataKey="produto_c" name="iPhone 15" stackId="a" fill="hsl(var(--info))" radius={[4, 4, 0, 0]} label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
+              <Bar dataKey="produto_a" name="PNAE" stackId="a" fill="hsl(var(--success))" label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
+              <Bar dataKey="produto_b" name="PNATE" stackId="a" fill="hsl(var(--primary))" label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
+              <Bar dataKey="produto_c" name="PDDE" stackId="a" fill="hsl(var(--info))" radius={[4, 4, 0, 0]} label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -773,7 +773,7 @@ export default function ChartsSection() {
         whenToUse={["Comparar proporções relativas", "Market share por período"]}
         whenNotToUse={["Valores absolutos são mais importantes", "Poucas categorias sem variação significativa"]}
       >
-        <ChartCard title="100% Stacked Column Chart">
+        <ChartCard title="100% Empilhadas — Programas FNDE">
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={stacked100Data}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
@@ -781,9 +781,9 @@ export default function ChartsSection() {
               <YAxis className="text-xs fill-muted-foreground" tickFormatter={(v) => `${v}%`} />
               <Tooltip contentStyle={tooltipStyle} formatter={(value: number) => `${value}%`} />
               <Legend />
-              <Bar dataKey="produto_a" name="iPhone 16" stackId="a" fill="hsl(var(--success))" label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
-              <Bar dataKey="produto_b" name="iPhone 16 Pro" stackId="a" fill="hsl(var(--primary))" label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
-              <Bar dataKey="produto_c" name="iPhone 15" stackId="a" fill="hsl(var(--info))" radius={[4, 4, 0, 0]} label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
+              <Bar dataKey="produto_a" name="PNAE" stackId="a" fill="hsl(var(--success))" label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
+              <Bar dataKey="produto_b" name="PNATE" stackId="a" fill="hsl(var(--primary))" label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
+              <Bar dataKey="produto_c" name="PDDE" stackId="a" fill="hsl(var(--info))" radius={[4, 4, 0, 0]} label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
