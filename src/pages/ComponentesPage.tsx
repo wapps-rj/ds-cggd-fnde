@@ -123,6 +123,10 @@ export default function ComponentesPage() {
       {/* STATS CARD */}
       <SectionHeader id="stats" title="Cards de Estatísticas" description="Variações de cards com indicadores, trends, sparklines e comparativos." />
       <StatsCardsSection />
+
+      {/* MÉTRICAS */}
+      <SectionHeader id="metricas" title="Métricas" description="Painel completo de métricas para dashboards: cards com gráficos circulares, sparklines, barras de variação, tabelas trimestrais e cards de resumo com ícones." />
+      <MetricsSection />
     </div>
   );
 }
