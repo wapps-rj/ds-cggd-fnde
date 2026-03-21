@@ -3,8 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   Home, Palette, Code2, Component, LayoutTemplate, Stamp,
   FileText, Accessibility, ChevronDown, ChevronRight, Search,
-  Menu, X, BookOpen, PanelLeftClose, PanelLeftOpen
+  Menu, X, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon
 } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 interface NavItem {
   label: string;
@@ -75,21 +76,16 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
-  // Close mobile sidebar on route change
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [location.pathname]);
+  useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
-  // Close mobile sidebar on Escape
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && mobileOpen) {
-        setMobileOpen(false);
-      }
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) setMobileOpen(false);
     };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
   }, [mobileOpen]);
 
   const toggleExpand = useCallback((label: string) => {
@@ -101,16 +97,12 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
     if (route && route !== location.pathname) {
       navigate(route + (hash ? `#${hash}` : ""));
     } else if (hash) {
-      const el = document.getElementById(hash);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+      document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
     }
     setMobileOpen(false);
   };
 
-  const isActive = (path: string) => {
-    const [route] = path.split("#");
-    return location.pathname === route;
-  };
+  const isActive = (path: string) => location.pathname === path.split("#")[0];
 
   const filteredItems = searchQuery
     ? navItems.filter(item =>
@@ -119,12 +111,9 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
       )
     : navItems;
 
-  const sidebarWidth = collapsed ? "w-16" : "w-64";
-
-  const renderNavContent = (isCollapsedView: boolean) => (
+  const renderNav = (isCollapsed: boolean) => (
     <>
-      {/* Search - hidden when collapsed */}
-      {!isCollapsedView && (
+      {!isCollapsed && (
         <div className="p-3">
           <div className="relative">
             <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-sidebar-muted" />
@@ -139,57 +128,37 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       )}
-
-      <nav className={`${isCollapsedView ? "px-1" : "px-2"} pb-6`} aria-label="Navegação do design system">
+      <nav className={`${isCollapsed ? "px-1" : "px-2"} pb-6`} aria-label="Navegação do design system">
         {filteredItems.map((item) => (
           <div key={item.label}>
             <button
               onClick={() => {
-                if (isCollapsedView) {
-                  // In collapsed mode, expand sidebar and navigate
-                  setCollapsed(false);
-                  handleNav(item.path);
-                  if (item.children) toggleExpand(item.label);
-                } else {
-                  if (item.children) toggleExpand(item.label);
-                  handleNav(item.path);
-                }
+                if (isCollapsed) { setCollapsed(false); handleNav(item.path); if (item.children) toggleExpand(item.label); }
+                else { if (item.children) toggleExpand(item.label); handleNav(item.path); }
               }}
-              title={isCollapsedView ? item.label : undefined}
-              aria-label={isCollapsedView ? item.label : undefined}
+              title={isCollapsed ? item.label : undefined}
+              aria-label={isCollapsed ? item.label : undefined}
               aria-expanded={item.children ? !!expanded[item.label] : undefined}
               aria-controls={item.children ? `subnav-${item.label}` : undefined}
-              className={`w-full flex items-center ${isCollapsedView ? "justify-center px-0 py-2.5" : "gap-2.5 px-3 py-2"} rounded text-sm transition-colors ${
-                isActive(item.path)
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                  : "hover:bg-sidebar-accent/50 text-sidebar-foreground"
+              className={`w-full flex items-center ${isCollapsed ? "justify-center px-0 py-2.5" : "gap-2.5 px-3 py-2"} rounded text-sm transition-colors ${
+                isActive(item.path) ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium" : "hover:bg-sidebar-accent/50 text-sidebar-foreground"
               }`}
             >
               <span className="flex-shrink-0">{item.icon}</span>
-              {!isCollapsedView && (
+              {!isCollapsed && (
                 <>
                   <span className="flex-1 text-left">{item.label}</span>
-                  {item.children && (
-                    expanded[item.label] ? <ChevronDown size={14} /> : <ChevronRight size={14} />
-                  )}
+                  {item.children && (expanded[item.label] ? <ChevronDown size={14} /> : <ChevronRight size={14} />)}
                 </>
               )}
             </button>
-            {!isCollapsedView && item.children && expanded[item.label] && (
-              <div
-                id={`subnav-${item.label}`}
-                role="region"
-                aria-label={`Subnavegação de ${item.label}`}
-                className="ml-7 mt-0.5 space-y-0.5"
-              >
+            {!isCollapsed && item.children && expanded[item.label] && (
+              <div id={`subnav-${item.label}`} role="region" aria-label={`Subnavegação de ${item.label}`} className="ml-7 mt-0.5 space-y-0.5">
                 {item.children
                   .filter(c => !searchQuery || c.label.toLowerCase().includes(searchQuery.toLowerCase()))
                   .map(child => (
-                    <button
-                      key={child.path}
-                      onClick={() => handleNav(child.path)}
-                      className="block w-full text-left text-xs px-3 py-1.5 rounded text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
-                    >
+                    <button key={child.path} onClick={() => handleNav(child.path)}
+                      className="block w-full text-left text-xs px-3 py-1.5 rounded text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
                       {child.label}
                     </button>
                   ))}
@@ -203,22 +172,20 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Top bar */}
+      {/* Header */}
       <header className="h-14 bg-primary text-primary-foreground flex items-center px-4 gap-3 fixed top-0 left-0 right-0 z-50">
-        {/* Mobile hamburger */}
         <button
-          className="lg:hidden p-1.5 rounded hover:bg-sidebar-accent transition-colors"
+          className="lg:hidden p-1.5 rounded hover:bg-primary-foreground/10 transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+          aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={mobileOpen}
           aria-controls="mobile-sidebar"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
-        {/* Desktop collapse toggle */}
         <button
-          className="hidden lg:flex p-1.5 rounded hover:bg-sidebar-accent transition-colors items-center justify-center"
+          className="hidden lg:flex p-1.5 rounded hover:bg-primary-foreground/10 transition-colors items-center justify-center"
           onClick={() => setCollapsed(!collapsed)}
           aria-label={collapsed ? "Expandir menu lateral" : "Recolher menu lateral"}
           aria-expanded={!collapsed}
@@ -228,69 +195,49 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
         </button>
 
         <div className="flex items-center gap-2.5">
-          <BookOpen size={22} className="text-sidebar-ring" />
+          <BookOpen size={22} className="text-secondary" />
           <div className="leading-tight">
             <span className="font-semibold text-sm block">Design System FNDE</span>
             <span className="text-[10px] opacity-70 block -mt-0.5">CGGD · Coordenação Geral de Governança</span>
           </div>
         </div>
+
         <div className="ml-auto flex items-center gap-2">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg hover:bg-primary-foreground/10 transition-colors"
+            aria-label={theme === "light" ? "Ativar modo escuro" : "Ativar modo claro"}
+            title={theme === "light" ? "Modo escuro" : "Modo claro"}
+          >
+            {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
           <span className="fnde-badge-secondary text-[10px] hidden sm:inline-flex">v1.0.0</span>
         </div>
       </header>
 
       <div className="flex pt-14 min-h-screen">
-        {/* Mobile overlay */}
-        {mobileOpen && (
-          <div
-            className="fixed inset-0 bg-foreground/30 z-30 lg:hidden"
-            onClick={() => setMobileOpen(false)}
-            aria-hidden="true"
-          />
-        )}
+        {mobileOpen && <div className="fixed inset-0 bg-foreground/30 z-30 lg:hidden" onClick={() => setMobileOpen(false)} aria-hidden="true" />}
 
         {/* Mobile sidebar */}
-        <aside
-          id="mobile-sidebar"
-          role="navigation"
-          aria-label="Menu de navegação principal"
-          className={`fixed top-14 bottom-0 left-0 w-64 bg-sidebar text-sidebar-foreground z-40 overflow-y-auto transition-transform duration-200 lg:hidden ${
-            mobileOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
-          {renderNavContent(false)}
+        <aside id="mobile-sidebar" role="navigation" aria-label="Menu de navegação"
+          className={`fixed top-14 bottom-0 left-0 w-64 bg-sidebar text-sidebar-foreground z-40 overflow-y-auto transition-transform duration-200 lg:hidden ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
+          {renderNav(false)}
         </aside>
 
         {/* Desktop sidebar */}
-        <aside
-          id="desktop-sidebar"
-          role="navigation"
-          aria-label="Menu de navegação principal"
-          className={`hidden lg:block sticky top-14 h-[calc(100vh-3.5rem)] bg-sidebar text-sidebar-foreground overflow-y-auto transition-all duration-200 ${sidebarWidth}`}
-        >
-          {/* Collapse toggle inside sidebar bottom */}
-          {renderNavContent(collapsed)}
-
-          {/* Bottom collapse hint */}
+        <aside id="desktop-sidebar" role="navigation" aria-label="Menu de navegação"
+          className={`hidden lg:flex lg:flex-col sticky top-14 h-[calc(100vh-3.5rem)] bg-sidebar text-sidebar-foreground overflow-y-auto transition-all duration-200 ${collapsed ? "w-16" : "w-64"}`}>
+          <div className="flex-1 overflow-y-auto">{renderNav(collapsed)}</div>
           <div className={`border-t border-sidebar-border p-2 ${collapsed ? "flex justify-center" : "px-3"}`}>
-            <button
-              onClick={() => setCollapsed(!collapsed)}
+            <button onClick={() => setCollapsed(!collapsed)}
               className="flex items-center gap-2 text-sidebar-muted hover:text-sidebar-foreground text-xs py-1.5 px-2 rounded hover:bg-sidebar-accent/50 transition-colors w-full"
-              aria-label={collapsed ? "Expandir menu lateral" : "Recolher menu lateral"}
-            >
-              {collapsed ? (
-                <PanelLeftOpen size={16} />
-              ) : (
-                <>
-                  <PanelLeftClose size={16} />
-                  <span>Recolher menu</span>
-                </>
-              )}
+              aria-label={collapsed ? "Expandir menu" : "Recolher menu"}>
+              {collapsed ? <PanelLeftOpen size={16} /> : <><PanelLeftClose size={16} /><span>Recolher menu</span></>}
             </button>
           </div>
         </aside>
 
-        {/* Main content */}
+        {/* Main */}
         <main className="flex-1 min-w-0">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
             {children}

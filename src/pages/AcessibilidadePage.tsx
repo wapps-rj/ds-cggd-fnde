@@ -3,40 +3,46 @@ import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents"
 export default function AcessibilidadePage() {
   return (
     <div>
-      <PageHeader title="Acessibilidade" description="Todo produto digital do FNDE deve nascer acessível. Seguimos as diretrizes WCAG 2.1 nível AA como padrão mínimo." />
+      <PageHeader title="Acessibilidade" description="Todo produto digital do FNDE deve nascer acessível. Seguimos as diretrizes WCAG 2.1 nível AA como padrão mínimo, em ambos os modos claro e escuro." />
 
-      <SectionHeader id="contraste" title="Contraste" description="Textos devem atender ao contraste mínimo AA do WCAG 2.1." />
+      <SectionHeader id="contraste" title="Contraste" description="Textos devem atender ao contraste mínimo AA do WCAG 2.1 em ambos os temas." />
       <div className="fnde-card mb-8">
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <div className="w-20 h-10 rounded flex items-center justify-center text-xs font-bold" style={{ backgroundColor: "#0D3857", color: "#fff" }}>AA ✓</div>
-            <p className="text-sm text-muted-foreground">Texto branco sobre Azul FNDE — Ratio 10.2:1</p>
+            <div className="w-20 h-10 rounded flex items-center justify-center text-xs font-bold bg-primary text-primary-foreground">AA ✓</div>
+            <p className="text-sm text-muted-foreground">Texto foreground sobre Primary — adequado em ambos os temas</p>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-20 h-10 rounded flex items-center justify-center text-xs font-bold" style={{ backgroundColor: "#D98217", color: "#fff" }}>AA ✓</div>
-            <p className="text-sm text-muted-foreground">Texto branco sobre Laranja FNDE — Ratio 3.5:1 (somente texto grande)</p>
+            <div className="w-20 h-10 rounded flex items-center justify-center text-xs font-bold bg-secondary text-secondary-foreground">AA ✓</div>
+            <p className="text-sm text-muted-foreground">Texto foreground sobre Secondary — adequado para texto grande</p>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-20 h-10 rounded flex items-center justify-center text-xs font-bold" style={{ backgroundColor: "#D98217", color: "#0D3857" }}>AAA ✓</div>
-            <p className="text-sm text-muted-foreground">Azul sobre Laranja — Ratio 4.1:1</p>
+            <div className="w-20 h-10 rounded flex items-center justify-center text-xs font-bold bg-card text-foreground border border-border">AA ✓</div>
+            <p className="text-sm text-muted-foreground">Texto foreground sobre Card — adaptativo ao tema</p>
           </div>
+        </div>
+        <div className="mt-4 p-3 rounded-lg bg-accent">
+          <p className="text-xs text-accent-foreground"><strong>Dica:</strong> Com o dark mode, todos os tokens de cor foram calibrados para manter contraste AA. Sempre use tokens semânticos em vez de cores fixas.</p>
         </div>
       </div>
 
       <SectionHeader id="foco" title="Foco Visível" description="Todo elemento interativo deve ter um indicador de foco visível para navegação por teclado." />
       <div className="fnde-card mb-8">
         <div className="flex flex-wrap gap-4 mb-4">
-          <button className="px-4 py-2 bg-primary text-primary-foreground rounded text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+          <button className="px-4 py-2 bg-primary text-primary-foreground rounded text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background">
             Clique ou use Tab
           </button>
-          <input placeholder="Campo com foco visível" className="border border-input rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2" />
+          <input placeholder="Campo com foco visível" className="border border-input rounded px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background" />
         </div>
-        <CodeBlock code={`/* Padrão de foco visível */
+        <CodeBlock code={`/* Padrão de foco visível — funciona em ambos os temas */
 .interactive-element:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px hsl(var(--background)),
               0 0 0 4px hsl(var(--ring));
-}`} language="css" />
+}
+
+/* Com Tailwind */
+className="focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"`} language="css" />
       </div>
 
       <SectionHeader id="teclado" title="Navegação por Teclado" />
@@ -65,6 +71,18 @@ export default function AcessibilidadePage() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      <SectionHeader id="dark-mode" title="Dark Mode e Acessibilidade" />
+      <div className="fnde-card mb-8">
+        <h4 className="text-sm font-semibold mb-3">Diretrizes para implementação com temas</h4>
+        <ul className="space-y-2 text-sm text-muted-foreground">
+          <li>• Nunca use cores fixas (ex: <code className="bg-muted px-1 rounded text-xs">#000000</code>) em componentes — sempre use tokens semânticos</li>
+          <li>• Verifique contraste em ambos os temas antes de aprovar um componente</li>
+          <li>• O ring de foco usa <code className="bg-muted px-1 rounded text-xs">ring-offset-background</code> para adaptar-se ao fundo do tema</li>
+          <li>• Bordas usam o token <code className="bg-muted px-1 rounded text-xs">--border</code> que ajusta leveza/escuridão automaticamente</li>
+          <li>• Sombras no dark mode usam opacidades maiores para compensar fundos escuros</li>
+        </ul>
       </div>
 
       <SectionHeader id="semantica" title="Semântica HTML" />
@@ -98,6 +116,7 @@ export default function AcessibilidadePage() {
                 { comp: "Tooltip", aria: "role='tooltip', aria-describedby" },
                 { comp: "Breadcrumb", aria: "aria-label='Breadcrumb', aria-current='page'" },
                 { comp: "Alert", aria: "role='alert'" },
+                { comp: "Theme Toggle", aria: "aria-label dinâmico indicando ação" },
               ].map(a => (
                 <tr key={a.comp} className="border-b border-border last:border-0">
                   <td className="py-2 pr-4 font-medium text-xs">{a.comp}</td>
@@ -112,7 +131,7 @@ export default function AcessibilidadePage() {
       <SectionHeader id="alvos" title="Alvos Clicáveis" />
       <div className="fnde-card">
         <p className="text-sm text-muted-foreground mb-3">
-          Todo alvo clicável deve ter no mínimo <strong>44×44 pixels</strong> de área tocável, conforme WCAG 2.5.8. Isso inclui botões, links, checkboxes e áreas de ação em dispositivos touch.
+          Todo alvo clicável deve ter no mínimo <strong>44×44 pixels</strong> de área tocável, conforme WCAG 2.5.8. Isso inclui botões, links, checkboxes, o toggle de tema e áreas de ação em dispositivos touch.
         </p>
         <p className="text-sm text-muted-foreground">
           Mensagens de erro devem ser associadas ao campo via <code className="bg-muted px-1 rounded text-xs">aria-describedby</code> e anunciadas com <code className="bg-muted px-1 rounded text-xs">role="alert"</code>.
