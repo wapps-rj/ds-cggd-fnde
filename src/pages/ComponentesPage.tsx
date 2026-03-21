@@ -91,6 +91,38 @@ export default function ComponentesPage() {
       {/* EMPTY STATE */}
       <SectionHeader id="empty-state" title="Empty State" description="Estado vazio quando não há dados para exibir." />
       <EmptyStateSection />
+
+      {/* DROPDOWN MENU */}
+      <SectionHeader id="dropdown" title="Dropdown Menu" description="Menu contextual com opções de ações que se abre a partir de um botão ou ícone." />
+      <DropdownMenuSection />
+
+      {/* DATEPICKER */}
+      <SectionHeader id="datepicker" title="DatePicker" description="Seleção de datas com calendário interativo e campos formatados." />
+      <DatePickerSection />
+
+      {/* FILTROS DINÂMICOS */}
+      <SectionHeader id="filtros" title="Filtros Dinâmicos" description="Barra de filtros combinados para refinar listagens e dashboards." />
+      <DynamicFiltersSection />
+
+      {/* BIG NUMBERS */}
+      <SectionHeader id="big-numbers" title="Big Numbers / KPIs" description="Cards de indicadores numéricos para dashboards e painéis gerenciais." />
+      <BigNumbersSection />
+
+      {/* UPLOAD EM MASSA */}
+      <SectionHeader id="upload" title="Upload em Massa" description="Componente de upload de múltiplos arquivos com barra de progresso e feedback por item." />
+      <BulkUploadSection />
+
+      {/* STEPS / STEPPER */}
+      <SectionHeader id="steps" title="Barra de Etapas (Stepper)" description="Indicador de progresso em etapas para fluxos multi-step como formulários e wizards." />
+      <StepperSection />
+
+      {/* LISTA DESCRITIVA */}
+      <SectionHeader id="lista-descritiva" title="Lista Descritiva" description="Exibição de pares chave-valor para detalhes e informações resumidas." />
+      <DescriptionListSection />
+
+      {/* STATS CARD */}
+      <SectionHeader id="stats" title="Cards de Estatísticas" description="Variações de cards com indicadores, trends, sparklines e comparativos." />
+      <StatsCardsSection />
     </div>
   );
 }
