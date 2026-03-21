@@ -2041,3 +2041,450 @@ function StatsCardsSection() {
     </ComponentPreview>
   );
 }
+
+/* ==================== MÉTRICAS ==================== */
+
+function MiniDonut({ value, size = 48, color = "text-primary" }: { value: number; size?: number; color?: string }) {
+  const r = (size - 8) / 2;
+  const circ = 2 * Math.PI * r;
+  const offset = circ - (value / 100) * circ;
+  return (
+    <svg width={size} height={size} className={color} aria-hidden="true">
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="currentColor" strokeWidth={4} opacity={0.15} />
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="currentColor" strokeWidth={4}
+        strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
+        transform={`rotate(-90 ${size / 2} ${size / 2})`} className="transition-all duration-700" />
+    </svg>
+  );
+}
+
+function MiniSparkline({ data, color = "text-primary", height = 40, width = 120 }: { data: number[]; color?: string; height?: number; width?: number }) {
+  const max = Math.max(...data);
+  const min = Math.min(...data);
+  const range = max - min || 1;
+  const step = width / (data.length - 1);
+  const points = data.map((d, i) => `${i * step},${height - ((d - min) / range) * (height - 4) - 2}`).join(" ");
+  return (
+    <svg width={width} height={height} className={color} aria-hidden="true">
+      <polyline fill="none" stroke="currentColor" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" points={points} />
+    </svg>
+  );
+}
+
+function MiniBarChart({ data, color = "bg-primary", height = 40 }: { data: number[]; color?: string; height?: number }) {
+  const max = Math.max(...data);
+  return (
+    <div className="flex items-end gap-[3px]" style={{ height }} aria-hidden="true">
+      {data.map((d, i) => (
+        <div key={i} className={`flex-1 rounded-t ${color} transition-all`} style={{ height: `${(d / max) * 100}%`, minWidth: 4 }} />
+      ))}
+    </div>
+  );
+}
+
+function MiniAreaChart({ data, color = "text-primary", height = 50, width = 140 }: { data: number[]; color?: string; height?: number; width?: number }) {
+  const max = Math.max(...data);
+  const min = Math.min(...data);
+  const range = max - min || 1;
+  const step = width / (data.length - 1);
+  const pts = data.map((d, i) => `${i * step},${height - ((d - min) / range) * (height - 6) - 3}`);
+  const line = pts.join(" ");
+  const area = `0,${height} ${line} ${width},${height}`;
+  return (
+    <svg width={width} height={height} className={color} aria-hidden="true">
+      <polygon fill="currentColor" opacity={0.1} points={area} />
+      <polyline fill="none" stroke="currentColor" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" points={line} />
+    </svg>
+  );
+}
+
+function MetricsSection() {
+  return (
+    <ComponentPreview
+      title="Métricas — Painel Completo"
+      description="Coleção de cards de métricas para dashboards institucionais: gráficos circulares, sparklines, barras, área, tabelas trimestrais e cards de resumo. Inspirado em painéis administrativos profissionais."
+      whenToUse={["Dashboards e painéis gerenciais", "Telas iniciais de módulos", "Relatórios executivos", "Acompanhamento de indicadores"]}
+      whenNotToUse={["Páginas de formulário", "Conteúdo editorial sem dados numéricos"]}
+      accessibility={["Cada card com aria-label descritivo", "Gráficos decorativos com aria-hidden", "Valores numéricos em texto, não só visual", "Trends com ícone + texto (não depender só de cor)"]}
+      code={`<!-- Metric card com gráfico circular -->
+<div class="metric-card" aria-label="Vendas totais: R$ 250K">
+  <div class="metric-header">
+    <h3 class="metric-title">Vendas Totais</h3>
+    <span class="metric-badge">Mensal</span>
+  </div>
+  <div class="metric-body">
+    <svg class="metric-donut" aria-hidden="true">
+      <circle class="donut-bg" />
+      <circle class="donut-fill" stroke-dashoffset="..." />
+    </svg>
+    <div class="metric-value-group">
+      <p class="metric-value">R$ 250K</p>
+      <p class="metric-subtitle">Total mensal de vendas</p>
+    </div>
+  </div>
+</div>
+
+<!-- Metric card com sparkline -->
+<div class="metric-card">
+  <div class="metric-header">
+    <h3>Projeto A - Vendas</h3>
+    <span class="metric-badge">Mensal</span>
+  </div>
+  <div class="metric-body">
+    <div class="metric-value-group">
+      <p class="metric-value">R$ 320K</p>
+      <p class="metric-subtitle">Vendas mensais Projeto A</p>
+    </div>
+    <svg class="sparkline-bars" aria-hidden="true">
+      <!-- barras mini -->
+    </svg>
+  </div>
+</div>
+
+<!-- Metric card com área + variação -->
+<div class="metric-card">
+  <div class="metric-header">
+    <h3>Greenfield Towers</h3>
+    <span class="metric-trend metric-trend-up">+R$ 40K</span>
+  </div>
+  <div class="metric-body">
+    <svg class="sparkline-area" aria-hidden="true">
+      <!-- area chart -->
+    </svg>
+    <div class="metric-value-group">
+      <p class="metric-value">R$ 550K</p>
+      <p class="metric-subtitle">Variação de vendas</p>
+    </div>
+  </div>
+</div>
+
+<!-- Metric card com donut colorido -->
+<div class="metric-card">
+  <div class="metric-header">
+    <h3>Receita Total</h3>
+    <span class="metric-trend metric-trend-up">+8,2%</span>
+  </div>
+  <div class="metric-body">
+    <svg class="metric-donut-pie" aria-hidden="true">
+      <!-- multi-segment donut -->
+    </svg>
+    <div>
+      <p class="metric-value">R$ 1.240K</p>
+      <p class="metric-subtitle">Este trimestre</p>
+    </div>
+  </div>
+</div>
+
+<!-- Tabela de relatório trimestral -->
+<div class="metric-table-card">
+  <div class="metric-header">
+    <h3>Relatórios Trimestrais</h3>
+    <span class="metric-badge metric-badge-new">Novo</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Trimestre</th>
+        <th>Receita</th>
+        <th>Despesa</th>
+        <th>Margem</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T1 2026</td><td>R$ 210k</td>
+        <td>R$ 165k</td><td>R$ 45k</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Card de resumo com ícone grande -->
+<div class="metric-summary-card">
+  <p class="metric-value-xl">421</p>
+  <p class="metric-label">Ordens</p>
+  <p class="metric-desc">421 novas ordens recebidas.</p>
+  <div class="metric-mini-bars" aria-hidden="true"></div>
+</div>`}
+    >
+      <div className="space-y-8">
+        {/* ===== ROW 1: Cards com donut ===== */}
+        <div>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Cards com gráfico circular (donut)</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { title: "Vendas Totais", badge: "Mensal", value: "R$ 250K", subtitle: "Total mensal de vendas", pct: 72, color: "text-primary" },
+              { title: "Total de Ordens", badge: "Mensal", value: "180", subtitle: "Total mensal de ordens", pct: 58, color: "text-info" },
+              { title: "Novos Cadastros", badge: "Mensal", value: "50.895", subtitle: "Novos cadastros mensais", pct: 85, color: "text-success" },
+              { title: "Receita", badge: "Mensal", value: "R$ 50,33K", subtitle: "Receita mensal", pct: 45, color: "text-secondary" },
+            ].map((m, i) => (
+              <div key={i} className="bg-card border border-border rounded-lg p-5" aria-label={`${m.title}: ${m.value}`}>
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-sm font-semibold text-foreground">{m.title}</h4>
+                  <span className="text-[10px] font-medium bg-primary/10 text-primary px-2 py-0.5 rounded">{m.badge}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <MiniDonut value={m.pct} size={56} color={m.color} />
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-foreground">{m.value}</p>
+                    <p className="text-xs text-muted-foreground">{m.subtitle}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ===== ROW 2: Cards com sparkline bars ===== */}
+        <div>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Cards com mini barras (sparkline)</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { title: "Projeto A - Vendas", value: "R$ 320K", subtitle: "Vendas mensais Projeto A", data: [40, 65, 35, 80, 55, 70, 90] },
+              { title: "Projeto B - Receita", value: "R$ 450K", subtitle: "Receita mensal Projeto B", data: [50, 40, 70, 60, 80, 75, 95] },
+              { title: "Projeto C - Engajamento", value: "R$ 580K", subtitle: "Engajamento mensal Projeto C", data: [30, 55, 45, 70, 60, 85, 75] },
+              { title: "Projeto D - Despesas", value: "R$ 700K", subtitle: "Despesas mensais Projeto D", data: [60, 45, 75, 50, 65, 80, 55] },
+            ].map((m, i) => (
+              <div key={i} className="bg-card border border-border rounded-lg p-5" aria-label={`${m.title}: ${m.value}`}>
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-sm font-semibold text-foreground">{m.title}</h4>
+                  <span className="text-[10px] font-medium bg-primary/10 text-primary px-2 py-0.5 rounded">Mensal</span>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-2xl font-bold text-foreground">{m.value}</p>
+                    <p className="text-xs text-muted-foreground">{m.subtitle}</p>
+                  </div>
+                  <MiniBarChart data={m.data} color="bg-primary/60" height={44} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ===== ROW 3: Cards com área chart + trend badge ===== */}
+        <div>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Cards com gráfico de área e variação</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { title: "Greenfield Towers", trend: "+R$ 40K", up: true, value: "R$ 550K", subtitle: "Variação de vendas", data: [20, 35, 30, 50, 45, 60, 55, 70, 65, 80] },
+              { title: "Oceanview Residences", trend: "-R$ 20K", up: false, value: "R$ 230K", subtitle: "Variação de vendas", data: [60, 55, 50, 45, 40, 35, 42, 38, 30, 25] },
+              { title: "Sunset Bay Villas", trend: "+R$ 50K", up: true, value: "R$ 650K", subtitle: "Variação de vendas", data: [30, 40, 35, 55, 50, 65, 60, 75, 80, 90] },
+              { title: "Maple Grove Homes", trend: "+R$ 30K", up: true, value: "R$ 480K", subtitle: "Variação de vendas", data: [25, 30, 45, 40, 55, 50, 60, 55, 70, 65] },
+            ].map((m, i) => (
+              <div key={i} className="bg-card border border-border rounded-lg p-5" aria-label={`${m.title}: ${m.value}`}>
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-sm font-semibold text-foreground">{m.title}</h4>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded ${m.up ? "bg-success-bg text-success" : "bg-error-bg text-error"}`}>
+                    {m.trend}
+                  </span>
+                </div>
+                <div className="mb-3">
+                  <MiniAreaChart data={m.data} color={m.up ? "text-success" : "text-error"} width={200} height={50} />
+                </div>
+                <div className="flex items-baseline justify-between">
+                  <p className="text-2xl font-bold text-foreground">{m.value}</p>
+                  <p className="text-xs text-muted-foreground">{m.subtitle}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ===== ROW 4: Cards com donut colorido (multi-segmento) + trend ===== */}
+        <div>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Cards com donut e trend trimestral</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { title: "Receita Total", trend: "+8,2%", up: true, value: "R$ 1.240K", subtitle: "Este trimestre", pct: 78, colors: ["text-primary", "text-info"] },
+              { title: "Total Despesas", trend: "-2,1%", up: false, value: "R$ 840K", subtitle: "Este trimestre", pct: 55, colors: ["text-secondary", "text-warning"] },
+              { title: "Lucro Líquido", trend: "Estável", up: true, value: "R$ 400K", subtitle: "Este trimestre", pct: 42, colors: ["text-success", "text-primary"] },
+              { title: "Fluxo de Caixa", trend: "+5,6%", up: true, value: "R$ 720K", subtitle: "Este trimestre", pct: 65, colors: ["text-info", "text-success"] },
+            ].map((m, i) => (
+              <div key={i} className="bg-card border border-border rounded-lg p-5" aria-label={`${m.title}: ${m.value}`}>
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-sm font-semibold text-foreground">{m.title}</h4>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
+                    m.trend === "Estável" ? "bg-muted text-muted-foreground" : m.up ? "bg-success-bg text-success" : "bg-error-bg text-error"
+                  }`}>
+                    {m.trend}
+                  </span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <MiniDonut value={m.pct} size={60} color={m.colors[0]} />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-[10px] font-bold text-foreground">{m.pct}%</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-foreground">{m.value}</p>
+                    <p className="text-xs text-muted-foreground">{m.subtitle}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ===== ROW 5: Quarterly table + summary cards ===== */}
+        <div>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Tabela trimestral + Cards de resumo</p>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {/* Quarterly table */}
+            <div className="bg-card border border-border rounded-lg overflow-hidden">
+              <div className="flex items-center justify-between p-4 border-b border-border">
+                <div className="flex items-center gap-2">
+                  <h4 className="text-sm font-semibold">Relatórios Trimestrais</h4>
+                  <span className="text-[10px] font-bold bg-success text-success-foreground px-1.5 py-0.5 rounded">NOVO</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <button className="p-1 hover:bg-muted rounded transition-colors" aria-label="Recolher"><ChevronDown size={14} /></button>
+                  <button className="p-1 hover:bg-muted rounded transition-colors" aria-label="Atualizar"><Activity size={14} /></button>
+                  <button className="p-1 hover:bg-muted rounded transition-colors" aria-label="Fechar"><X size={14} /></button>
+                </div>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border bg-muted/30">
+                      <th className="text-left py-2.5 px-4 text-xs font-semibold uppercase text-muted-foreground">Trimestre</th>
+                      <th className="text-right py-2.5 px-3 text-xs font-semibold uppercase text-muted-foreground">Receita</th>
+                      <th className="text-right py-2.5 px-3 text-xs font-semibold uppercase text-muted-foreground">Despesa</th>
+                      <th className="text-right py-2.5 px-3 text-xs font-semibold uppercase text-muted-foreground">Margem</th>
+                      <th className="py-2.5 px-3 w-12" />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { q: "Trimestre 1", period: "Jan – Mar 2026", rev: "R$ 210k", exp: "R$ 165k", margin: "R$ 45k", pct: 65 },
+                      { q: "Trimestre 2", period: "Abr – Jun 2026", rev: "R$ 225k", exp: "R$ 175k", margin: "R$ 50k", pct: 72 },
+                      { q: "Trimestre 3", period: "Jul – Set 2026", rev: "R$ 240k", exp: "R$ 190k", margin: "R$ 50k", pct: 78 },
+                      { q: "Trimestre 4", period: "Out – Dez 2026", rev: "R$ 260k", exp: "R$ 195k", margin: "R$ 65k", pct: 85 },
+                    ].map((row, i) => (
+                      <tr key={i} className="border-b border-border last:border-0 hover:bg-muted/20 transition-colors">
+                        <td className="py-3 px-4">
+                          <p className="font-semibold text-sm">{row.q}</p>
+                          <p className="text-[10px] text-muted-foreground">{row.period}</p>
+                        </td>
+                        <td className="text-right py-3 px-3 text-sm">{row.rev}</td>
+                        <td className="text-right py-3 px-3 text-sm">{row.exp}</td>
+                        <td className="text-right py-3 px-3 text-sm font-medium">{row.margin}</td>
+                        <td className="py-3 px-3">
+                          <MiniDonut value={row.pct} size={28} color="text-primary" />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Summary card - Orders */}
+            <div className="bg-card border border-border rounded-lg p-5 flex flex-col">
+              <div className="flex-1">
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-4xl font-bold text-foreground">421</span>
+                  <span className="text-sm text-muted-foreground">Ordens</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Você recebeu 421 novas ordens, indicando uma tendência saudável de vendas no período.
+                </p>
+              </div>
+              <div className="flex items-end gap-[2px] h-16">
+                {[30, 50, 40, 60, 45, 70, 55, 80, 65, 85, 75, 90].map((h, i) => (
+                  <div key={i} className="flex-1 rounded-t bg-primary/30 hover:bg-primary/60 transition-colors" style={{ height: `${h}%` }} />
+                ))}
+              </div>
+            </div>
+
+            {/* Summary card - Products (dark style) */}
+            <div className="bg-primary rounded-lg p-5 text-primary-foreground flex flex-col">
+              <div className="flex-1">
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-4xl font-bold">185</span>
+                  <span className="text-sm opacity-70">Produtos</span>
+                </div>
+                <p className="text-sm opacity-70 mb-4">
+                  Você possui 185 produtos ativos disponíveis no inventário do sistema.
+                </p>
+              </div>
+              <div className="flex items-end gap-[2px] h-16">
+                {[45, 60, 35, 75, 50, 80, 65, 55, 70, 85, 60, 90].map((h, i) => (
+                  <div key={i} className="flex-1 rounded-t bg-primary-foreground/20 hover:bg-primary-foreground/40 transition-colors" style={{ height: `${h}%` }} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== ROW 6: Mixed metric cards ===== */}
+        <div>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Cards mistos de indicadores</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Profit card */}
+            <div className="bg-card border border-border rounded-lg p-5">
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="text-3xl font-bold text-foreground">R$ 12,50k</span>
+                <span className="text-sm text-muted-foreground">Lucro</span>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">Lucro total de R$ 12.500 neste mês, mostrando crescimento estável e positivo.</p>
+              <MiniSparkline data={[20, 35, 25, 50, 45, 60, 55, 70, 65, 80, 75, 85]} color="text-success" width={200} height={40} />
+            </div>
+
+            {/* Revenue goal */}
+            <div className="bg-card border border-border rounded-lg p-5">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-muted-foreground">Meta de receita</span>
+                <span className="text-xs font-semibold text-success">87% alcançado</span>
+              </div>
+              <div className="h-3 bg-muted rounded-full overflow-hidden mb-3" role="progressbar" aria-valuenow={87} aria-valuemin={0} aria-valuemax={100}>
+                <div className="h-full bg-gradient-to-r from-primary to-success rounded-full" style={{ width: "87%" }} />
+              </div>
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div>
+                  <p className="text-lg font-bold text-foreground">R$ 870K</p>
+                  <p className="text-[10px] text-muted-foreground">Atual</p>
+                </div>
+                <div>
+                  <p className="text-lg font-bold text-muted-foreground/50">R$ 1M</p>
+                  <p className="text-[10px] text-muted-foreground">Meta</p>
+                </div>
+                <div>
+                  <p className="text-lg font-bold text-primary">R$ 130K</p>
+                  <p className="text-[10px] text-muted-foreground">Faltam</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Multi-stat card */}
+            <div className="bg-card border border-border rounded-lg p-5">
+              <h4 className="text-sm font-semibold mb-4">Resumo do período</h4>
+              <div className="space-y-3">
+                {[
+                  { label: "Receita", value: "R$ 1.240K", trend: "+8,2%", up: true, pct: 78 },
+                  { label: "Despesas", value: "R$ 840K", trend: "-2,1%", up: false, pct: 55 },
+                  { label: "Lucro", value: "R$ 400K", trend: "+12%", up: true, pct: 42 },
+                  { label: "Fluxo de caixa", value: "R$ 720K", trend: "+5,6%", up: true, pct: 65 },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-muted-foreground">{item.label}</span>
+                        <span className={`text-[10px] font-semibold ${item.up ? "text-success" : "text-error"}`}>{item.trend}</span>
+                      </div>
+                      <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full ${item.up ? "bg-primary" : "bg-secondary"}`} style={{ width: `${item.pct}%` }} />
+                      </div>
+                    </div>
+                    <span className="text-sm font-bold text-foreground w-24 text-right">{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ComponentPreview>
+  );
+}
