@@ -1,9 +1,10 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Home, Palette, Code2, Component, LayoutTemplate, Stamp,
   FileText, Accessibility, ChevronDown, ChevronRight, Search,
-  Menu, X, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon
+  Menu, X, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon,
+  SearchX
 } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -83,6 +84,8 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [showNoResults, setShowNoResults] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
@@ -113,28 +116,105 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
 
   const isActive = (path: string) => location.pathname === path.split("#")[0];
 
-  const filteredItems = searchQuery
+  const query = searchQuery.toLowerCase().trim();
+
+  const filteredItems = query
     ? navItems.filter(item =>
-        item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.children?.some(c => c.label.toLowerCase().includes(searchQuery.toLowerCase()))
+        item.label.toLowerCase().includes(query) ||
+        item.children?.some(c => c.label.toLowerCase().includes(query))
       )
     : navItems;
+
+  // Auto-expand parents that have matching children
+  useEffect(() => {
+    if (!query) return;
+    const toExpand: Record<string, boolean> = {};
+    navItems.forEach(item => {
+      if (item.children?.some(c => c.label.toLowerCase().includes(query))) {
+        toExpand[item.label] = true;
+      }
+    });
+    if (Object.keys(toExpand).length > 0) {
+      setExpanded(prev => ({ ...prev, ...toExpand }));
+    }
+  }, [query]);
+
+  // Collect all flat results for keyboard navigation
+  const flatResults = query
+    ? filteredItems.flatMap(item => {
+        const matches: { label: string; path: string }[] = [];
+        if (item.label.toLowerCase().includes(query)) matches.push({ label: item.label, path: item.path });
+        item.children?.forEach(c => {
+          if (c.label.toLowerCase().includes(query)) matches.push({ label: c.label, path: c.path });
+        });
+        return matches;
+      })
+    : [];
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (flatResults.length > 0) {
+        handleNav(flatResults[0].path);
+        setSearchQuery("");
+      } else if (query) {
+        setShowNoResults(true);
+      }
+    }
+    if (e.key === "Escape") {
+      setSearchQuery("");
+      searchInputRef.current?.blur();
+    }
+  };
 
   const renderNav = (isCollapsed: boolean) => (
     <>
       {!isCollapsed && (
-        <div className="p-3">
+        <div className="p-3 space-y-2">
           <div className="relative">
             <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-sidebar-muted" />
             <input
+              ref={searchInputRef}
               type="text"
-              placeholder="Buscar..."
+              placeholder="Buscar seções, componentes..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-sidebar-accent text-sidebar-foreground text-xs rounded pl-8 pr-3 py-2 placeholder:text-sidebar-muted border border-sidebar-border focus:outline-none focus:ring-1 focus:ring-sidebar-ring"
+              onChange={(e) => { setSearchQuery(e.target.value); setShowNoResults(false); }}
+              onKeyDown={handleSearchKeyDown}
+              className="w-full bg-sidebar-accent text-sidebar-foreground text-xs rounded pl-8 pr-8 py-2 placeholder:text-sidebar-muted border border-sidebar-border focus:outline-none focus:ring-1 focus:ring-sidebar-ring"
               aria-label="Buscar na navegação"
+              role="searchbox"
+              aria-describedby="search-hint"
             />
+            {searchQuery && (
+              <button
+                onClick={() => { setSearchQuery(""); setShowNoResults(false); searchInputRef.current?.focus(); }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-sidebar-muted hover:text-sidebar-foreground transition-colors"
+                aria-label="Limpar busca"
+              >
+                <X size={12} />
+              </button>
+            )}
           </div>
+          <span id="search-hint" className="sr-only">Pressione Enter para navegar ao primeiro resultado</span>
+          {query && filteredItems.length > 0 && (
+            <p className="text-[10px] text-sidebar-muted px-1">
+              {flatResults.length} resultado{flatResults.length !== 1 ? "s" : ""} encontrado{flatResults.length !== 1 ? "s" : ""}
+            </p>
+          )}
+          {query && filteredItems.length === 0 && (
+            <div
+              role="alert"
+              className="flex items-start gap-2 rounded-md border border-destructive/30 bg-destructive/10 p-2.5 text-[11px] text-destructive animate-in fade-in-0 slide-in-from-top-1 duration-200"
+            >
+              <SearchX size={16} className="flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-medium">Nenhum resultado encontrado</p>
+                <p className="text-destructive/80 mt-0.5">
+                  Não encontramos "{searchQuery}" no menu. Verifique a grafia ou navegue pelas seções.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       )}
       <nav className={`${isCollapsed ? "px-1" : "px-2"} pb-6`} aria-label="Navegação do design system">
@@ -164,10 +244,14 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
             {!isCollapsed && item.children && expanded[item.label] && (
               <div id={`subnav-${item.label}`} role="region" aria-label={`Subnavegação de ${item.label}`} className="ml-7 mt-0.5 space-y-0.5">
                 {item.children
-                  .filter(c => !searchQuery || c.label.toLowerCase().includes(searchQuery.toLowerCase()))
+                  .filter(c => !query || c.label.toLowerCase().includes(query))
                   .map(child => (
-                    <button key={child.path} onClick={() => handleNav(child.path)}
-                      className="block w-full text-left text-xs px-3 py-1.5 rounded text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
+                    <button key={child.path} onClick={() => { handleNav(child.path); setSearchQuery(""); }}
+                      className={`block w-full text-left text-xs px-3 py-1.5 rounded transition-colors ${
+                        query && child.label.toLowerCase().includes(query)
+                          ? "text-sidebar-foreground bg-sidebar-accent/70 font-medium"
+                          : "text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
+                      }`}>
                       {child.label}
                     </button>
                   ))}
