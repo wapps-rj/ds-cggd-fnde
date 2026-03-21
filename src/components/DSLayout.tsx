@@ -332,10 +332,16 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
         </aside>
 
         {/* Main */}
-        <main className="flex-1 min-w-0">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
+        <main className="flex-1 min-w-0 flex flex-col">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 flex-1">
             {children}
           </div>
+          <footer className="border-t border-border bg-muted/30 py-6 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-5xl mx-auto text-center text-xs text-muted-foreground space-y-1">
+              <p className="font-medium">FNDE — Todos os direitos reservados</p>
+              <p>CGGD — Coordenação Geral de Governança</p>
+            </div>
+          </footer>
         </main>
       </div>
     </div>
