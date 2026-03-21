@@ -170,18 +170,51 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
   const renderNav = (isCollapsed: boolean) => (
     <>
       {!isCollapsed && (
-        <div className="p-3">
+        <div className="p-3 space-y-2">
           <div className="relative">
             <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-sidebar-muted" />
             <input
+              ref={searchInputRef}
               type="text"
-              placeholder="Buscar..."
+              placeholder="Buscar seções, componentes..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-sidebar-accent text-sidebar-foreground text-xs rounded pl-8 pr-3 py-2 placeholder:text-sidebar-muted border border-sidebar-border focus:outline-none focus:ring-1 focus:ring-sidebar-ring"
+              onChange={(e) => { setSearchQuery(e.target.value); setShowNoResults(false); }}
+              onKeyDown={handleSearchKeyDown}
+              className="w-full bg-sidebar-accent text-sidebar-foreground text-xs rounded pl-8 pr-8 py-2 placeholder:text-sidebar-muted border border-sidebar-border focus:outline-none focus:ring-1 focus:ring-sidebar-ring"
               aria-label="Buscar na navegação"
+              role="searchbox"
+              aria-describedby="search-hint"
             />
+            {searchQuery && (
+              <button
+                onClick={() => { setSearchQuery(""); setShowNoResults(false); searchInputRef.current?.focus(); }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-sidebar-muted hover:text-sidebar-foreground transition-colors"
+                aria-label="Limpar busca"
+              >
+                <X size={12} />
+              </button>
+            )}
           </div>
+          <span id="search-hint" className="sr-only">Pressione Enter para navegar ao primeiro resultado</span>
+          {query && filteredItems.length > 0 && (
+            <p className="text-[10px] text-sidebar-muted px-1">
+              {flatResults.length} resultado{flatResults.length !== 1 ? "s" : ""} encontrado{flatResults.length !== 1 ? "s" : ""}
+            </p>
+          )}
+          {query && filteredItems.length === 0 && (
+            <div
+              role="alert"
+              className="flex items-start gap-2 rounded-md border border-destructive/30 bg-destructive/10 p-2.5 text-[11px] text-destructive animate-in fade-in-0 slide-in-from-top-1 duration-200"
+            >
+              <SearchX size={16} className="flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-medium">Nenhum resultado encontrado</p>
+                <p className="text-destructive/80 mt-0.5">
+                  Não encontramos "{searchQuery}" no menu. Verifique a grafia ou navegue pelas seções.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       )}
       <nav className={`${isCollapsed ? "px-1" : "px-2"} pb-6`} aria-label="Navegação do design system">
