@@ -526,7 +526,7 @@ export default function ChartsSection() {
         <ChartCard title="Radial Bar Chart">
           <ResponsiveContainer width="100%" height={300}>
             <RadialBarChart cx="50%" cy="50%" innerRadius="30%" outerRadius="90%" data={radialData} startAngle={180} endAngle={0}>
-              <RadialBar background clockWise dataKey="value" cornerRadius={6} />
+              <RadialBar background dataKey="value" cornerRadius={6} />
               <Legend iconSize={10} layout="vertical" verticalAlign="middle" align="right" />
               <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }} />
             </RadialBarChart>
