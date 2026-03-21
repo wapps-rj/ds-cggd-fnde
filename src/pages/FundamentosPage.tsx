@@ -1,5 +1,6 @@
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
 import ColorSection from "@/components/ColorSection";
+import GridSection from "@/components/GridSection";
 import {
   ArrowRight, Bell, Check, ChevronRight, Download, Eye,
   Heart, Home, Mail, Search, Settings, Star, User, AlertTriangle, Info
