@@ -946,29 +946,1065 @@ function SpinnerSection() {
   );
 }
 
-/* ==================== EMPTY STATE ==================== */
-function EmptyStateSection() {
+/* ==================== DROPDOWN MENU ==================== */
+function DropdownMenuSection() {
+  const [open, setOpen] = useState(false);
+  const [selectedAction, setSelectedAction] = useState<string | null>(null);
+
   return (
     <ComponentPreview
-      title="Empty State"
-      description="Estado quando não há dados para exibir."
-      whenToUse={["Listas vazias", "Resultados de busca sem retorno", "Primeiro uso de funcionalidade"]}
-      code={`<div class="empty-state">
-  <svg>inbox</svg>
-  <h3>Nenhum resultado encontrado</h3>
-  <p>Tente ajustar os filtros ou realizar uma nova busca.</p>
-  <button>Nova busca</button>
+      title="Dropdown Menu"
+      description="Menu contextual de ações acionado por botão, ícone ou contexto. Suporta itens, separadores, ícones e estados disabled."
+      whenToUse={["Agrupar ações secundárias", "Menus de contexto (ações por item em tabelas)", "Opções de configuração"]}
+      whenNotToUse={["Navegação principal (use sidebar ou tabs)", "Seleção de valor (use Select)"]}
+      accessibility={["role='menu' no container", "role='menuitem' em cada item", "Fechar com ESC", "Navegação por setas ↑↓", "aria-haspopup='true' no trigger"]}
+      code={`<!-- Dropdown básico -->
+<div class="dropdown">
+  <button aria-haspopup="true" aria-expanded="false" class="btn btn-outline">
+    Ações <svg>chevron-down</svg>
+  </button>
+  <div role="menu" class="dropdown-content">
+    <button role="menuitem">
+      <svg>edit</svg> Editar
+    </button>
+    <button role="menuitem">
+      <svg>share</svg> Compartilhar
+    </button>
+    <hr class="dropdown-separator" />
+    <button role="menuitem" class="dropdown-item-danger">
+      <svg>trash</svg> Excluir
+    </button>
+  </div>
+</div>
+
+<!-- Com ícone trigger (três pontos) -->
+<button aria-haspopup="true" class="btn-icon">
+  <svg>more-vertical</svg>
+</button>`}
+    >
+      <div className="flex flex-wrap gap-6 items-start">
+        {/* Dropdown com botão texto */}
+        <div className="relative">
+          <button
+            onClick={() => setOpen(!open)}
+            aria-haspopup="true"
+            aria-expanded={open}
+            className="inline-flex items-center gap-2 border border-border bg-background px-4 py-2 rounded text-sm font-medium hover:bg-muted transition-colors"
+          >
+            Ações <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+          </button>
+          {open && (
+            <div
+              role="menu"
+              className="absolute top-full left-0 mt-1 w-48 bg-card border border-border rounded-lg shadow-lg py-1 z-20 animate-fade-in"
+              onMouseLeave={() => setOpen(false)}
+            >
+              {[
+                { icon: <Edit size={14} />, label: "Editar", action: "edit" },
+                { icon: <Copy size={14} />, label: "Duplicar", action: "duplicate" },
+                { icon: <Share2 size={14} />, label: "Compartilhar", action: "share" },
+                { icon: <Download size={14} />, label: "Exportar", action: "export" },
+              ].map(item => (
+                <button
+                  key={item.action}
+                  role="menuitem"
+                  onClick={() => { setSelectedAction(item.label); setOpen(false); }}
+                  className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors text-left"
+                >
+                  <span className="text-muted-foreground">{item.icon}</span> {item.label}
+                </button>
+              ))}
+              <div className="h-px bg-border my-1" />
+              <button
+                role="menuitem"
+                onClick={() => { setSelectedAction("Excluir"); setOpen(false); }}
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-error/10 text-error transition-colors text-left"
+              >
+                <Trash2 size={14} /> Excluir
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Dropdown com ícone */}
+        <DropdownIconDemo />
+
+        {selectedAction && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted px-3 py-2 rounded">
+            <Check size={14} className="text-success" /> Ação selecionada: <strong className="text-foreground">{selectedAction}</strong>
+          </div>
+        )}
+      </div>
+    </ComponentPreview>
+  );
+}
+
+function DropdownIconDemo() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        aria-haspopup="true"
+        aria-expanded={open}
+        aria-label="Menu de ações"
+        className="p-2 border border-border rounded hover:bg-muted transition-colors"
+      >
+        <MoreVertical size={16} />
+      </button>
+      {open && (
+        <div
+          role="menu"
+          className="absolute top-full right-0 mt-1 w-40 bg-card border border-border rounded-lg shadow-lg py-1 z-20 animate-fade-in"
+          onMouseLeave={() => setOpen(false)}
+        >
+          <button role="menuitem" className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors text-left">
+            <Eye size={14} className="text-muted-foreground" /> Visualizar
+          </button>
+          <button role="menuitem" className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors text-left">
+            <Edit size={14} className="text-muted-foreground" /> Editar
+          </button>
+          <button role="menuitem" className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors text-left text-error hover:bg-error/10">
+            <Trash2 size={14} /> Excluir
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ==================== DATEPICKER ==================== */
+function DatePickerSection() {
+  const [date, setDate] = useState("");
+  const [showCal, setShowCal] = useState(false);
+  const [rangeStart, setRangeStart] = useState("");
+  const [rangeEnd, setRangeEnd] = useState("");
+  const today = new Date();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
+  const [viewMonth, setViewMonth] = useState(currentMonth);
+  const [viewYear, setViewYear] = useState(currentYear);
+
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+  const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+  const selectDate = (day: number) => {
+    const d = `${String(day).padStart(2, "0")}/${String(viewMonth + 1).padStart(2, "0")}/${viewYear}`;
+    setDate(d);
+    setShowCal(false);
+  };
+
+  const prevMonth = () => {
+    if (viewMonth === 0) { setViewMonth(11); setViewYear(viewYear - 1); }
+    else setViewMonth(viewMonth - 1);
+  };
+  const nextMonth = () => {
+    if (viewMonth === 11) { setViewMonth(0); setViewYear(viewYear + 1); }
+    else setViewMonth(viewMonth + 1);
+  };
+
+  return (
+    <ComponentPreview
+      title="DatePicker"
+      description="Seleção de data com calendário visual, suporte a formato brasileiro (DD/MM/AAAA), range de datas e integração com formulários."
+      whenToUse={["Formulários com campos de data", "Filtros por período", "Agendamento"]}
+      whenNotToUse={["Seleção de horário isolado (use TimePicker)", "Datas muito distantes (use input de ano)"]}
+      accessibility={["Campo com máscara acessível", "Calendário navegável por teclado", "aria-label nas setas de mês", "Formato de data visível ao usuário"]}
+      code={`<!-- DatePicker simples -->
+<div class="datepicker">
+  <label for="data">Data</label>
+  <div class="datepicker-input-wrapper">
+    <input type="text" id="data" placeholder="DD/MM/AAAA"
+      pattern="\\d{2}/\\d{2}/\\d{4}" />
+    <button aria-label="Abrir calendário">
+      <svg>calendar</svg>
+    </button>
+  </div>
+  <div class="datepicker-calendar" role="grid"
+    aria-label="Calendário">
+    <div class="calendar-header">
+      <button aria-label="Mês anterior">←</button>
+      <span>Março 2026</span>
+      <button aria-label="Próximo mês">→</button>
+    </div>
+    <div class="calendar-grid">
+      <!-- Dom Seg Ter ... -->
+      <button class="calendar-day">1</button>
+      <button class="calendar-day today">21</button>
+    </div>
+  </div>
+</div>
+
+<!-- Range de datas -->
+<div class="date-range">
+  <input type="date" aria-label="Data inicial" />
+  <span>até</span>
+  <input type="date" aria-label="Data final" />
 </div>`}
     >
-      <div className="text-center py-12 border border-dashed border-border rounded-lg">
-        <Inbox size={48} className="mx-auto text-muted-foreground/50 mb-4" />
-        <h4 className="font-semibold mb-1">Nenhum resultado encontrado</h4>
-        <p className="text-sm text-muted-foreground mb-4 max-w-sm mx-auto">
-          Tente ajustar os filtros de busca ou verifique se os dados foram carregados corretamente.
-        </p>
-        <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium">
-          <Search size={14} /> Nova busca
-        </button>
+      <div className="space-y-6">
+        {/* DatePicker simples */}
+        <div>
+          <label className="block text-sm font-medium mb-1.5">Data de referência</label>
+          <div className="relative max-w-xs">
+            <div className="relative">
+              <input
+                type="text"
+                value={date}
+                onChange={e => setDate(e.target.value)}
+                placeholder="DD/MM/AAAA"
+                className="w-full border border-input rounded px-3 py-2 pr-10 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
+              />
+              <button
+                onClick={() => setShowCal(!showCal)}
+                aria-label="Abrir calendário"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Calendar size={16} />
+              </button>
+            </div>
+
+            {showCal && (
+              <div className="absolute top-full left-0 mt-1 bg-card border border-border rounded-lg shadow-lg p-3 z-30 animate-fade-in w-72">
+                <div className="flex items-center justify-between mb-3">
+                  <button onClick={prevMonth} aria-label="Mês anterior" className="p-1 hover:bg-muted rounded transition-colors">
+                    <ArrowLeft size={16} />
+                  </button>
+                  <span className="text-sm font-semibold">{monthNames[viewMonth]} {viewYear}</span>
+                  <button onClick={nextMonth} aria-label="Próximo mês" className="p-1 hover:bg-muted rounded transition-colors">
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+                <div className="grid grid-cols-7 gap-0 text-center text-xs">
+                  {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map(d => (
+                    <div key={d} className="py-1 text-muted-foreground font-medium">{d}</div>
+                  ))}
+                  {Array.from({ length: firstDay }).map((_, i) => <div key={`e-${i}`} />)}
+                  {Array.from({ length: daysInMonth }).map((_, i) => {
+                    const day = i + 1;
+                    const isToday = day === today.getDate() && viewMonth === currentMonth && viewYear === currentYear;
+                    return (
+                      <button
+                        key={day}
+                        onClick={() => selectDate(day)}
+                        className={`py-1.5 rounded text-sm transition-colors hover:bg-primary hover:text-primary-foreground ${
+                          isToday ? "bg-primary/10 text-primary font-bold" : "hover:bg-muted"
+                        }`}
+                      >
+                        {day}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Date range */}
+        <div>
+          <label className="block text-sm font-medium mb-1.5">Período (range)</label>
+          <div className="flex items-center gap-2 max-w-md">
+            <div className="relative flex-1">
+              <input
+                type="date"
+                value={rangeStart}
+                onChange={e => setRangeStart(e.target.value)}
+                className="w-full border border-input rounded px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
+                aria-label="Data inicial"
+              />
+            </div>
+            <span className="text-sm text-muted-foreground">até</span>
+            <div className="relative flex-1">
+              <input
+                type="date"
+                value={rangeEnd}
+                onChange={e => setRangeEnd(e.target.value)}
+                className="w-full border border-input rounded px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
+                aria-label="Data final"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Preset ranges */}
+        <div>
+          <p className="text-sm font-medium mb-2">Atalhos de período</p>
+          <div className="flex flex-wrap gap-2">
+            {["Hoje", "Últimos 7 dias", "Últimos 30 dias", "Este mês", "Último trimestre", "Este ano"].map(label => (
+              <button key={label} className="px-3 py-1.5 text-xs border border-border rounded-full hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors">
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </ComponentPreview>
+  );
+}
+
+/* ==================== FILTROS DINÂMICOS ==================== */
+function DynamicFiltersSection() {
+  const [status, setStatus] = useState("todos");
+  const [tipo, setTipo] = useState("todos");
+  const [searchVal, setSearchVal] = useState("");
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+
+  const addFilter = (f: string) => {
+    if (!activeFilters.includes(f)) setActiveFilters([...activeFilters, f]);
+  };
+  const removeFilter = (f: string) => setActiveFilters(activeFilters.filter(x => x !== f));
+  const clearAll = () => { setActiveFilters([]); setStatus("todos"); setTipo("todos"); setSearchVal(""); };
+
+  const handleStatusChange = (val: string) => {
+    setStatus(val);
+    if (val !== "todos") addFilter(`Status: ${val}`);
+    else setActiveFilters(prev => prev.filter(f => !f.startsWith("Status:")));
+  };
+  const handleTipoChange = (val: string) => {
+    setTipo(val);
+    if (val !== "todos") addFilter(`Tipo: ${val}`);
+    else setActiveFilters(prev => prev.filter(f => !f.startsWith("Tipo:")));
+  };
+
+  return (
+    <ComponentPreview
+      title="Filtros Dinâmicos"
+      description="Barra de filtros combinados com chips ativos, busca por texto, selects e botão de limpar. Ideal para dashboards e listagens."
+      whenToUse={["Listagens com muitos registros", "Dashboards com dados filtráveis", "Relatórios com parâmetros"]}
+      whenNotToUse={["Listas com poucos itens (< 10)", "Quando há apenas 1 critério (use busca simples)"]}
+      accessibility={["Labels em todos os campos", "Chips removíveis com aria-label", "Anunciar quantidade de filtros ativos via aria-live"]}
+      code={`<!-- Barra de filtros -->
+<div class="filter-bar" role="search" aria-label="Filtros">
+  <div class="filter-search">
+    <svg>search</svg>
+    <input type="search" placeholder="Buscar..." />
+  </div>
+
+  <select aria-label="Filtrar por status">
+    <option value="todos">Todos os status</option>
+    <option value="ativo">Ativo</option>
+    <option value="pendente">Pendente</option>
+    <option value="inativo">Inativo</option>
+  </select>
+
+  <select aria-label="Filtrar por tipo">
+    <option value="todos">Todos os tipos</option>
+    <option value="pnae">PNAE</option>
+    <option value="pdde">PDDE</option>
+  </select>
+
+  <button class="btn btn-outline btn-sm">
+    <svg>filter</svg> Mais filtros
+  </button>
+</div>
+
+<!-- Chips de filtros ativos -->
+<div class="filter-chips" aria-live="polite">
+  <span class="filter-chip">
+    Status: Ativo
+    <button aria-label="Remover filtro Status">×</button>
+  </span>
+  <button class="filter-clear">Limpar todos</button>
+</div>`}
+    >
+      <div className="space-y-4">
+        {/* Filter bar */}
+        <div className="flex flex-wrap gap-3 items-end" role="search" aria-label="Filtros de listagem">
+          <div className="flex-1 min-w-[200px]">
+            <label className="block text-xs font-medium mb-1 text-muted-foreground">Buscar</label>
+            <div className="relative">
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="search"
+                value={searchVal}
+                onChange={e => setSearchVal(e.target.value)}
+                placeholder="Nome, código, município..."
+                className="w-full border border-input rounded pl-9 pr-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-medium mb-1 text-muted-foreground">Status</label>
+            <select
+              value={status}
+              onChange={e => handleStatusChange(e.target.value)}
+              className="border border-input rounded px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
+            >
+              <option value="todos">Todos</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Pendente">Pendente</option>
+              <option value="Inativo">Inativo</option>
+              <option value="Concluído">Concluído</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium mb-1 text-muted-foreground">Programa</label>
+            <select
+              value={tipo}
+              onChange={e => handleTipoChange(e.target.value)}
+              className="border border-input rounded px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
+            >
+              <option value="todos">Todos</option>
+              <option value="PNAE">PNAE</option>
+              <option value="PDDE">PDDE</option>
+              <option value="PNLD">PNLD</option>
+              <option value="Caminho da Escola">Caminho da Escola</option>
+            </select>
+          </div>
+          <button className="inline-flex items-center gap-1.5 border border-border px-3 py-2 rounded text-sm hover:bg-muted transition-colors">
+            <Filter size={14} /> Mais filtros
+          </button>
+        </div>
+
+        {/* Active filter chips */}
+        {activeFilters.length > 0 && (
+          <div className="flex flex-wrap gap-2 items-center" aria-live="polite">
+            <span className="text-xs text-muted-foreground">{activeFilters.length} filtro(s) ativo(s):</span>
+            {activeFilters.map(f => (
+              <span key={f} className="inline-flex items-center gap-1 bg-primary/10 text-primary px-2.5 py-1 rounded-full text-xs font-medium">
+                {f}
+                <button onClick={() => removeFilter(f)} aria-label={`Remover filtro ${f}`} className="hover:bg-primary/20 rounded-full p-0.5 transition-colors">
+                  <X size={12} />
+                </button>
+              </span>
+            ))}
+            <button onClick={clearAll} className="text-xs text-error hover:underline ml-1">Limpar todos</button>
+          </div>
+        )}
+
+        {/* Example result count */}
+        <div className="text-sm text-muted-foreground border-t border-border pt-3">
+          Exibindo <strong className="text-foreground">247</strong> resultados
+          {activeFilters.length > 0 && <> com {activeFilters.length} filtro(s) aplicado(s)</>}
+        </div>
+      </div>
+    </ComponentPreview>
+  );
+}
+
+/* ==================== BIG NUMBERS / KPIs ==================== */
+function BigNumbersSection() {
+  return (
+    <ComponentPreview
+      title="Big Numbers / KPIs"
+      description="Cards de destaque com indicadores numéricos grandes, variação percentual, ícone contextual e trend visual."
+      whenToUse={["Dashboards e painéis gerenciais", "Resumos executivos", "Telas iniciais de módulos"]}
+      whenNotToUse={["Dados que precisam de contexto tabular", "Valores sem significado isolado"]}
+      accessibility={["aria-label descritivo no card", "Não depender apenas de cor para trend (usar ↑↓ e texto)"]}
+      code={`<!-- Big Number Card -->
+<div class="kpi-card" aria-label="Escolas atendidas: 12.847">
+  <div class="kpi-header">
+    <span class="kpi-icon kpi-icon-primary">
+      <svg>users</svg>
+    </span>
+    <span class="kpi-trend kpi-trend-up">
+      ↑ 12,3%
+    </span>
+  </div>
+  <p class="kpi-value">12.847</p>
+  <p class="kpi-label">Escolas atendidas</p>
+  <p class="kpi-comparison">vs. 11.436 mês anterior</p>
+</div>
+
+<!-- Variação negativa -->
+<div class="kpi-card">
+  <span class="kpi-trend kpi-trend-down">↓ 3,2%</span>
+  <p class="kpi-value">R$ 2,4M</p>
+  <p class="kpi-label">Pendências</p>
+</div>
+
+<!-- Grid de KPIs -->
+<div class="kpi-grid cols-4">
+  <!-- 4 cards lado a lado -->
+</div>`}
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          { icon: <Users size={20} />, value: "12.847", label: "Escolas atendidas", trend: "+12,3%", up: true, comparison: "vs. 11.436 mês anterior", color: "text-primary bg-primary/10" },
+          { icon: <DollarSign size={20} />, value: "R$ 847M", label: "Recursos transferidos", trend: "+8,7%", up: true, comparison: "vs. R$ 779M no trimestre anterior", color: "text-success bg-success-bg" },
+          { icon: <Clock size={20} />, value: "23", label: "Pendências", trend: "-15,4%", up: false, comparison: "vs. 27 semana anterior", color: "text-warning bg-warning-bg" },
+          { icon: <BarChart3 size={20} />, value: "94,2%", label: "Taxa de execução", trend: "+2,1%", up: true, comparison: "Meta: 95%", color: "text-info bg-info-bg" },
+        ].map((kpi, i) => (
+          <div key={i} className="bg-card border border-border rounded-lg p-5" aria-label={`${kpi.label}: ${kpi.value}`}>
+            <div className="flex items-center justify-between mb-3">
+              <span className={`p-2 rounded-lg ${kpi.color}`}>{kpi.icon}</span>
+              <span className={`inline-flex items-center gap-1 text-xs font-semibold ${kpi.up ? "text-success" : "text-error"}`}>
+                {kpi.up ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                {kpi.trend}
+              </span>
+            </div>
+            <p className="text-3xl font-bold text-foreground leading-none mb-1">{kpi.value}</p>
+            <p className="text-sm text-muted-foreground">{kpi.label}</p>
+            <p className="text-xs text-muted-foreground/70 mt-2">{kpi.comparison}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Inline compact variant */}
+      <div className="mt-6">
+        <p className="text-sm font-medium mb-3">Variante compacta (inline)</p>
+        <div className="flex flex-wrap gap-4">
+          {[
+            { value: "5.423", label: "Municípios", trend: "↑ 2%" },
+            { value: "R$ 1,2B", label: "Orçamento anual", trend: "→ 0%" },
+            { value: "326", label: "Projetos ativos", trend: "↑ 18%" },
+          ].map((item, i) => (
+            <div key={i} className="flex items-baseline gap-2 bg-muted px-4 py-2 rounded-lg">
+              <span className="text-xl font-bold text-foreground">{item.value}</span>
+              <span className="text-xs text-muted-foreground">{item.label}</span>
+              <span className="text-xs font-medium text-success">{item.trend}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </ComponentPreview>
+  );
+}
+
+/* ==================== UPLOAD EM MASSA ==================== */
+function BulkUploadSection() {
+  const [files, setFiles] = useState<{ name: string; size: string; progress: number; status: "uploading" | "done" | "error" }[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const simulateUpload = useCallback((fileNames: string[]) => {
+    const newFiles = fileNames.map(name => ({
+      name,
+      size: `${(Math.random() * 5 + 0.5).toFixed(1)} MB`,
+      progress: 0,
+      status: "uploading" as const,
+    }));
+    setFiles(prev => [...prev, ...newFiles]);
+
+    newFiles.forEach((file, idx) => {
+      const startIdx = files.length + idx;
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 25 + 10;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          setFiles(prev => prev.map((f, i) => i === startIdx ? { ...f, progress: 100, status: Math.random() > 0.15 ? "done" : "error" } : f));
+        } else {
+          setFiles(prev => prev.map((f, i) => i === startIdx ? { ...f, progress: Math.min(progress, 99) } : f));
+        }
+      }, 300 + Math.random() * 400);
+    });
+  }, [files.length]);
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const names = Array.from(e.dataTransfer.files).map(f => f.name);
+    if (names.length) simulateUpload(names);
+  };
+
+  const handleFileSelect = () => {
+    simulateUpload(["relatorio_2026.pdf", "planilha_dados.xlsx", "comprovante_003.pdf", "foto_escola.jpg"]);
+  };
+
+  return (
+    <ComponentPreview
+      title="Upload em Massa com Progresso"
+      description="Área de drag-and-drop para múltiplos arquivos com barra de progresso individual, status por item e feedback visual."
+      whenToUse={["Envio de documentos comprobatórios", "Importação de planilhas", "Upload de fotos de obras"]}
+      whenNotToUse={["Upload de arquivo único simples (use input type=file)", "Dados que cabem em formulário (use campos textuais)"]}
+      accessibility={["Área de drop com role e aria-label", "Progresso anunciado via aria-valuenow", "Status por arquivo em texto, não só cor"]}
+      code={`<!-- Área de upload -->
+<div class="upload-dropzone" role="button" tabindex="0"
+  aria-label="Arraste arquivos ou clique para selecionar">
+  <svg>upload-cloud</svg>
+  <p>Arraste arquivos aqui ou
+    <button>selecione do computador</button>
+  </p>
+  <p class="upload-hint">PDF, XLSX, JPG até 10MB cada</p>
+  <input type="file" multiple hidden />
+</div>
+
+<!-- Lista de arquivos com progresso -->
+<div class="upload-file-list">
+  <div class="upload-file-item">
+    <svg>file-text</svg>
+    <div class="upload-file-info">
+      <span class="upload-file-name">relatorio.pdf</span>
+      <span class="upload-file-size">2.4 MB</span>
+    </div>
+    <div class="upload-progress-bar" role="progressbar"
+      aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+      <div class="upload-progress-fill" style="width: 65%"></div>
+    </div>
+    <span class="upload-status">65%</span>
+  </div>
+
+  <!-- Concluído -->
+  <div class="upload-file-item upload-file-done">
+    <svg>check-circle</svg>
+    <span>Enviado com sucesso</span>
+  </div>
+
+  <!-- Erro -->
+  <div class="upload-file-item upload-file-error">
+    <svg>x-circle</svg>
+    <span>Falha no envio</span>
+    <button>Tentar novamente</button>
+  </div>
+</div>`}
+    >
+      <div className="space-y-4">
+        {/* Dropzone */}
+        <div
+          onDragOver={e => { e.preventDefault(); setIsDragging(true); }}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
+          role="button"
+          tabIndex={0}
+          aria-label="Arraste arquivos ou clique para selecionar"
+          className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+            isDragging ? "border-primary bg-primary/5" : "border-border hover:border-primary/50 hover:bg-muted/30"
+          }`}
+        >
+          <UploadCloud size={40} className="mx-auto text-muted-foreground/50 mb-3" />
+          <p className="text-sm font-medium mb-1">Arraste arquivos aqui ou <span className="text-primary underline">selecione do computador</span></p>
+          <p className="text-xs text-muted-foreground">PDF, XLSX, JPG, PNG · Até 10MB por arquivo · Máximo 20 arquivos</p>
+          <input ref={fileInputRef} type="file" multiple hidden onChange={() => handleFileSelect()} />
+        </div>
+
+        {/* Demo button */}
+        {files.length === 0 && (
+          <button
+            onClick={handleFileSelect}
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium"
+          >
+            <Upload size={14} /> Simular upload de 4 arquivos
+          </button>
+        )}
+
+        {/* File list */}
+        {files.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <span>{files.length} arquivo(s)</span>
+              <span>
+                {files.filter(f => f.status === "done").length} concluído(s)
+                {files.some(f => f.status === "error") && ` · ${files.filter(f => f.status === "error").length} com erro`}
+              </span>
+            </div>
+            {files.map((file, i) => (
+              <div key={i} className="flex items-center gap-3 bg-card border border-border rounded-lg p-3">
+                <span className={`shrink-0 ${file.status === "done" ? "text-success" : file.status === "error" ? "text-error" : "text-muted-foreground"}`}>
+                  {file.status === "done" ? <CheckCircle2 size={18} /> : file.status === "error" ? <XCircle size={18} /> : <File size={18} />}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm font-medium truncate">{file.name}</span>
+                    <span className="text-xs text-muted-foreground ml-2 shrink-0">
+                      {file.status === "done" ? "Concluído" : file.status === "error" ? "Erro" : `${Math.round(file.progress)}%`}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden" role="progressbar" aria-valuenow={Math.round(file.progress)} aria-valuemin={0} aria-valuemax={100}>
+                      <div
+                        className={`h-full rounded-full transition-all duration-300 ${
+                          file.status === "done" ? "bg-success" : file.status === "error" ? "bg-error" : "bg-primary"
+                        }`}
+                        style={{ width: `${file.progress}%` }}
+                      />
+                    </div>
+                    <span className="text-[10px] text-muted-foreground shrink-0">{file.size}</span>
+                  </div>
+                </div>
+                {file.status === "error" && (
+                  <button className="text-xs text-primary hover:underline shrink-0">Tentar novamente</button>
+                )}
+                <button aria-label={`Remover ${file.name}`} className="p-1 hover:bg-muted rounded shrink-0 transition-colors" onClick={() => setFiles(prev => prev.filter((_, j) => j !== i))}>
+                  <X size={14} className="text-muted-foreground" />
+                </button>
+              </div>
+            ))}
+            {/* Global progress */}
+            <div className="bg-muted/50 rounded-lg p-3 flex items-center gap-3">
+              <Activity size={16} className="text-primary" />
+              <div className="flex-1">
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-primary rounded-full transition-all duration-300"
+                    style={{ width: `${files.reduce((sum, f) => sum + f.progress, 0) / files.length}%` }}
+                  />
+                </div>
+              </div>
+              <span className="text-xs font-medium">{Math.round(files.reduce((sum, f) => sum + f.progress, 0) / files.length)}%</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </ComponentPreview>
+  );
+}
+
+/* ==================== STEPPER ==================== */
+function StepperSection() {
+  const [currentStep, setCurrentStep] = useState(1);
+  const steps = [
+    { label: "Dados básicos", description: "Informações do programa" },
+    { label: "Documentação", description: "Upload de documentos" },
+    { label: "Revisão", description: "Conferência dos dados" },
+    { label: "Confirmação", description: "Envio e protocolo" },
+  ];
+
+  return (
+    <ComponentPreview
+      title="Barra de Etapas (Stepper)"
+      description="Componente de progresso em etapas para fluxos multi-step com estados completo, ativo e pendente."
+      whenToUse={["Formulários longos divididos em etapas", "Processos com fluxo definido (wizard)", "Acompanhamento de status"]}
+      whenNotToUse={["Etapas que podem ser feitas em qualquer ordem (use Tabs)", "Fluxos com menos de 3 etapas"]}
+      accessibility={["aria-current='step' na etapa ativa", "aria-label no nav", "Indicação de etapa completa via texto, não só cor/ícone"]}
+      code={`<!-- Stepper horizontal -->
+<nav aria-label="Etapas do formulário">
+  <ol class="stepper">
+    <li class="step step-complete" aria-label="Etapa 1 completa">
+      <span class="step-indicator">
+        <svg>check</svg>
+      </span>
+      <span class="step-label">Dados básicos</span>
+    </li>
+    <li class="step step-active" aria-current="step">
+      <span class="step-indicator">2</span>
+      <span class="step-label">Documentação</span>
+      <span class="step-description">Upload de documentos</span>
+    </li>
+    <li class="step step-pending">
+      <span class="step-indicator">3</span>
+      <span class="step-label">Revisão</span>
+    </li>
+  </ol>
+</nav>
+
+<!-- Navegação -->
+<div class="stepper-actions">
+  <button class="btn btn-outline">Voltar</button>
+  <button class="btn btn-primary">Próxima etapa</button>
+</div>`}
+    >
+      <div className="space-y-6">
+        {/* Horizontal stepper */}
+        <nav aria-label="Etapas do formulário">
+          <ol className="flex items-start">
+            {steps.map((step, i) => {
+              const num = i + 1;
+              const isComplete = num < currentStep;
+              const isActive = num === currentStep;
+              return (
+                <li key={i} className="flex-1 relative">
+                  <div className="flex flex-col items-center text-center">
+                    <button
+                      onClick={() => setCurrentStep(num)}
+                      aria-current={isActive ? "step" : undefined}
+                      aria-label={`Etapa ${num}${isComplete ? " completa" : isActive ? " atual" : " pendente"}: ${step.label}`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-colors z-10 relative ${
+                        isComplete ? "bg-success text-success-foreground" :
+                        isActive ? "bg-primary text-primary-foreground ring-4 ring-primary/20" :
+                        "bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      {isComplete ? <Check size={18} /> : num}
+                    </button>
+                    <span className={`mt-2 text-xs font-medium ${isActive ? "text-primary" : isComplete ? "text-foreground" : "text-muted-foreground"}`}>
+                      {step.label}
+                    </span>
+                    <span className="text-[10px] text-muted-foreground mt-0.5 hidden sm:block">{step.description}</span>
+                  </div>
+                  {i < steps.length - 1 && (
+                    <div className={`absolute top-5 left-[calc(50%+24px)] right-[calc(-50%+24px)] h-0.5 ${num < currentStep ? "bg-success" : "bg-border"}`} />
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+
+        {/* Step content */}
+        <div className="border border-border rounded-lg p-6 bg-muted/20 animate-fade-in">
+          <h4 className="font-semibold mb-2">Etapa {currentStep}: {steps[currentStep - 1].label}</h4>
+          <p className="text-sm text-muted-foreground">{steps[currentStep - 1].description} — Conteúdo da etapa apareceria aqui.</p>
+        </div>
+
+        {/* Navigation */}
+        <div className="flex items-center justify-between">
+          <button
+            onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
+            disabled={currentStep === 1}
+            className="inline-flex items-center gap-2 border border-border px-4 py-2 rounded text-sm font-medium hover:bg-muted transition-colors disabled:opacity-30"
+          >
+            <ArrowLeft size={14} /> Voltar
+          </button>
+          <span className="text-xs text-muted-foreground">Etapa {currentStep} de {steps.length}</span>
+          <button
+            onClick={() => setCurrentStep(Math.min(steps.length, currentStep + 1))}
+            disabled={currentStep === steps.length}
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-30"
+          >
+            {currentStep === steps.length ? "Concluir" : "Próxima etapa"} <ArrowRight size={14} />
+          </button>
+        </div>
+
+        {/* Vertical stepper variant */}
+        <div className="mt-6">
+          <p className="text-sm font-medium mb-3">Variante vertical</p>
+          <ol className="space-y-0 ml-4">
+            {steps.map((step, i) => {
+              const num = i + 1;
+              const isComplete = num < currentStep;
+              const isActive = num === currentStep;
+              return (
+                <li key={i} className="relative pb-6 last:pb-0">
+                  {i < steps.length - 1 && (
+                    <div className={`absolute left-[15px] top-[36px] bottom-0 w-0.5 ${num < currentStep ? "bg-success" : "bg-border"}`} />
+                  )}
+                  <div className="flex items-start gap-3">
+                    <span className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                      isComplete ? "bg-success text-success-foreground" : isActive ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                    }`}>
+                      {isComplete ? <Check size={14} /> : num}
+                    </span>
+                    <div>
+                      <p className={`text-sm font-medium ${isActive ? "text-primary" : "text-foreground"}`}>{step.label}</p>
+                      <p className="text-xs text-muted-foreground">{step.description}</p>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </div>
+    </ComponentPreview>
+  );
+}
+
+/* ==================== LISTA DESCRITIVA ==================== */
+function DescriptionListSection() {
+  return (
+    <ComponentPreview
+      title="Lista Descritiva"
+      description="Exibição de pares chave-valor para dados de detalhe, resumos e fichas cadastrais."
+      whenToUse={["Telas de detalhe", "Fichas cadastrais", "Resumos de formulário antes do envio"]}
+      whenNotToUse={["Dados tabulares comparativos (use Tabela)", "Listas de itens homogêneos"]}
+      accessibility={["Usar elementos dl, dt, dd", "dt com font-weight para distinção visual"]}
+      code={`<dl class="description-list">
+  <div class="dl-item">
+    <dt>Programa</dt>
+    <dd>PNAE - Programa Nacional de Alimentação Escolar</dd>
+  </div>
+  <div class="dl-item">
+    <dt>Status</dt>
+    <dd><span class="badge badge-success">Ativo</span></dd>
+  </div>
+  <div class="dl-item">
+    <dt>Valor aprovado</dt>
+    <dd>R$ 1.247.000,00</dd>
+  </div>
+</dl>
+
+<!-- Layout em 2 colunas -->
+<dl class="description-list dl-grid-2">
+  ...
+</dl>`}
+    >
+      <div className="space-y-6">
+        {/* Standard layout */}
+        <dl className="border border-border rounded-lg divide-y divide-border">
+          {[
+            { term: "Programa", value: "PNAE – Programa Nacional de Alimentação Escolar" },
+            { term: "Entidade", value: "Prefeitura Municipal de Brasília - DF" },
+            { term: "CNPJ", value: "00.394.445/0001-43" },
+            { term: "Status", value: <span className="fnde-badge-success">Ativo</span> },
+            { term: "Valor aprovado", value: "R$ 1.247.000,00" },
+            { term: "Vigência", value: "01/01/2026 a 31/12/2026" },
+            { term: "Responsável", value: "Maria da Silva Oliveira" },
+          ].map((item, i) => (
+            <div key={i} className="flex flex-col sm:flex-row sm:items-center px-4 py-3 gap-1 sm:gap-0">
+              <dt className="text-sm font-medium text-muted-foreground sm:w-1/3 shrink-0">{item.term}</dt>
+              <dd className="text-sm text-foreground">{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        {/* Grid 2-col variant */}
+        <div>
+          <p className="text-sm font-medium mb-3">Variante em grid (2 colunas)</p>
+          <dl className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { term: "Código", value: "FNDE-2026-00312" },
+              { term: "Exercício", value: "2026" },
+              { term: "Município", value: "Brasília – DF" },
+              { term: "UF", value: "Distrito Federal" },
+              { term: "Modalidade", value: "Transferência automática" },
+              { term: "Parcelas", value: "10 de 12 liberadas" },
+            ].map((item, i) => (
+              <div key={i} className="bg-muted/30 rounded-lg px-4 py-3">
+                <dt className="text-xs font-medium text-muted-foreground mb-0.5">{item.term}</dt>
+                <dd className="text-sm font-medium text-foreground">{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </ComponentPreview>
+  );
+}
+
+/* ==================== STATS CARDS ==================== */
+function StatsCardsSection() {
+  return (
+    <ComponentPreview
+      title="Cards de Estatísticas"
+      description="Variações avançadas de cards para painéis: com mini-gráfico, comparativo, meta/progresso e ranking."
+      whenToUse={["Dashboards detalhados", "Relatórios visuais", "Comparativos de desempenho"]}
+      code={`<!-- Card com progresso -->
+<div class="stat-card">
+  <div class="stat-header">
+    <span class="stat-label">Taxa de execução</span>
+    <span class="stat-icon"><svg>bar-chart</svg></span>
+  </div>
+  <p class="stat-value">78,4%</p>
+  <div class="stat-progress" role="progressbar"
+    aria-valuenow="78" aria-valuemin="0" aria-valuemax="100">
+    <div class="stat-progress-fill" style="width: 78%"></div>
+  </div>
+  <p class="stat-meta">Meta: 95%</p>
+</div>
+
+<!-- Card comparativo -->
+<div class="stat-card">
+  <span class="stat-label">Este mês vs anterior</span>
+  <div class="stat-compare">
+    <div>
+      <p class="stat-value">1.247</p>
+      <p class="stat-sublabel">Mar/2026</p>
+    </div>
+    <div>
+      <p class="stat-value stat-value-muted">1.102</p>
+      <p class="stat-sublabel">Fev/2026</p>
+    </div>
+  </div>
+</div>`}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Card com progresso/meta */}
+        <div className="bg-card border border-border rounded-lg p-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-muted-foreground">Taxa de execução</span>
+            <BarChart3 size={16} className="text-muted-foreground" />
+          </div>
+          <p className="text-2xl font-bold mb-3">78,4%</p>
+          <div className="h-2 bg-muted rounded-full overflow-hidden mb-2" role="progressbar" aria-valuenow={78} aria-valuemin={0} aria-valuemax={100}>
+            <div className="h-full bg-primary rounded-full" style={{ width: "78.4%" }} />
+          </div>
+          <div className="flex justify-between text-xs text-muted-foreground">
+            <span>0%</span>
+            <span className="font-medium text-primary">Meta: 95%</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+        {/* Card comparativo */}
+        <div className="bg-card border border-border rounded-lg p-5">
+          <span className="text-sm text-muted-foreground block mb-3">Atendimentos: este mês vs anterior</span>
+          <div className="flex items-end gap-6">
+            <div>
+              <p className="text-2xl font-bold text-foreground">1.247</p>
+              <p className="text-xs text-muted-foreground">Mar/2026</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-muted-foreground/50">1.102</p>
+              <p className="text-xs text-muted-foreground">Fev/2026</p>
+            </div>
+            <div className="flex items-center gap-1 text-success text-sm font-semibold mb-1">
+              <TrendingUp size={14} /> +13,2%
+            </div>
+          </div>
+          {/* Mini bar chart */}
+          <div className="flex items-end gap-1 mt-4 h-10">
+            {[40, 55, 30, 65, 50, 70, 80, 60, 90, 85, 75, 95].map((h, i) => (
+              <div key={i} className={`flex-1 rounded-t ${i === 11 ? "bg-primary" : "bg-primary/20"}`} style={{ height: `${h}%` }} />
+            ))}
+          </div>
+        </div>
+
+        {/* Card de ranking */}
+        <div className="bg-card border border-border rounded-lg p-5">
+          <span className="text-sm text-muted-foreground block mb-3">Top 5 programas por valor</span>
+          <div className="space-y-2">
+            {[
+              { name: "PNAE", value: "R$ 3,1B", pct: 100 },
+              { name: "PNLD", value: "R$ 2,4B", pct: 77 },
+              { name: "PDDE", value: "R$ 1,8B", pct: 58 },
+              { name: "Caminho da Escola", value: "R$ 890M", pct: 29 },
+              { name: "Proinfância", value: "R$ 420M", pct: 14 },
+            ].map((item, i) => (
+              <div key={i}>
+                <div className="flex items-center justify-between text-xs mb-1">
+                  <span className="font-medium">{i + 1}. {item.name}</span>
+                  <span className="text-muted-foreground">{item.value}</span>
+                </div>
+                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-primary/70 rounded-full" style={{ width: `${item.pct}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Card com status indicadores */}
+        <div className="bg-card border border-border rounded-lg p-5">
+          <span className="text-sm text-muted-foreground block mb-3">Status dos processos</span>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { label: "Aprovados", count: 142, color: "text-success", bg: "bg-success-bg" },
+              { label: "Pendentes", count: 38, color: "text-warning", bg: "bg-warning-bg" },
+              { label: "Em análise", count: 67, color: "text-info", bg: "bg-info-bg" },
+              { label: "Reprovados", count: 12, color: "text-error", bg: "bg-error-bg" },
+            ].map((item, i) => (
+              <div key={i} className={`${item.bg} rounded-lg p-3 text-center`}>
+                <p className={`text-xl font-bold ${item.color}`}>{item.count}</p>
+                <p className="text-xs text-muted-foreground">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Card com ícone grande */}
+        <div className="bg-primary rounded-lg p-5 text-primary-foreground">
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-xs opacity-70 mb-1">Total acumulado 2026</p>
+              <p className="text-3xl font-bold">R$ 8,6B</p>
+              <p className="text-sm opacity-80 mt-2">Recursos transferidos para educação básica em todo o Brasil</p>
+            </div>
+            <DollarSign size={40} className="opacity-20" />
+          </div>
+        </div>
+
+        {/* Card ação rápida */}
+        <div className="bg-card border border-border rounded-lg p-5 flex flex-col justify-between">
+          <div>
+            <span className="text-sm text-muted-foreground block mb-2">Ações pendentes</span>
+            <div className="space-y-2">
+              {["Aprovar prestação PNAE #3421", "Revisar parecer PDDE #1872", "Assinar termo Proinfância #099"].map((item, i) => (
+                <div key={i} className="flex items-center gap-2 text-sm">
+                  <div className="w-1.5 h-1.5 rounded-full bg-warning shrink-0" />
+                  <span className="truncate">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <button className="mt-4 w-full text-center bg-primary text-primary-foreground py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity">
+            Ver todas as pendências
+          </button>
+        </div>
       </div>
     </ComponentPreview>
   );
