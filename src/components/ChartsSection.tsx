@@ -84,6 +84,166 @@ const lineMultiData = [
   { name: "Dom", receita: 140, custo: 88, lucro: 52 },
 ];
 
+/* ========== COLUMN CHART DATA ========== */
+const basicColumnData = [
+  { name: "Fev", lucro: 44, receita: 76, fluxo: 35 },
+  { name: "Mar", lucro: 55, receita: 85, fluxo: 41 },
+  { name: "Abr", lucro: 57, receita: 101, fluxo: 36 },
+  { name: "Mai", lucro: 56, receita: 98, fluxo: 26 },
+  { name: "Jun", lucro: 61, receita: 87, fluxo: 45 },
+  { name: "Jul", lucro: 58, receita: 105, fluxo: 48 },
+  { name: "Ago", lucro: 63, receita: 91, fluxo: 52 },
+  { name: "Set", lucro: 60, receita: 114, fluxo: 53 },
+  { name: "Out", lucro: 66, receita: 94, fluxo: 41 },
+];
+
+const dataLabelsData = [
+  { name: "Jan", valor: 2.3 }, { name: "Fev", valor: 3.1 },
+  { name: "Mar", valor: 4.0 }, { name: "Abr", valor: 10.1 },
+  { name: "Mai", valor: 4.0 }, { name: "Jun", valor: 3.6 },
+];
+
+const stackedColumnData = [
+  { name: "2023 Q1", produto_a: 65, produto_b: 28, produto_c: 35 },
+  { name: "2023 Q2", produto_a: 59, produto_b: 48, produto_c: 29 },
+  { name: "2023 Q3", produto_a: 80, produto_b: 40, produto_c: 50 },
+  { name: "2023 Q4", produto_a: 81, produto_b: 19, produto_c: 45 },
+  { name: "2024 Q1", produto_a: 56, produto_b: 86, produto_c: 60 },
+  { name: "2024 Q2", produto_a: 55, produto_b: 27, produto_c: 33 },
+  { name: "2024 Q3", produto_a: 40, produto_b: 90, produto_c: 38 },
+  { name: "2024 Q4", produto_a: 72, produto_b: 50, produto_c: 47 },
+];
+
+const stacked100Data = [
+  { name: "2023 Q1", produto_a: 65, produto_b: 19, produto_c: 16 },
+  { name: "2023 Q2", produto_a: 58, produto_b: 24, produto_c: 18 },
+  { name: "2023 Q3", produto_a: 54, produto_b: 26, produto_c: 20 },
+  { name: "2023 Q4", produto_a: 74, produto_b: 17, produto_c: 9 },
+];
+
+const groupedStackedData = [
+  { name: "2022", q1: 40, q2: 30, q3: 35, q4: 25 },
+  { name: "2023", q1: 50, q2: 40, q3: 45, q4: 35 },
+  { name: "2024", q1: 60, q2: 50, q3: 55, q4: 45 },
+];
+
+const horizontalData = [
+  { name: "Educação Básica", valor: 4500 },
+  { name: "Infraestrutura", valor: 3200 },
+  { name: "Tecnologia", valor: 2800 },
+  { name: "Merenda Escolar", valor: 2400 },
+  { name: "Transporte", valor: 1800 },
+  { name: "Livro Didático", valor: 1200 },
+];
+
+const tooltipStyle = { background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 };
+
+/* ========== COLUMN CODE BLOCKS ========== */
+const codeBasicColumn = `import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+
+const data = [
+  { name: "Fev", lucro: 44, receita: 76, fluxo: 35 },
+  { name: "Mar", lucro: 55, receita: 85, fluxo: 41 },
+  // ...
+];
+
+<ResponsiveContainer width="100%" height={320}>
+  <BarChart data={data}>
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="name" />
+    <YAxis label={{ value: "$ (milhares)", angle: -90, position: "insideLeft" }} />
+    <Tooltip />
+    <Legend />
+    <Bar dataKey="lucro" name="Net Profit" fill="hsl(var(--success))" radius={[2,2,0,0]} />
+    <Bar dataKey="receita" name="Revenue" fill="hsl(var(--primary))" radius={[2,2,0,0]} />
+    <Bar dataKey="fluxo" name="Free Cash Flow" fill="hsl(var(--info))" radius={[2,2,0,0]} />
+  </BarChart>
+</ResponsiveContainer>`;
+
+const codeDataLabels = `// Colunas com rótulo de valor acima de cada barra
+<ResponsiveContainer width="100%" height={320}>
+  <BarChart data={data}>
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="name" />
+    <YAxis />
+    <Tooltip />
+    <Bar dataKey="valor" fill="hsl(var(--primary))" radius={[4,4,0,0]}
+      label={{ position: "top", fontSize: 11, fill: "hsl(var(--foreground))" }} />
+  </BarChart>
+</ResponsiveContainer>`;
+
+const codeStackedColumn = `// Colunas empilhadas com labels internos
+<ResponsiveContainer width="100%" height={320}>
+  <BarChart data={data}>
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="name" />
+    <YAxis />
+    <Tooltip />
+    <Legend />
+    <Bar dataKey="produto_a" name="iPhone 16" stackId="a"
+      fill="hsl(var(--success))"
+      label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
+    <Bar dataKey="produto_b" name="iPhone 16 Pro" stackId="a"
+      fill="hsl(var(--primary))"
+      label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
+    <Bar dataKey="produto_c" name="iPhone 15" stackId="a"
+      fill="hsl(var(--info))" radius={[4,4,0,0]}
+      label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
+  </BarChart>
+</ResponsiveContainer>`;
+
+const codeStacked100 = `// Colunas 100% empilhadas (valores em %)
+<ResponsiveContainer width="100%" height={320}>
+  <BarChart data={data}>
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="name" />
+    <YAxis tickFormatter={(v) => \`\${v}%\`} />
+    <Tooltip formatter={(value) => \`\${value}%\`} />
+    <Legend />
+    <Bar dataKey="produto_a" name="iPhone 16" stackId="a"
+      fill="hsl(var(--success))"
+      label={{ position: "inside", fontSize: 10, fill: "#fff",
+        formatter: (v) => \`\${v}%\` }} />
+    <Bar dataKey="produto_b" name="iPhone 16 Pro" stackId="a"
+      fill="hsl(var(--primary))"
+      label={{ position: "inside", fontSize: 10, fill: "#fff",
+        formatter: (v) => \`\${v}%\` }} />
+    <Bar dataKey="produto_c" name="iPhone 15" stackId="a"
+      fill="hsl(var(--info))" radius={[4,4,0,0]}
+      label={{ position: "inside", fontSize: 10, fill: "#fff",
+        formatter: (v) => \`\${v}%\` }} />
+  </BarChart>
+</ResponsiveContainer>`;
+
+const codeGroupedStacked = `// Colunas agrupadas + empilhadas
+<ResponsiveContainer width="100%" height={320}>
+  <BarChart data={data}>
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="name" />
+    <YAxis />
+    <Tooltip />
+    <Legend />
+    <Bar dataKey="q1" name="Q1" stackId="a" fill="hsl(var(--primary))" />
+    <Bar dataKey="q2" name="Q2" stackId="a" fill="hsl(var(--primary))"
+      fillOpacity={0.5} radius={[4,4,0,0]} />
+    <Bar dataKey="q3" name="Q3" stackId="b" fill="hsl(var(--secondary))" />
+    <Bar dataKey="q4" name="Q4" stackId="b" fill="hsl(var(--secondary))"
+      fillOpacity={0.5} radius={[4,4,0,0]} />
+  </BarChart>
+</ResponsiveContainer>`;
+
+const codeHorizontal = `// Barras horizontais — ideal para rankings
+<ResponsiveContainer width="100%" height={320}>
+  <BarChart data={data} layout="vertical">
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis type="number" />
+    <YAxis dataKey="name" type="category" width={120} />
+    <Tooltip />
+    <Bar dataKey="valor" fill="hsl(var(--primary))" radius={[0,4,4,0]}
+      label={{ position: "right", fontSize: 11 }} />
+  </BarChart>
+</ResponsiveContainer>`;
+
 /* ========== COPYABLE CODE BLOCKS ========== */
 const codeBasicArea = `import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
