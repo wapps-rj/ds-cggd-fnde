@@ -946,6 +946,34 @@ function SpinnerSection() {
   );
 }
 
+/* ==================== EMPTY STATE ==================== */
+function EmptyStateSection() {
+  return (
+    <ComponentPreview
+      title="Empty State"
+      description="Estado quando não há dados para exibir."
+      whenToUse={["Listas vazias", "Resultados de busca sem retorno", "Primeiro uso de funcionalidade"]}
+      code={`<div class="empty-state">
+  <svg>inbox</svg>
+  <h3>Nenhum resultado encontrado</h3>
+  <p>Tente ajustar os filtros ou realizar uma nova busca.</p>
+  <button>Nova busca</button>
+</div>`}
+    >
+      <div className="text-center py-12 border border-dashed border-border rounded-lg">
+        <Inbox size={48} className="mx-auto text-muted-foreground/50 mb-4" />
+        <h4 className="font-semibold mb-1">Nenhum resultado encontrado</h4>
+        <p className="text-sm text-muted-foreground mb-4 max-w-sm mx-auto">
+          Tente ajustar os filtros de busca ou verifique se os dados foram carregados corretamente.
+        </p>
+        <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium">
+          <Search size={14} /> Nova busca
+        </button>
+      </div>
+    </ComponentPreview>
+  );
+}
+
 /* ==================== DROPDOWN MENU ==================== */
 function DropdownMenuSection() {
   const [open, setOpen] = useState(false);
