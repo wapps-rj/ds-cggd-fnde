@@ -1,9 +1,10 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Home, Palette, Code2, Component, LayoutTemplate, Stamp,
   FileText, Accessibility, ChevronDown, ChevronRight, Search,
-  Menu, X, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon
+  Menu, X, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon,
+  SearchX
 } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 
