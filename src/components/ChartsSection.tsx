@@ -773,7 +773,7 @@ export default function ChartsSection() {
         whenToUse={["Comparar proporções relativas", "Market share por período"]}
         whenNotToUse={["Valores absolutos são mais importantes", "Poucas categorias sem variação significativa"]}
       >
-        <ChartCard title="100% Stacked Column Chart">
+        <ChartCard title="100% Empilhadas — Programas FNDE">
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={stacked100Data}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
@@ -781,9 +781,9 @@ export default function ChartsSection() {
               <YAxis className="text-xs fill-muted-foreground" tickFormatter={(v) => `${v}%`} />
               <Tooltip contentStyle={tooltipStyle} formatter={(value: number) => `${value}%`} />
               <Legend />
-              <Bar dataKey="produto_a" name="iPhone 16" stackId="a" fill="hsl(var(--success))" label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
-              <Bar dataKey="produto_b" name="iPhone 16 Pro" stackId="a" fill="hsl(var(--primary))" label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
-              <Bar dataKey="produto_c" name="iPhone 15" stackId="a" fill="hsl(var(--info))" radius={[4, 4, 0, 0]} label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
+              <Bar dataKey="produto_a" name="PNAE" stackId="a" fill="hsl(var(--success))" label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
+              <Bar dataKey="produto_b" name="PNATE" stackId="a" fill="hsl(var(--primary))" label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
+              <Bar dataKey="produto_c" name="PDDE" stackId="a" fill="hsl(var(--info))" radius={[4, 4, 0, 0]} label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
