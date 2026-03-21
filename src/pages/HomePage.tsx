@@ -1,18 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import {
   Palette, Code2, Component, LayoutTemplate, Stamp, FileText,
-  Accessibility, ArrowRight, BookOpen, Users, Shield, Lightbulb
+  Accessibility, ArrowRight, BookOpen, Users, Shield, Lightbulb,
+  Sun, Moon
 } from "lucide-react";
 import { PageHeader } from "@/components/DSComponents";
 
 const sections = [
-  { icon: <Palette size={24} />, title: "Fundamentos", desc: "Tipografia, cores, iconografia, grid e espaçamento", path: "/fundamentos", color: "bg-fnde-blue-50 text-fnde-blue" },
-  { icon: <Code2 size={24} />, title: "Tokens", desc: "CSS Custom Properties documentados e prontos para uso", path: "/tokens", color: "bg-fnde-orange-50 text-fnde-orange" },
-  { icon: <Component size={24} />, title: "Componentes", desc: "Botões, inputs, cards, tabelas, modais e mais", path: "/componentes", color: "bg-fnde-blue-50 text-fnde-blue" },
-  { icon: <LayoutTemplate size={24} />, title: "Templates", desc: "Padrões de página: dashboard, listagem, formulário", path: "/templates", color: "bg-fnde-orange-50 text-fnde-orange" },
-  { icon: <Stamp size={24} />, title: "Marca FNDE", desc: "Logo, identidade visual, zona de segurança e aplicações", path: "/marca", color: "bg-fnde-blue-50 text-fnde-blue" },
-  { icon: <FileText size={24} />, title: "Conteúdo", desc: "Voz da marca, tom de voz, boas práticas de escrita", path: "/conteudo", color: "bg-fnde-orange-50 text-fnde-orange" },
-  { icon: <Accessibility size={24} />, title: "Acessibilidade", desc: "Contraste, navegação por teclado, ARIA, foco visível", path: "/acessibilidade", color: "bg-fnde-blue-50 text-fnde-blue" },
+  { icon: <Palette size={24} />, title: "Fundamentos", desc: "Tipografia, cores, iconografia, grid, espaçamento e princípios visuais", path: "/fundamentos" },
+  { icon: <Code2 size={24} />, title: "Tokens", desc: "CSS Custom Properties documentados e prontos para uso em light e dark mode", path: "/tokens" },
+  { icon: <Component size={24} />, title: "Componentes", desc: "Botões, inputs, cards, tabelas, modais e mais de 20 componentes", path: "/componentes" },
+  { icon: <LayoutTemplate size={24} />, title: "Templates", desc: "Padrões de página: dashboard, listagem, formulário e autenticação", path: "/templates" },
+  { icon: <Stamp size={24} />, title: "Marca FNDE", desc: "Logo, identidade visual, zona de segurança e aplicações da marca", path: "/marca" },
+  { icon: <FileText size={24} />, title: "Conteúdo", desc: "Voz da marca, tom de voz, boas práticas de escrita e microcopy", path: "/conteudo" },
+  { icon: <Accessibility size={24} />, title: "Acessibilidade", desc: "Contraste, navegação por teclado, ARIA, foco visível e semântica", path: "/acessibilidade" },
 ];
 
 const principles = [
@@ -41,22 +42,30 @@ export default function HomePage() {
         </h2>
         <p className="opacity-80 max-w-2xl leading-relaxed mb-6">
           Este Design System serve como referência de UI, biblioteca de padrões e guia de implementação para a 
-          padronização visual e técnica de produtos digitais do FNDE. Construído com base no Padrão Digital de 
-          Governo (gov.br) e na identidade visual oficial do FNDE.
+          padronização visual e técnica de produtos digitais do FNDE. Inclui suporte completo a modo claro e escuro.
         </p>
         <div className="flex flex-wrap gap-3">
-          <button
-            onClick={() => navigate("/fundamentos")}
-            className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-4 py-2 rounded font-medium text-sm hover:opacity-90 transition-opacity"
-          >
+          <button onClick={() => navigate("/fundamentos")}
+            className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-4 py-2 rounded font-medium text-sm hover:opacity-90 transition-opacity">
             Começar <ArrowRight size={16} />
           </button>
-          <button
-            onClick={() => navigate("/componentes")}
-            className="inline-flex items-center gap-2 bg-primary-foreground/10 border border-primary-foreground/20 text-primary-foreground px-4 py-2 rounded font-medium text-sm hover:bg-primary-foreground/20 transition-colors"
-          >
+          <button onClick={() => navigate("/componentes")}
+            className="inline-flex items-center gap-2 bg-primary-foreground/10 border border-primary-foreground/20 text-primary-foreground px-4 py-2 rounded font-medium text-sm hover:bg-primary-foreground/20 transition-colors">
             Ver componentes
           </button>
+        </div>
+      </div>
+
+      {/* Dark/Light highlight */}
+      <div className="fnde-card mb-10 flex items-center gap-4">
+        <div className="flex items-center gap-2 text-primary">
+          <Sun size={20} />
+          <span className="text-sm font-medium">/</span>
+          <Moon size={20} />
+        </div>
+        <div>
+          <h3 className="font-semibold text-sm">Suporte a Dark Mode</h3>
+          <p className="text-xs text-muted-foreground">Todos os tokens, componentes e templates são compatíveis com modo claro e escuro. Use o toggle no header para alternar.</p>
         </div>
       </div>
 
@@ -65,7 +74,7 @@ export default function HomePage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
         {principles.map((p) => (
           <div key={p.title} className="fnde-card">
-            <div className="w-10 h-10 rounded-lg bg-fnde-blue-50 text-fnde-blue flex items-center justify-center mb-3">
+            <div className="w-10 h-10 rounded-lg bg-accent text-accent-foreground flex items-center justify-center mb-3">
               {p.icon}
             </div>
             <h3 className="font-semibold text-sm mb-1">{p.title}</h3>
@@ -78,12 +87,8 @@ export default function HomePage() {
       <h2 className="text-xl font-bold mb-4">Navegue pelo sistema</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
         {sections.map((s) => (
-          <button
-            key={s.path}
-            onClick={() => navigate(s.path)}
-            className="fnde-card-hover text-left group"
-          >
-            <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3 ${s.color}`}>
+          <button key={s.path} onClick={() => navigate(s.path)} className="fnde-card-hover text-left group">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 bg-accent text-accent-foreground">
               {s.icon}
             </div>
             <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{s.title}</h3>
@@ -109,8 +114,8 @@ export default function HomePage() {
             <p className="text-xs text-muted-foreground">Templates</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-secondary">AA</p>
-            <p className="text-xs text-muted-foreground">Contraste WCAG</p>
+            <p className="text-2xl font-bold text-secondary">2</p>
+            <p className="text-xs text-muted-foreground">Temas (Light/Dark)</p>
           </div>
         </div>
       </div>

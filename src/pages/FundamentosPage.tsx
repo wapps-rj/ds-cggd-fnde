@@ -4,15 +4,15 @@ import {
   Heart, Home, Mail, Search, Settings, Star, User, AlertTriangle, Info
 } from "lucide-react";
 
-const colorScale = (name: string, colors: { label: string; hex: string; token: string }[]) => (
+const colorScale = (name: string, colors: { label: string; token: string }[]) => (
   <div className="mb-6">
     <h4 className="text-sm font-semibold mb-2">{name}</h4>
     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
       {colors.map(c => (
         <div key={c.token} className="text-center">
-          <div className="h-12 rounded-lg border border-border mb-1" style={{ backgroundColor: c.hex }} />
+          <div className={`h-12 rounded-lg border border-border mb-1 bg-${c.token}`} style={{ backgroundColor: `hsl(var(--${c.token}))` }} />
           <p className="text-[10px] font-medium">{c.label}</p>
-          <p className="text-[10px] text-muted-foreground">{c.hex}</p>
+          <p className="text-[10px] text-muted-foreground">{c.token}</p>
         </div>
       ))}
     </div>
@@ -24,7 +24,7 @@ export default function FundamentosPage() {
     <div>
       <PageHeader
         title="Fundamentos"
-        description="Os alicerces visuais e técnicos do Design System FNDE. Estas diretrizes garantem consistência e acessibilidade em todos os produtos digitais."
+        description="Os alicerces visuais e técnicos do Design System FNDE. Estas diretrizes garantem consistência e acessibilidade em todos os produtos digitais, em ambos os modos claro e escuro."
       />
 
       {/* Tipografia */}
@@ -63,7 +63,7 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-/* Tokens de tipografia */
+/* Tokens de tipografia (funcionam em ambos os temas) */
 --text-xs: 0.75rem;    /* 12px - Legendas */
 --text-sm: 0.875rem;   /* 14px - Labels */
 --text-base: 1rem;     /* 16px - Corpo */
@@ -76,68 +76,35 @@ body {
       />
 
       {/* Cores */}
-      <SectionHeader id="cores" title="Cores" description="Paleta institucional baseada no Manual da Marca FNDE 2024, com cores derivadas para interfaces digitais." />
+      <SectionHeader id="cores" title="Cores" description="Paleta institucional baseada no Manual da Marca FNDE 2024. No dark mode, as cores são ajustadas para manter contraste e legibilidade." />
 
       <div className="fnde-card mb-6">
         <h4 className="text-sm font-semibold mb-4">Paleta principal FNDE</h4>
         <div className="flex flex-wrap gap-4 mb-6">
           <div className="flex-1 min-w-[200px]">
-            <div className="h-24 rounded-lg mb-2" style={{ backgroundColor: "#0D3857" }} />
-            <p className="font-semibold text-sm">Azul FNDE</p>
-            <p className="text-xs text-muted-foreground">#0D3857 · HSL(207, 63%, 20%)</p>
+            <div className="h-24 rounded-lg mb-2 bg-primary" />
+            <p className="font-semibold text-sm">Azul FNDE (Primary)</p>
+            <p className="text-xs text-muted-foreground">Adapta-se automaticamente ao tema</p>
           </div>
           <div className="flex-1 min-w-[200px]">
-            <div className="h-24 rounded-lg mb-2" style={{ backgroundColor: "#D98217" }} />
-            <p className="font-semibold text-sm">Laranja FNDE</p>
-            <p className="text-xs text-muted-foreground">#D98217 · HSL(34, 82%, 47%)</p>
+            <div className="h-24 rounded-lg mb-2 bg-secondary" />
+            <p className="font-semibold text-sm">Laranja FNDE (Secondary)</p>
+            <p className="text-xs text-muted-foreground">Adapta-se automaticamente ao tema</p>
           </div>
         </div>
 
-        {colorScale("Escala Azul FNDE", [
-          { label: "50", hex: "#EDF4F8", token: "--fnde-blue-50" },
-          { label: "100", hex: "#D5E6F0", token: "--fnde-blue-100" },
-          { label: "200", hex: "#A3C8DE", token: "--fnde-blue-200" },
-          { label: "300", hex: "#4C8DB8", token: "--fnde-blue-300" },
-          { label: "400", hex: "#1B6091", token: "--fnde-blue-400" },
-          { label: "500", hex: "#0D3857", token: "--fnde-blue-500" },
-          { label: "600", hex: "#092A42", token: "--fnde-blue-600" },
-          { label: "700", hex: "#051B2D", token: "--fnde-blue-700" },
-        ])}
-
-        {colorScale("Escala Laranja FNDE", [
-          { label: "50", hex: "#FEF6EA", token: "--fnde-orange-50" },
-          { label: "100", hex: "#FAE4C0", token: "--fnde-orange-100" },
-          { label: "200", hex: "#EDBD6E", token: "--fnde-orange-200" },
-          { label: "300", hex: "#E09A2E", token: "--fnde-orange-300" },
-          { label: "400", hex: "#D98217", token: "--fnde-orange-400" },
-          { label: "500", hex: "#B06B12", token: "--fnde-orange-500" },
-          { label: "600", hex: "#7A4A0D", token: "--fnde-orange-600" },
-        ])}
-
-        {colorScale("Paleta complementar (do manual)", [
-          { label: "Azul Claro", hex: "#B4D7F0", token: "comp-blue-light" },
-          { label: "Azul Médio", hex: "#4C9CD6", token: "comp-blue-mid" },
-          { label: "Amarelo", hex: "#FDCB46", token: "comp-yellow" },
-          { label: "Ouro", hex: "#D9A718", token: "comp-gold" },
-          { label: "Vermelho", hex: "#D92E18", token: "comp-red" },
-          { label: "Índigo", hex: "#4518D9", token: "comp-indigo" },
-          { label: "Lima", hex: "#DCD41B", token: "comp-lime" },
-        ])}
-      </div>
-
-      <div className="fnde-card mb-6">
-        <h4 className="text-sm font-semibold mb-4">Cores semânticas</h4>
+        <h4 className="text-sm font-semibold mb-3">Cores semânticas (adaptativas)</h4>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: "Success", bg: "#3A8F5C", fgBg: "#E8F5E9" },
-            { label: "Warning", bg: "#D98217", fgBg: "#FFF8E1" },
-            { label: "Error", bg: "#D92E18", fgBg: "#FFEBEE" },
-            { label: "Info", bg: "#4C9CD6", fgBg: "#E3F2FD" },
+            { label: "Success", cls: "bg-success" },
+            { label: "Warning", cls: "bg-warning" },
+            { label: "Error", cls: "bg-error" },
+            { label: "Info", cls: "bg-info" },
           ].map(c => (
             <div key={c.label} className="text-center">
               <div className="flex gap-1 mb-1">
-                <div className="flex-1 h-10 rounded-l-lg" style={{ backgroundColor: c.bg }} />
-                <div className="flex-1 h-10 rounded-r-lg border border-border" style={{ backgroundColor: c.fgBg }} />
+                <div className={`flex-1 h-10 rounded-l-lg ${c.cls}`} />
+                <div className={`flex-1 h-10 rounded-r-lg border border-border`} style={{ backgroundColor: `hsl(var(--${c.label.toLowerCase()}-bg))` }} />
               </div>
               <p className="text-xs font-medium">{c.label}</p>
             </div>
@@ -145,8 +112,25 @@ body {
         </div>
       </div>
 
+      <div className="fnde-card mb-6">
+        <h4 className="text-sm font-semibold mb-3">Superfícies e fundos</h4>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { label: "Background", cls: "bg-background border" },
+            { label: "Card", cls: "bg-card border" },
+            { label: "Muted", cls: "bg-muted" },
+            { label: "Accent", cls: "bg-accent" },
+          ].map(s => (
+            <div key={s.label} className="text-center">
+              <div className={`h-12 rounded-lg mb-1 ${s.cls} border-border`} />
+              <p className="text-xs font-medium">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Iconografia */}
-      <SectionHeader id="iconografia" title="Iconografia" description="O sistema utiliza Lucide como biblioteca de ícones. São ícones open-source, com traço consistente e boa legibilidade." />
+      <SectionHeader id="iconografia" title="Iconografia" description="O sistema utiliza Lucide como biblioteca de ícones. São ícones open-source, com traço consistente e boa legibilidade em ambos os temas." />
 
       <div className="fnde-card mb-6">
         <h4 className="text-sm font-semibold mb-4">Tamanhos padrão</h4>
@@ -238,7 +222,7 @@ body {
       </div>
 
       {/* Elevation */}
-      <SectionHeader id="elevacao" title="Elevação e Sombras" description="Níveis de elevação para criar hierarquia visual e profundidade." />
+      <SectionHeader id="elevacao" title="Elevação e Sombras" description="Níveis de elevação para criar hierarquia visual e profundidade. As sombras se adaptam ao tema." />
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
         {[
@@ -297,7 +281,7 @@ body {
         </div>
         <h4 className="text-sm font-semibold mb-2">Easings</h4>
         <p className="text-xs text-muted-foreground">
-          Use <code>ease-out</code> para entradas, <code>ease-in</code> para saídas e <code>ease-in-out</code> para transições contínuas.
+          Use <code className="bg-muted px-1 rounded">ease-out</code> para entradas, <code className="bg-muted px-1 rounded">ease-in</code> para saídas e <code className="bg-muted px-1 rounded">ease-in-out</code> para transições contínuas.
         </p>
       </div>
 
