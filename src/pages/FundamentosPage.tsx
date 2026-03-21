@@ -79,56 +79,7 @@ body {
       {/* Cores */}
       <SectionHeader id="cores" title="Cores" description="Paleta institucional baseada no Manual da Marca FNDE 2024. No dark mode, as cores são ajustadas para manter contraste e legibilidade." />
 
-      <div className="fnde-card mb-6">
-        <h4 className="text-sm font-semibold mb-4">Paleta principal FNDE</h4>
-        <div className="flex flex-wrap gap-4 mb-6">
-          <div className="flex-1 min-w-[200px]">
-            <div className="h-24 rounded-lg mb-2 bg-primary" />
-            <p className="font-semibold text-sm">Azul FNDE (Primary)</p>
-            <p className="text-xs text-muted-foreground">Adapta-se automaticamente ao tema</p>
-          </div>
-          <div className="flex-1 min-w-[200px]">
-            <div className="h-24 rounded-lg mb-2 bg-secondary" />
-            <p className="font-semibold text-sm">Laranja FNDE (Secondary)</p>
-            <p className="text-xs text-muted-foreground">Adapta-se automaticamente ao tema</p>
-          </div>
-        </div>
-
-        <h4 className="text-sm font-semibold mb-3">Cores semânticas (adaptativas)</h4>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            { label: "Success", cls: "bg-success" },
-            { label: "Warning", cls: "bg-warning" },
-            { label: "Error", cls: "bg-error" },
-            { label: "Info", cls: "bg-info" },
-          ].map(c => (
-            <div key={c.label} className="text-center">
-              <div className="flex gap-1 mb-1">
-                <div className={`flex-1 h-10 rounded-l-lg ${c.cls}`} />
-                <div className={`flex-1 h-10 rounded-r-lg border border-border`} style={{ backgroundColor: `hsl(var(--${c.label.toLowerCase()}-bg))` }} />
-              </div>
-              <p className="text-xs font-medium">{c.label}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="fnde-card mb-6">
-        <h4 className="text-sm font-semibold mb-3">Superfícies e fundos</h4>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            { label: "Background", cls: "bg-background border" },
-            { label: "Card", cls: "bg-card border" },
-            { label: "Muted", cls: "bg-muted" },
-            { label: "Accent", cls: "bg-accent" },
-          ].map(s => (
-            <div key={s.label} className="text-center">
-              <div className={`h-12 rounded-lg mb-1 ${s.cls} border-border`} />
-              <p className="text-xs font-medium">{s.label}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ColorSection />
 
       {/* Iconografia */}
       <SectionHeader id="iconografia" title="Iconografia" description="O sistema utiliza Lucide como biblioteca de ícones. São ícones open-source, com traço consistente e boa legibilidade em ambos os temas." />
