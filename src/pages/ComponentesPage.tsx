@@ -128,6 +128,9 @@ export default function ComponentesPage() {
       {/* MÉTRICAS */}
       <SectionHeader id="metricas" title="Métricas" description="Painel completo de métricas para dashboards: cards com gráficos circulares, sparklines, barras de variação, tabelas trimestrais e cards de resumo com ícones." />
       <MetricsSection />
+
+      {/* GRÁFICOS */}
+      <ChartsSection />
     </div>
   );
 }
