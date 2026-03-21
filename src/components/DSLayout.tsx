@@ -267,7 +267,7 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="h-14 bg-primary text-primary-foreground flex items-center px-4 gap-3 fixed top-0 left-0 right-0 z-50">
+      <header className="h-14 text-primary-foreground flex items-center px-4 gap-3 fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: 'hsl(var(--header-background))' }}>
         <button
           className="lg:hidden p-1.5 rounded hover:bg-primary-foreground/10 transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
