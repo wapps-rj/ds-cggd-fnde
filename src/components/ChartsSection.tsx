@@ -142,8 +142,8 @@ const tooltipStyle = { background: "hsl(var(--card))", border: "1px solid hsl(va
 const codeBasicColumn = `import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "Fev", lucro: 44, receita: 76, fluxo: 35 },
-  { name: "Mar", lucro: 55, receita: 85, fluxo: 41 },
+  { name: "Fev", pnae: 44, pnate: 76, pdde: 35 },
+  { name: "Mar", pnae: 55, pnate: 85, pdde: 41 },
   // ...
 ];
 
@@ -151,12 +151,12 @@ const data = [
   <BarChart data={data}>
     <CartesianGrid strokeDasharray="3 3" />
     <XAxis dataKey="name" />
-    <YAxis label={{ value: "$ (milhares)", angle: -90, position: "insideLeft" }} />
+    <YAxis label={{ value: "R$ (milhões)", angle: -90, position: "insideLeft" }} />
     <Tooltip />
     <Legend />
-    <Bar dataKey="lucro" name="Net Profit" fill="hsl(var(--success))" radius={[2,2,0,0]} />
-    <Bar dataKey="receita" name="Revenue" fill="hsl(var(--primary))" radius={[2,2,0,0]} />
-    <Bar dataKey="fluxo" name="Free Cash Flow" fill="hsl(var(--info))" radius={[2,2,0,0]} />
+    <Bar dataKey="pnae" name="PNAE" fill="hsl(var(--success))" radius={[2,2,0,0]} />
+    <Bar dataKey="pnate" name="PNATE" fill="hsl(var(--primary))" radius={[2,2,0,0]} />
+    <Bar dataKey="pdde" name="PDDE" fill="hsl(var(--info))" radius={[2,2,0,0]} />
   </BarChart>
 </ResponsiveContainer>`;
 
