@@ -38,7 +38,7 @@ export default function HomePage() {
       <div className="rounded-xl bg-primary text-primary-foreground p-8 md:p-10 mb-10">
         <p className="text-sm font-medium opacity-80 mb-2">CGGD · Coordenação Geral de Governança</p>
         <h2 className="text-2xl md:text-3xl font-bold mb-3">
-          Dedicação total por uma educação em contínua evolução
+          Sistema de padrões para as aplicações do CGGD / FNDE
         </h2>
         <p className="opacity-80 max-w-2xl leading-relaxed mb-6">
           Este Design System serve como referência de UI, biblioteca de padrões e guia de implementação para a 
