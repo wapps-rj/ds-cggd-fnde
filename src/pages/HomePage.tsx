@@ -41,8 +41,7 @@ export default function HomePage() {
           Sistema de padrões para as aplicações do CGGD / FNDE
         </h2>
         <p className="opacity-80 max-w-2xl leading-relaxed mb-6">
-          Este Design System serve como referência de UI, biblioteca de padrões e guia de implementação para a 
-          padronização visual e técnica de produtos digitais do FNDE. Inclui suporte completo a modo claro e escuro.
+          Este Design System estabelece padrões de UI e implementação para os produtos digitais do FNDE. Desenvolvido em vanilla (sem frameworks ou bibliotecas externas), assegura compatibilidade, flexibilidade e reutilização em qualquer stack ou aplicações geradas por IA.
         </p>
         <div className="flex flex-wrap gap-3">
           <button onClick={() => navigate("/fundamentos")}
