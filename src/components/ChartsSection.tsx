@@ -699,22 +699,22 @@ export default function ChartsSection() {
       {/* 11. Basic Column */}
       <ComponentPreview
         title="Colunas Básicas (Múltiplas séries)"
-        description="Barras agrupadas para comparar múltiplas métricas por período, como lucro, receita e fluxo de caixa."
+        description="Barras agrupadas para comparar investimentos por programa FNDE em cada período."
         code={codeBasicColumn}
-        whenToUse={["Comparar 2-3 métricas por categoria", "Análise financeira por período"]}
+        whenToUse={["Comparar 2-3 programas por período", "Análise de repasses por programa"]}
         whenNotToUse={["Mais de 4 séries (fica poluído)", "Dados contínuos (use linha/área)"]}
       >
-        <ChartCard title="Basic Column Charts">
+        <ChartCard title="Colunas Básicas — Programas FNDE">
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={basicColumnData}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
               <XAxis dataKey="name" className="text-xs fill-muted-foreground" />
-              <YAxis className="text-xs fill-muted-foreground" label={{ value: "$ (milhares)", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "hsl(var(--muted-foreground))" } }} />
+              <YAxis className="text-xs fill-muted-foreground" label={{ value: "R$ (milhões)", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "hsl(var(--muted-foreground))" } }} />
               <Tooltip contentStyle={tooltipStyle} />
               <Legend />
-              <Bar dataKey="lucro" name="Net Profit" fill="hsl(var(--success))" radius={[2, 2, 0, 0]} />
-              <Bar dataKey="receita" name="Revenue" fill="hsl(var(--primary))" radius={[2, 2, 0, 0]} />
-              <Bar dataKey="fluxo" name="Free Cash Flow" fill="hsl(var(--info))" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="pnae" name="PNAE" fill="hsl(var(--success))" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="pnate" name="PNATE" fill="hsl(var(--primary))" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="pdde" name="PDDE" fill="hsl(var(--info))" radius={[2, 2, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
