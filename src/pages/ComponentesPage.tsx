@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { PageHeader, SectionHeader, ComponentPreview, CodeBlock } from "@/components/DSComponents";
+import ChartsSection from "@/components/ChartsSection";
 import {
   AlertTriangle, Check, ChevronDown, ChevronRight, Copy, Download,
   Eye, Home, Info, Loader2, Mail, Search, Upload, X, FileText, Inbox,
@@ -127,6 +128,9 @@ export default function ComponentesPage() {
       {/* MÉTRICAS */}
       <SectionHeader id="metricas" title="Métricas" description="Painel completo de métricas para dashboards: cards com gráficos circulares, sparklines, barras de variação, tabelas trimestrais e cards de resumo com ícones." />
       <MetricsSection />
+
+      {/* GRÁFICOS */}
+      <ChartsSection />
     </div>
   );
 }

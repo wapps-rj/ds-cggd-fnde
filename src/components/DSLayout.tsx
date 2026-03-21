@@ -71,6 +71,7 @@ const navItems: NavItem[] = [
       { label: "Lista Descritiva", path: "/componentes#lista-descritiva" },
       { label: "Cards de Estatísticas", path: "/componentes#stats" },
       { label: "Métricas", path: "/componentes#metricas" },
+      { label: "Gráficos", path: "/componentes#graficos" },
     ],
   },
   { label: "Templates", path: "/templates", icon: <LayoutTemplate size={18} /> },
