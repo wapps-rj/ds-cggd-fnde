@@ -116,12 +116,56 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
 
   const isActive = (path: string) => location.pathname === path.split("#")[0];
 
-  const filteredItems = searchQuery
+  const query = searchQuery.toLowerCase().trim();
+
+  const filteredItems = query
     ? navItems.filter(item =>
-        item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.children?.some(c => c.label.toLowerCase().includes(searchQuery.toLowerCase()))
+        item.label.toLowerCase().includes(query) ||
+        item.children?.some(c => c.label.toLowerCase().includes(query))
       )
     : navItems;
+
+  // Auto-expand parents that have matching children
+  useEffect(() => {
+    if (!query) return;
+    const toExpand: Record<string, boolean> = {};
+    navItems.forEach(item => {
+      if (item.children?.some(c => c.label.toLowerCase().includes(query))) {
+        toExpand[item.label] = true;
+      }
+    });
+    if (Object.keys(toExpand).length > 0) {
+      setExpanded(prev => ({ ...prev, ...toExpand }));
+    }
+  }, [query]);
+
+  // Collect all flat results for keyboard navigation
+  const flatResults = query
+    ? filteredItems.flatMap(item => {
+        const matches: { label: string; path: string }[] = [];
+        if (item.label.toLowerCase().includes(query)) matches.push({ label: item.label, path: item.path });
+        item.children?.forEach(c => {
+          if (c.label.toLowerCase().includes(query)) matches.push({ label: c.label, path: c.path });
+        });
+        return matches;
+      })
+    : [];
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (flatResults.length > 0) {
+        handleNav(flatResults[0].path);
+        setSearchQuery("");
+      } else if (query) {
+        setShowNoResults(true);
+      }
+    }
+    if (e.key === "Escape") {
+      setSearchQuery("");
+      searchInputRef.current?.blur();
+    }
+  };
 
   const renderNav = (isCollapsed: boolean) => (
     <>
