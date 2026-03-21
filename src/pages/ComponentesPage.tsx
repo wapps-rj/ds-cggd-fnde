@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { PageHeader, SectionHeader, ComponentPreview, CodeBlock } from "@/components/DSComponents";
+import ChartsSection from "@/components/ChartsSection";
 import {
   AlertTriangle, Check, ChevronDown, ChevronRight, Copy, Download,
   Eye, Home, Info, Loader2, Mail, Search, Upload, X, FileText, Inbox,
