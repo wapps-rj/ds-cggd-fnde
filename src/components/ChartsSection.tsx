@@ -533,6 +533,147 @@ export default function ChartsSection() {
           </ResponsiveContainer>
         </ChartCard>
       </ComponentPreview>
+
+      {/* ===== COLUMN / BAR CHARTS ===== */}
+
+      {/* 11. Basic Column */}
+      <ComponentPreview
+        title="Colunas Básicas (Múltiplas séries)"
+        description="Barras agrupadas para comparar múltiplas métricas por período, como lucro, receita e fluxo de caixa."
+        code={codeBasicColumn}
+        whenToUse={["Comparar 2-3 métricas por categoria", "Análise financeira por período"]}
+        whenNotToUse={["Mais de 4 séries (fica poluído)", "Dados contínuos (use linha/área)"]}
+      >
+        <ChartCard title="Basic Column Charts">
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={basicColumnData}>
+              <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+              <XAxis dataKey="name" className="text-xs fill-muted-foreground" />
+              <YAxis className="text-xs fill-muted-foreground" label={{ value: "$ (milhares)", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "hsl(var(--muted-foreground))" } }} />
+              <Tooltip contentStyle={tooltipStyle} />
+              <Legend />
+              <Bar dataKey="lucro" name="Net Profit" fill="hsl(var(--success))" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="receita" name="Revenue" fill="hsl(var(--primary))" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="fluxo" name="Free Cash Flow" fill="hsl(var(--info))" radius={[2, 2, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+      </ComponentPreview>
+
+      {/* 12. Column with Data Labels */}
+      <ComponentPreview
+        title="Colunas com Data Labels"
+        description="Gráfico de barras com rótulos de valor exibidos acima de cada coluna para leitura direta."
+        code={codeDataLabels}
+        whenToUse={["Relatórios impressos ou exportados", "Quando o valor exato é mais importante que a tendência"]}
+        whenNotToUse={["Muitas barras (labels se sobrepõem)", "Visualizações interativas com tooltip"]}
+      >
+        <ChartCard title="Column Chart with Datalabels">
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={dataLabelsData}>
+              <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+              <XAxis dataKey="name" className="text-xs fill-muted-foreground" />
+              <YAxis className="text-xs fill-muted-foreground" />
+              <Tooltip contentStyle={tooltipStyle} />
+              <Bar dataKey="valor" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} label={{ position: "top", fontSize: 11, fill: "hsl(var(--foreground))" }} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+      </ComponentPreview>
+
+      {/* 13. Stacked Column */}
+      <ComponentPreview
+        title="Colunas Empilhadas (Stacked)"
+        description="Barras empilhadas para exibir composição total por período com detalhamento por categoria."
+        code={codeStackedColumn}
+        whenToUse={["Exibir composição de um total por período", "Vendas por produto/trimestre"]}
+        whenNotToUse={["Comparar valores individuais entre categorias", "Quando a contribuição de cada parte é pequena"]}
+      >
+        <ChartCard title="Stacked Column Charts">
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={stackedColumnData}>
+              <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+              <XAxis dataKey="name" className="text-xs fill-muted-foreground" />
+              <YAxis className="text-xs fill-muted-foreground" />
+              <Tooltip contentStyle={tooltipStyle} />
+              <Legend />
+              <Bar dataKey="produto_a" name="iPhone 16" stackId="a" fill="hsl(var(--success))" label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
+              <Bar dataKey="produto_b" name="iPhone 16 Pro" stackId="a" fill="hsl(var(--primary))" label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
+              <Bar dataKey="produto_c" name="iPhone 15" stackId="a" fill="hsl(var(--info))" radius={[4, 4, 0, 0]} label={{ position: "inside", fontSize: 10, fill: "#fff" }} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+      </ComponentPreview>
+
+      {/* 14. 100% Stacked */}
+      <ComponentPreview
+        title="Colunas 100% Empilhadas"
+        description="Cada barra representa 100% da composição, ideal para comparar proporções relativas entre períodos."
+        code={codeStacked100}
+        whenToUse={["Comparar proporções relativas", "Market share por período"]}
+        whenNotToUse={["Valores absolutos são mais importantes", "Poucas categorias sem variação significativa"]}
+      >
+        <ChartCard title="100% Stacked Column Chart">
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={stacked100Data}>
+              <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+              <XAxis dataKey="name" className="text-xs fill-muted-foreground" />
+              <YAxis className="text-xs fill-muted-foreground" tickFormatter={(v) => `${v}%`} />
+              <Tooltip contentStyle={tooltipStyle} formatter={(value: number) => `${value}%`} />
+              <Legend />
+              <Bar dataKey="produto_a" name="iPhone 16" stackId="a" fill="hsl(var(--success))" label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
+              <Bar dataKey="produto_b" name="iPhone 16 Pro" stackId="a" fill="hsl(var(--primary))" label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
+              <Bar dataKey="produto_c" name="iPhone 15" stackId="a" fill="hsl(var(--info))" radius={[4, 4, 0, 0]} label={{ position: "inside", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+      </ComponentPreview>
+
+      {/* 15. Grouped + Stacked */}
+      <ComponentPreview
+        title="Colunas Agrupadas + Empilhadas"
+        description="Combinação de barras agrupadas com empilhamento para análises multidimensionais complexas."
+        code={codeGroupedStacked}
+        whenToUse={["Análise de múltiplas dimensões", "Comparar composições entre grupos"]}
+        whenNotToUse={["Dados simples", "Quando causa confusão visual"]}
+      >
+        <ChartCard title="Grouped Stacked Column Chart">
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={groupedStackedData}>
+              <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+              <XAxis dataKey="name" className="text-xs fill-muted-foreground" />
+              <YAxis className="text-xs fill-muted-foreground" />
+              <Tooltip contentStyle={tooltipStyle} />
+              <Legend />
+              <Bar dataKey="q1" name="Q1" stackId="a" fill="hsl(var(--primary))" />
+              <Bar dataKey="q2" name="Q2" stackId="a" fill="hsl(var(--primary))" fillOpacity={0.5} radius={[4, 4, 0, 0]} />
+              <Bar dataKey="q3" name="Q3" stackId="b" fill="hsl(var(--secondary))" />
+              <Bar dataKey="q4" name="Q4" stackId="b" fill="hsl(var(--secondary))" fillOpacity={0.5} radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+      </ComponentPreview>
+
+      {/* 16. Horizontal Bar */}
+      <ComponentPreview
+        title="Barras Horizontais"
+        description="Variação horizontal do gráfico de barras, ideal para nomes longos de categorias e rankings."
+        code={codeHorizontal}
+        whenToUse={["Rankings e classificações", "Categorias com nomes longos"]}
+        whenNotToUse={["Dados temporais (use vertical)", "Muitas categorias (> 10)"]}
+      >
+        <ChartCard title="Horizontal Bar Chart">
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={horizontalData} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+              <XAxis type="number" className="text-xs fill-muted-foreground" />
+              <YAxis dataKey="name" type="category" width={120} className="text-xs fill-muted-foreground" />
+              <Tooltip contentStyle={tooltipStyle} />
+              <Bar dataKey="valor" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} label={{ position: "right", fontSize: 11, fill: "hsl(var(--foreground))" }} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+      </ComponentPreview>
     </>
   );
 }
