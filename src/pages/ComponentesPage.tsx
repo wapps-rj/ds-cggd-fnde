@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { PageHeader, SectionHeader, ComponentPreview, CodeBlock } from "@/components/DSComponents";
 import {
   AlertTriangle, Check, ChevronDown, ChevronRight, Copy, Download,
   Eye, Home, Info, Loader2, Mail, Search, Upload, X, FileText, Inbox,
-  ArrowLeft, ArrowRight
+  ArrowLeft, ArrowRight, Calendar, Filter, TrendingUp, TrendingDown,
+  MoreVertical, Trash2, Edit, Share2, UploadCloud, File, CheckCircle2,
+  XCircle, Clock, Users, DollarSign, BarChart3, Activity, Minus
 } from "lucide-react";
 
 export default function ComponentesPage() {
