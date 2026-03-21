@@ -200,15 +200,15 @@ const codeStacked100 = `// Colunas 100% empilhadas (valores em %)
     <YAxis tickFormatter={(v) => \`\${v}%\`} />
     <Tooltip formatter={(value) => \`\${value}%\`} />
     <Legend />
-    <Bar dataKey="produto_a" name="iPhone 16" stackId="a"
+    <Bar dataKey="produto_a" name="PNAE" stackId="a"
       fill="hsl(var(--success))"
       label={{ position: "inside", fontSize: 10, fill: "#fff",
         formatter: (v) => \`\${v}%\` }} />
-    <Bar dataKey="produto_b" name="iPhone 16 Pro" stackId="a"
+    <Bar dataKey="produto_b" name="PNATE" stackId="a"
       fill="hsl(var(--primary))"
       label={{ position: "inside", fontSize: 10, fill: "#fff",
         formatter: (v) => \`\${v}%\` }} />
-    <Bar dataKey="produto_c" name="iPhone 15" stackId="a"
+    <Bar dataKey="produto_c" name="PDDE" stackId="a"
       fill="hsl(var(--info))" radius={[4,4,0,0]}
       label={{ position: "inside", fontSize: 10, fill: "#fff",
         formatter: (v) => \`\${v}%\` }} />
