@@ -1,5 +1,6 @@
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
 import ColorSection from "@/components/ColorSection";
+import GridSection from "@/components/GridSection";
 import {
   ArrowRight, Bell, Check, ChevronRight, Download, Eye,
   Heart, Home, Mail, Search, Settings, Star, User, AlertTriangle, Info
@@ -148,30 +149,9 @@ body {
       />
 
       {/* Grid */}
-      <SectionHeader id="grid" title="Grid e Espaçamento" description="Sistema de grid responsivo baseado em 12 colunas e escala de espaçamento consistente." />
+      <SectionHeader id="grid" title="Grid e Espaçamento" description="Sistema de grid responsivo com suporte a 16, 12, 8 e 4 colunas para desktop, tablet e mobile, com exemplos práticos para dashboards." />
 
-      <div className="fnde-card mb-6">
-        <h4 className="text-sm font-semibold mb-4">Escala de espaçamento</h4>
-        <div className="space-y-2">
-          {[
-            { token: "--space-1", value: "4px", rem: "0.25rem" },
-            { token: "--space-2", value: "8px", rem: "0.5rem" },
-            { token: "--space-3", value: "12px", rem: "0.75rem" },
-            { token: "--space-4", value: "16px", rem: "1rem" },
-            { token: "--space-6", value: "24px", rem: "1.5rem" },
-            { token: "--space-8", value: "32px", rem: "2rem" },
-            { token: "--space-10", value: "40px", rem: "2.5rem" },
-            { token: "--space-12", value: "48px", rem: "3rem" },
-            { token: "--space-16", value: "64px", rem: "4rem" },
-          ].map(s => (
-            <div key={s.token} className="flex items-center gap-3">
-              <code className="text-xs w-28 text-muted-foreground">{s.token}</code>
-              <div className="bg-primary/20 h-4 rounded" style={{ width: s.value }} />
-              <span className="text-xs text-muted-foreground">{s.value} ({s.rem})</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      <GridSection />
 
       {/* Elevation */}
       <SectionHeader id="elevacao" title="Elevação e Sombras" description="Níveis de elevação para criar hierarquia visual e profundidade. As sombras se adaptam ao tema." />
