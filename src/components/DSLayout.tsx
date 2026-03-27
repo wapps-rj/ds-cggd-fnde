@@ -78,6 +78,7 @@ const navItems: NavItem[] = [
     label: "Templates", path: "/templates", icon: <LayoutTemplate size={18} />,
     children: [
       { label: "Header FNDE", path: "/templates#header" },
+      { label: "Menu Lateral", path: "/templates#menu-lateral" },
       { label: "Modelos de Página", path: "/templates#templates-modelos" },
     ],
   },

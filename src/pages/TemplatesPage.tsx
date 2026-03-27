@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
 import { Menu, ChevronDown } from "lucide-react";
+import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import fndeLogo from "@/assets/marca-fnde-negativa.svg";
 
 /* ─── Header variant type ─── */
@@ -287,6 +288,16 @@ export default function TemplatesPage() {
             </ul>
           </div>
         </div>
+      </div>
+
+      {/* ═══ MENU LATERAL SECTION ═══ */}
+      <SectionHeader
+        id="menu-lateral"
+        title="Menu Lateral — Componente Final"
+        description="Menu de navegação lateral para complementar o botão de menu do header. Com ícones, subitens, busca e botão fechar."
+      />
+      <div className="mb-12">
+        <SidebarMenuSection />
       </div>
 
       {/* ═══ TEMPLATE CARDS (existing) ═══ */}
