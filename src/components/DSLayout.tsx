@@ -74,7 +74,13 @@ const navItems: NavItem[] = [
       { label: "Gráficos", path: "/componentes#graficos" },
     ],
   },
-  { label: "Templates", path: "/templates", icon: <LayoutTemplate size={18} /> },
+  {
+    label: "Templates", path: "/templates", icon: <LayoutTemplate size={18} />,
+    children: [
+      { label: "Header FNDE", path: "/templates#header" },
+      { label: "Modelos de Página", path: "/templates#templates-modelos" },
+    ],
+  },
   { label: "Marca FNDE", path: "/marca", icon: <Stamp size={18} /> },
   { label: "Conteúdo", path: "/conteudo", icon: <FileText size={18} /> },
   { label: "Acessibilidade", path: "/acessibilidade", icon: <Accessibility size={18} /> },
