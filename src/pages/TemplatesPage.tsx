@@ -43,7 +43,12 @@ function getHeaderBgHex(audience: string) {
 
 function getClassificationBg(audience: string) {
   if (audience === "externo") return "bg-[#2a9d8f]";
-  return "bg-[#1565a0]";
+  return "bg-[#F0C06D]";
+}
+
+function getClassificationText(audience: string) {
+  if (audience === "externo") return "text-white/90";
+  return "text-[#082841]";
 }
 
 /* ─── Single Header Preview ─── */
