@@ -1,4 +1,7 @@
 import { PageHeader, SectionHeader } from "@/components/DSComponents";
+import fndeLogoHorizontal from "@/assets/fnde-logo-horizontal.svg";
+import fndeLogoVertical from "@/assets/fnde-logo-vertical.svg";
+import fndeZonaSeguranca from "@/assets/fnde-zona-seguranca.png";
 
 export default function MarcaPage() {
   return (
@@ -10,10 +13,10 @@ export default function MarcaPage() {
         <p className="text-sm text-muted-foreground mb-4">O isotipo (símbolo) utiliza elementos da bandeira do Brasil, livro aberto, estrelas do brasão da República e referências à leitura e aprendizado, reforçando o caráter de nacionalidade.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="border border-border rounded-lg p-6 bg-background flex items-center justify-center">
-            <img src="/images/fnde-logo-horizontal.jpg" alt="Logo FNDE versão completa horizontal" className="max-h-20 object-contain" />
+            <img src={fndeLogoHorizontal} alt="Logo FNDE versão completa horizontal" className="max-h-20 object-contain" />
           </div>
           <div className="border border-border rounded-lg p-6 bg-background flex items-center justify-center">
-            <img src="/images/fnde-logo-vertical.jpg" alt="Logo FNDE versão completa vertical" className="max-h-32 object-contain" />
+            <img src={fndeLogoVertical} alt="Logo FNDE versão completa vertical" className="max-h-32 object-contain" />
           </div>
         </div>
       </div>
