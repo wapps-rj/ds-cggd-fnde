@@ -42,7 +42,7 @@ export default function MarcaPage() {
       <SectionHeader id="zona-seguranca" title="Zona de Segurança" description="Área mínima de respiro ao redor do logo que não deve ser invadida por outros elementos." />
       <div className="fnde-card mb-8">
         <div className="border border-border rounded-lg p-6 bg-background flex items-center justify-center mb-4">
-          <img src="/images/fnde-zona-seguranca.jpg" alt="Zona de segurança do logo FNDE" className="max-h-32 object-contain" />
+          <img src={fndeZonaSeguranca} alt="Zona de segurança do logo FNDE" className="max-h-32 object-contain" loading="lazy" width={800} height={512} />
         </div>
         <p className="text-sm text-muted-foreground">A unidade X equivale à altura da esfera do símbolo. A zona de segurança utiliza X/2 em todos os lados.</p>
       </div>
