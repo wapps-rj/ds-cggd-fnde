@@ -29,6 +29,9 @@ export default function HomePage() {
 
   return (
     <div>
+      <div className="mb-8 flex flex-col items-start gap-4">
+        <img src={fndeLogo} alt="Marca FNDE" className="h-12 md:h-14" />
+      </div>
       <PageHeader
         title="Design System FNDE"
         description="Guia visual, técnico e operacional para o time de desenvolvimento da CGGD / FNDE. Transformando vidas por meio da educação."
