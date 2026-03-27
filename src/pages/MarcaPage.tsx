@@ -49,16 +49,65 @@ export default function MarcaPage() {
         <p className="text-sm text-muted-foreground">A unidade X equivale à altura da esfera do símbolo. A zona de segurança utiliza X/2 em todos os lados.</p>
       </div>
 
-      <SectionHeader id="reducao" title="Redução Mínima" />
+      <SectionHeader id="reducao" title="Redução Mínima" description="Tamanhos mínimos para garantir a legibilidade da marca em diferentes meios de aplicação." />
       <div className="fnde-card mb-8">
-        <div className="grid grid-cols-2 gap-4 text-center">
-          <div className="border border-border rounded-lg p-4">
-            <p className="text-sm font-semibold">Impressão</p>
-            <p className="text-xs text-muted-foreground">Largura mínima: 40mm (completa) / 23mm (simplificada)</p>
+        <p className="text-sm text-muted-foreground mb-6">A marca FNDE possui duas versões — completa (com descritivo) e simplificada (somente símbolo e sigla). Cada uma tem dimensões mínimas específicas para impressão e meio digital.</p>
+
+        {/* Versão Completa */}
+        <h4 className="text-sm font-semibold mb-4">Versão Completa (com descritivo)</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="border border-border rounded-lg p-6 bg-background">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Impressão</p>
+            <div className="flex items-end gap-4 mb-4">
+              <div className="border-2 border-dashed border-primary/30 rounded p-3 inline-flex items-center justify-center" style={{ minWidth: '160px' }}>
+                <img src={fndeLogoHorizontal2} alt="Logo FNDE completa - tamanho mínimo impressão" className="h-8 object-contain" />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <p className="text-sm"><span className="font-semibold">Largura mínima:</span> 40mm</p>
+              <p className="text-xs text-muted-foreground">Abaixo deste tamanho a legibilidade do descritivo fica comprometida.</p>
+            </div>
           </div>
-          <div className="border border-border rounded-lg p-4">
-            <p className="text-sm font-semibold">Digital</p>
-            <p className="text-xs text-muted-foreground">Largura mínima: 110px (completa) / 65px (simplificada)</p>
+          <div className="border border-border rounded-lg p-6 bg-background">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Digital</p>
+            <div className="flex items-end gap-4 mb-4">
+              <div className="border-2 border-dashed border-primary/30 rounded p-3 inline-flex items-center justify-center" style={{ minWidth: '110px' }}>
+                <img src={fndeLogoHorizontal2} alt="Logo FNDE completa - tamanho mínimo digital" className="h-6 object-contain" />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <p className="text-sm"><span className="font-semibold">Largura mínima:</span> 110px</p>
+              <p className="text-xs text-muted-foreground">Para telas e interfaces digitais, garantindo nitidez em diferentes resoluções.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Versão Simplificada */}
+        <h4 className="text-sm font-semibold mb-4">Versão Simplificada (símbolo + sigla)</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="border border-border rounded-lg p-6 bg-background">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Impressão</p>
+            <div className="flex items-end gap-4 mb-4">
+              <div className="border-2 border-dashed border-primary/30 rounded p-3 inline-flex items-center justify-center" style={{ minWidth: '92px' }}>
+                <img src={fndeLogoVertical2} alt="Logo FNDE simplificada - tamanho mínimo impressão" className="h-12 object-contain" />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <p className="text-sm"><span className="font-semibold">Largura mínima:</span> 23mm</p>
+              <p className="text-xs text-muted-foreground">Versão compacta para aplicações com espaço reduzido.</p>
+            </div>
+          </div>
+          <div className="border border-border rounded-lg p-6 bg-background">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Digital</p>
+            <div className="flex items-end gap-4 mb-4">
+              <div className="border-2 border-dashed border-primary/30 rounded p-3 inline-flex items-center justify-center" style={{ minWidth: '65px' }}>
+                <img src={fndeLogoVertical2} alt="Logo FNDE simplificada - tamanho mínimo digital" className="h-10 object-contain" />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <p className="text-sm"><span className="font-semibold">Largura mínima:</span> 65px</p>
+              <p className="text-xs text-muted-foreground">Para ícones, favicons e aplicações em tamanho reduzido.</p>
+            </div>
           </div>
         </div>
       </div>
