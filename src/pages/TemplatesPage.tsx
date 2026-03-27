@@ -43,7 +43,12 @@ function getHeaderBgHex(audience: string) {
 
 function getClassificationBg(audience: string) {
   if (audience === "externo") return "bg-[#2a9d8f]";
-  return "bg-[#1565a0]";
+  return "bg-[#F0C06D]";
+}
+
+function getClassificationText(audience: string) {
+  if (audience === "externo") return "text-white/90";
+  return "text-[#082841]";
 }
 
 /* ─── Single Header Preview ─── */
@@ -84,7 +89,7 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
 
       {/* Classification bar */}
       {variant.showClassification && (
-        <div className={`${getClassificationBg(variant.audience)} text-white/90 px-4 py-1 text-[10px]`}>
+        <div className={`${getClassificationBg(variant.audience)} ${getClassificationText(variant.audience)} px-4 py-1 text-[10px]`}>
           Conteúdo <strong>INTERNO/TODOS</strong>
         </div>
       )}
@@ -164,8 +169,8 @@ ${menuRight ? `    <button class="fnde-header__menu fnde-header__menu--right" ar
 .fnde-header__sigla { font-weight: 600; font-size: 0.875rem; }
 .fnde-header__name { font-size: 0.875rem; opacity: 0.8; }
 .fnde-header__classification {
-  background: ${variant.audience === "externo" ? "#2a9d8f" : "#1565a0"};
-  color: rgba(255,255,255,0.9);
+  background: ${variant.audience === "externo" ? "#2a9d8f" : "#F0C06D"};
+  color: ${variant.audience === "externo" ? "rgba(255,255,255,0.9)" : "#082841"};
   padding: 0.25rem 1rem;
   font-size: 0.625rem;
 }
