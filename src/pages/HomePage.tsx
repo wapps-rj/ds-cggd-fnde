@@ -5,6 +5,7 @@ import {
   Sun, Moon
 } from "lucide-react";
 import { PageHeader } from "@/components/DSComponents";
+import fndeLogo from "@/assets/fnde-logo-horizontal-3.svg";
 
 const sections = [
   { icon: <Palette size={24} />, title: "Fundamentos", desc: "Tipografia, cores, iconografia, grid, espaçamento e princípios visuais", path: "/fundamentos" },
