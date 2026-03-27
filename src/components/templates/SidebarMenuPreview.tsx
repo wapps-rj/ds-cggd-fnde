@@ -2,9 +2,10 @@ import { useState, useRef } from "react";
 import {
   Home, Settings, Users, FileText, BarChart3, Shield, Bell,
   HelpCircle, Search, X, ChevronDown, ChevronRight,
-  Folder, ClipboardList, Landmark, GraduationCap, Wallet
+  Folder, ClipboardList, GraduationCap, Wallet
 } from "lucide-react";
 import { CodeBlock } from "@/components/DSComponents";
+import iconeFndeNegativo from "@/assets/icone-fnde-negativo.svg";
 
 /* ─── Menu item model ─── */
 interface MenuItem {
@@ -102,7 +103,7 @@ function SidebarPreview() {
         {/* Sidebar header with close */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <Landmark size={18} className="text-[#D98217]" />
+            <img src={iconeFndeNegativo} alt="FNDE" className="h-5 w-5" />
             <span className="text-sm font-semibold">SIGLA</span>
           </div>
           <button
