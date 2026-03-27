@@ -32,17 +32,17 @@ const headerVariants: HeaderVariant[] = [
 ];
 
 function getHeaderBg(audience: string) {
-  if (audience === "externo") return "bg-[#1a7a6d]";
+  if (audience === "externo") return "bg-[#D98217]";
   return "bg-[#0d3857]";
 }
 
 function getHeaderBgHex(audience: string) {
-  if (audience === "externo") return "#1a7a6d";
+  if (audience === "externo") return "#D98217";
   return "#0d3857";
 }
 
 function getClassificationBg(audience: string) {
-  if (audience === "externo") return "bg-[#2a9d8f]";
+  if (audience === "externo") return "bg-[#E5A54D]";
   return "bg-[#F0C06D]";
 }
 
