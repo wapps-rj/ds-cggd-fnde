@@ -32,17 +32,17 @@ const headerVariants: HeaderVariant[] = [
 ];
 
 function getHeaderBg(audience: string) {
-  if (audience === "externo") return "bg-[#1a7a6d]";
+  if (audience === "externo") return "bg-[#D98217]";
   return "bg-[#0d3857]";
 }
 
 function getHeaderBgHex(audience: string) {
-  if (audience === "externo") return "#1a7a6d";
+  if (audience === "externo") return "#D98217";
   return "#0d3857";
 }
 
 function getClassificationBg(audience: string) {
-  if (audience === "externo") return "bg-[#2a9d8f]";
+  if (audience === "externo") return "bg-[#E5A54D]";
   return "bg-[#F0C06D]";
 }
 
@@ -169,7 +169,7 @@ ${menuRight ? `    <button class="fnde-header__menu fnde-header__menu--right" ar
 .fnde-header__sigla { font-weight: 600; font-size: 0.875rem; }
 .fnde-header__name { font-size: 0.875rem; opacity: 0.8; }
 .fnde-header__classification {
-  background: ${variant.audience === "externo" ? "#2a9d8f" : "#F0C06D"};
+  background: ${variant.audience === "externo" ? "#E5A54D" : "#F0C06D"};
   color: ${variant.audience === "externo" ? "rgba(255,255,255,0.9)" : "#082841"};
   padding: 0.25rem 1rem;
   font-size: 0.625rem;
