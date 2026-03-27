@@ -2,6 +2,8 @@ import { PageHeader, SectionHeader } from "@/components/DSComponents";
 import fndeLogoHorizontal from "@/assets/fnde-logo-horizontal.svg";
 import fndeLogoVertical from "@/assets/fnde-logo-vertical.svg";
 import fndeZonaSeguranca from "@/assets/fnde-zona-seguranca.png";
+import fndeLogoHorizontal2 from "@/assets/fnde-logo-horizontal-2.svg";
+import fndeLogoVertical2 from "@/assets/fnde-logo-vertical-2.svg";
 
 export default function MarcaPage() {
   return (
