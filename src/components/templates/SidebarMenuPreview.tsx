@@ -2,9 +2,10 @@ import { useState, useRef } from "react";
 import {
   Home, Settings, Users, FileText, BarChart3, Shield, Bell,
   HelpCircle, Search, X, ChevronDown, ChevronRight,
-  Folder, ClipboardList, Landmark, GraduationCap, Wallet
+  Folder, ClipboardList, GraduationCap, Wallet
 } from "lucide-react";
 import { CodeBlock } from "@/components/DSComponents";
+import iconeFndeNegativo from "@/assets/icone-fnde-negativo.svg";
 
 /* ─── Menu item model ─── */
 interface MenuItem {
