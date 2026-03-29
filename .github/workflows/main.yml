@@ -1,56 +1,59 @@
-name: Deploy to Hostinger
+name: Deploy Lovable via FTP na Hostinger
 
 on:
-
   push:
-
-    branches:
-
-      - main
+    branches: ["main"]
+  workflow_dispatch:
 
 jobs:
-
-  web-deploy:
-
-    name: 🎉 Deploy
-
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: 🚚 Obter o código mais recente
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
 
-      uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
 
-    - name: 🟢 Configurar Node.js
+      - name: Build
+        run: npm run build
 
-      uses: actions/setup-node@v4
+      - name: Create SPA .htaccess
+        run: |
+          cat > dist/.htaccess << 'EOF'
+          <IfModule mod_rewrite.c>
+            RewriteEngine On
+            RewriteBase /
+            RewriteRule ^index\.html$ - [L]
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteCond %{REQUEST_FILENAME} !-d
+            RewriteRule . /index.html [L]
+          </IfModule>
+          EOF
 
-      with:
-
-        node-version: '20' # Você pode alterar para a versão do Node que utiliza localmente
-
-    - name: 📦 Instalar dependências
-
-      run: npm install
-
-    - name: 🛠️ Executar o Build
-
-      run: npm run build
-
-    - name: 📂 Sincronizar arquivos com a Hostinger
-
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-
-      with:
-
-        server: ${{ secrets.FTP_SERVER }}
-
-        username: ${{ secrets.FTP_USERNAME }}
-
-        password: ${{ secrets.FTP_PASSWORD }}
-
-        local-dir: ./dist/ # ⚠️ ATENÇÃO: Altere para a pasta que o seu build gera
-
-        server-dir: ./public_html/ds/ # Pasta de destino na Hostinger
- 
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: dist/
+          server-dir: /public_html/ds/
+          timeout: 120000
+          dangerous-clean-slate: false
+          dry-run: false
+          log-level: verbose
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
