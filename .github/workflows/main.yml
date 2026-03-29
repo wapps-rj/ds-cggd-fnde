@@ -1,0 +1,56 @@
+name: Deploy to Hostinger
+
+on:
+
+  push:
+
+    branches:
+
+      - main
+
+jobs:
+
+  web-deploy:
+
+    name: 🎉 Deploy
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: 🚚 Obter o código mais recente
+
+      uses: actions/checkout@v4
+
+    - name: 🟢 Configurar Node.js
+
+      uses: actions/setup-node@v4
+
+      with:
+
+        node-version: '20' # Você pode alterar para a versão do Node que utiliza localmente
+
+    - name: 📦 Instalar dependências
+
+      run: npm install
+
+    - name: 🛠️ Executar o Build
+
+      run: npm run build
+
+    - name: 📂 Sincronizar arquivos com a Hostinger
+
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+
+      with:
+
+        server: ${{ secrets.FTP_SERVER }}
+
+        username: ${{ secrets.FTP_USERNAME }}
+
+        password: ${{ secrets.FTP_PASSWORD }}
+
+        local-dir: ./dist/ # ⚠️ ATENÇÃO: Altere para a pasta que o seu build gera
+
+        server-dir: ./public_html/ds/ # Pasta de destino na Hostinger
+ 
