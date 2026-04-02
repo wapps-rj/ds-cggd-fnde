@@ -156,6 +156,3 @@ export default function AutorPage() {
     </div>
   );
 }
-    </div>
-  );
-}
