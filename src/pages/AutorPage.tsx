@@ -22,6 +22,7 @@ const services = [
 ];
 
 const career = [
+  { company: "Fundo Nacional de Desenvolvimento da Educação (FNDE)", period: "", via: "G4F / DF" },
   { company: "CAIXA Econômica Federal", period: "junho 2022 – atual", via: "Globalweb / DF" },
   { company: "PETROBRAS", period: "maio 2021 – junho 2022", via: "Spassu / ES" },
   { company: "Air Parts Equipamentos Pneumáticos", period: "março 2021", via: "RJ / SP" },
