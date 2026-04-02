@@ -29,6 +29,7 @@ const App = () => (
             <Route path="/marca" element={<MarcaPage />} />
             <Route path="/conteudo" element={<ConteudoPage />} />
             <Route path="/acessibilidade" element={<AcessibilidadePage />} />
+            <Route path="/autor" element={<AutorPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </DSLayout>

@@ -4,7 +4,7 @@ import {
   Home, Palette, Code2, Component, LayoutTemplate, Stamp,
   FileText, Accessibility, ChevronDown, ChevronRight, Search,
   Menu, X, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon,
-  SearchX
+  SearchX, Users
 } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 
