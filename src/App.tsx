@@ -10,6 +10,7 @@ import TemplatesPage from "@/pages/TemplatesPage";
 import MarcaPage from "@/pages/MarcaPage";
 import ConteudoPage from "@/pages/ConteudoPage";
 import AcessibilidadePage from "@/pages/AcessibilidadePage";
+import AutorPage from "@/pages/AutorPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();

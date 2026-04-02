@@ -85,6 +85,7 @@ const navItems: NavItem[] = [
   { label: "Marca FNDE", path: "/marca", icon: <Stamp size={18} /> },
   { label: "Conteúdo", path: "/conteudo", icon: <FileText size={18} /> },
   { label: "Acessibilidade", path: "/acessibilidade", icon: <Accessibility size={18} /> },
+  { label: "Autor", path: "/autor", icon: <Users size={18} /> },
 ];
 
 export default function DSLayout({ children }: { children: React.ReactNode }) {
