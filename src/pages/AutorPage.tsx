@@ -153,16 +153,9 @@ export default function AutorPage() {
         ))}
       </div>
 
-      {/* Projetos */}
-      <SectionHeader id="projetos" title="Projetos em Destaque" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-        {projects.map((p) => (
-          <a key={p.title} href={p.url} target="_blank" rel="noopener noreferrer" className="fnde-card-hover group">
-            <h3 className="text-sm font-semibold group-hover:text-primary transition-colors mb-1">{p.title}</h3>
-            <p className="text-xs text-muted-foreground">{p.desc}</p>
-          </a>
-        ))}
-      </div>
+    </div>
+  );
+}
     </div>
   );
 }
