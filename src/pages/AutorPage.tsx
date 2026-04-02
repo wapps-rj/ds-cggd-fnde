@@ -119,7 +119,7 @@ export default function AutorPage() {
             </div>
             <div>
               <p className="text-sm font-semibold">{c.company}</p>
-              <p className="text-xs text-muted-foreground">{c.period} — {c.via}</p>
+              <p className="text-xs text-muted-foreground">{c.period ? `${c.period} — ${c.via}` : c.via}</p>
             </div>
           </div>
         ))}
