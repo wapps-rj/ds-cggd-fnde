@@ -289,8 +289,8 @@ export default function TemplatesPage() {
                 <h4 className="text-sm font-semibold text-foreground">{variant.title}</h4>
                 <p className="text-xs text-muted-foreground mt-0.5">{variant.description}</p>
               </div>
-              <span className={`fnde-badge-${variant.audience === "externo" ? "success" : "primary"} shrink-0 text-[10px]`}>
-                {variant.audience === "externo" ? "Externo" : variant.audience === "interno-classificado" ? "Classificado" : "Interno"}
+              <span className={`fnde-badge-${variant.audience === "externo" ? "success" : isLightHeader(variant.audience) ? "warning" : "primary"} shrink-0 text-[10px]`}>
+                {variant.audience === "externo" ? "Externo" : isLightHeader(variant.audience) ? "Fundo claro" : variant.audience === "interno-classificado" ? "Classificado" : "Interno"}
               </span>
             </div>
 
