@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { ComponentPreview, CodeBlock } from "@/components/DSComponents";
 import exemploImg from "@/assets/exemplo-imagem-login-2.png";
 import fndeLogo from "@/assets/logo-fnde-completa-2.svg";
@@ -8,25 +8,9 @@ function CardSignInPreview() {
   const [showPw, setShowPw] = useState(false);
 
   return (
-    <div className="w-full rounded-xl overflow-hidden shadow-lg border border-border grid grid-cols-1 md:grid-cols-2 min-h-[480px]">
-      {/* Left — Image */}
-      <div className="relative hidden md:block">
-        <img
-          src={exemploImg}
-          alt="Edifício FNDE"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-[#0d3857]/40" />
-        <div className="absolute bottom-6 left-6 right-6">
-          <p className="text-white/90 text-sm font-medium leading-snug">
-            Fundo Nacional de Desenvolvimento da Educação
-          </p>
-          <p className="text-white/60 text-xs mt-1">Transformando vidas por meio da educação.</p>
-        </div>
-      </div>
-
-      {/* Right — Form */}
-      <div className="flex flex-col justify-center px-8 py-10 bg-card">
+    <div className="w-full rounded-xl overflow-hidden shadow-lg border border-border grid grid-cols-1 md:grid-cols-2 min-h-[520px] bg-muted/30">
+      {/* Left — Form */}
+      <div className="flex flex-col justify-center px-8 py-10 bg-card rounded-l-xl">
         <div className="max-w-sm mx-auto w-full space-y-6">
           {/* Logo */}
           <div className="flex justify-center">
@@ -35,7 +19,7 @@ function CardSignInPreview() {
 
           {/* Title */}
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-foreground">Bem-vindo</h3>
+            <h3 className="text-lg font-bold text-foreground">Bem-vindo ao Sistema</h3>
             <p className="text-sm text-muted-foreground mt-1">
               Informe seu e-mail e senha para continuar.
             </p>
@@ -44,29 +28,37 @@ function CardSignInPreview() {
           {/* Fields */}
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1.5">
                 E-mail <span className="text-[#D98217]">*</span>
               </label>
-              <input
-                type="email"
-                placeholder="admin@exemplo.com"
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-sm focus:outline-none focus:ring-2 focus:ring-[#0d3857]/30"
-              />
+              <div className="flex items-center border border-border rounded-md bg-background overflow-hidden focus-within:ring-2 focus-within:ring-[#0d3857]/30">
+                <span className="flex items-center justify-center w-10 h-10 bg-muted/50 border-r border-border text-muted-foreground">
+                  <Mail size={16} />
+                </span>
+                <input
+                  type="email"
+                  placeholder="admin@exemplo.com"
+                  className="flex-1 px-3 py-2 bg-transparent text-sm focus:outline-none"
+                />
+              </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1.5">
                 Senha <span className="text-[#D98217]">*</span>
               </label>
-              <div className="relative">
+              <div className="flex items-center border border-border rounded-md bg-background overflow-hidden focus-within:ring-2 focus-within:ring-[#0d3857]/30">
+                <span className="flex items-center justify-center w-10 h-10 bg-muted/50 border-r border-border text-muted-foreground">
+                  <Lock size={16} />
+                </span>
                 <input
                   type={showPw ? "text" : "password"}
                   defaultValue="12345678"
-                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-sm pr-10 focus:outline-none focus:ring-2 focus:ring-[#0d3857]/30"
+                  className="flex-1 px-3 py-2 bg-transparent text-sm focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPw(!showPw)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="px-3 text-muted-foreground hover:text-foreground"
                 >
                   {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -93,6 +85,27 @@ function CardSignInPreview() {
             Novo aqui?{" "}
             <a href="#" className="text-[#D98217] hover:underline font-medium">Criar uma conta</a>
           </p>
+
+          {/* Footer */}
+          <p className="text-center text-xs text-muted-foreground pt-4">
+            © 2025 FNDE — <span className="font-semibold">CGGD</span>
+          </p>
+        </div>
+      </div>
+
+      {/* Right — Image */}
+      <div className="relative hidden md:block rounded-r-xl overflow-hidden">
+        <img
+          src={exemploImg}
+          alt="Edifício FNDE"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#0d3857]/40" />
+        <div className="absolute bottom-6 left-6 right-6">
+          <p className="text-white/90 text-sm font-medium leading-snug">
+            Fundo Nacional de Desenvolvimento da Educação
+          </p>
+          <p className="text-white/60 text-xs mt-1">Transformando vidas por meio da educação.</p>
         </div>
       </div>
     </div>
@@ -101,6 +114,30 @@ function CardSignInPreview() {
 
 const cardSignInCode = `<!-- Modelo Card (Sign In) — FNDE -->
 <div class="card-signin">
+  <div class="card-signin__form">
+    <img src="/assets/logo-fnde.svg" alt="FNDE" class="card-signin__logo" />
+    <h2>Bem-vindo ao Sistema</h2>
+    <p>Informe seu e-mail e senha para continuar.</p>
+    <form>
+      <label>E-mail <span class="required">*</span></label>
+      <div class="input-icon">
+        <span class="input-icon__prefix">✉</span>
+        <input type="email" placeholder="admin@exemplo.com" />
+      </div>
+      <label>Senha <span class="required">*</span></label>
+      <div class="input-icon">
+        <span class="input-icon__prefix">🔒</span>
+        <input type="password" />
+      </div>
+      <div class="card-signin__options">
+        <label><input type="checkbox" /> Lembrar de mim</label>
+        <a href="#">Esqueceu a senha?</a>
+      </div>
+      <button type="submit">Entrar</button>
+    </form>
+    <p class="card-signin__register">Novo aqui? <a href="#">Criar uma conta</a></p>
+    <p class="card-signin__footer">© 2025 FNDE — <strong>CGGD</strong></p>
+  </div>
   <div class="card-signin__image">
     <img src="/assets/exemplo-imagem-login.png" alt="Edifício FNDE" />
     <div class="card-signin__overlay"></div>
@@ -109,60 +146,22 @@ const cardSignInCode = `<!-- Modelo Card (Sign In) — FNDE -->
       <span>Transformando vidas por meio da educação.</span>
     </div>
   </div>
-  <div class="card-signin__form">
-    <img src="/assets/logo-fnde.svg" alt="FNDE" class="card-signin__logo" />
-    <h2>Bem-vindo</h2>
-    <p>Informe seu e-mail e senha para continuar.</p>
-    <form>
-      <label>E-mail <span class="required">*</span></label>
-      <input type="email" placeholder="admin@exemplo.com" />
-      <label>Senha <span class="required">*</span></label>
-      <input type="password" />
-      <div class="card-signin__options">
-        <label><input type="checkbox" /> Lembrar de mim</label>
-        <a href="#">Esqueceu a senha?</a>
-      </div>
-      <button type="submit">Entrar</button>
-    </form>
-    <p class="card-signin__register">Novo aqui? <a href="#">Criar uma conta</a></p>
-  </div>
 </div>
 
 <style>
 .card-signin {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 480px;
+  min-height: 520px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 24px rgba(0,0,0,0.12);
   font-family: 'Poppins', sans-serif;
 }
-.card-signin__image {
-  position: relative;
-}
-.card-signin__image img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-.card-signin__overlay {
-  position: absolute; inset: 0;
-  background: rgba(13,56,87,0.4);
-}
-.card-signin__caption {
-  position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
-}
-.card-signin__caption strong {
-  display: block; color: rgba(255,255,255,0.9);
-  font-size: 0.875rem;
-}
-.card-signin__caption span {
-  display: block; color: rgba(255,255,255,0.6);
-  font-size: 0.75rem; margin-top: 0.25rem;
-}
 .card-signin__form {
   display: flex; flex-direction: column;
   justify-content: center; padding: 2rem;
+  background: #fff;
 }
 .card-signin__logo {
   height: 40px; width: auto;
@@ -170,17 +169,27 @@ const cardSignInCode = `<!-- Modelo Card (Sign In) — FNDE -->
 }
 .card-signin__form h2 {
   text-align: center; font-size: 1.125rem;
-  font-weight: 600; color: #1a1a1a;
+  font-weight: 700; color: #1a1a1a;
 }
 .card-signin__form > p {
   text-align: center; font-size: 0.875rem;
   color: #6b7280; margin-top: 0.25rem;
 }
-.card-signin__form input[type="email"],
-.card-signin__form input[type="password"] {
-  width: 100%; padding: 0.5rem 0.75rem;
+.input-icon {
+  display: flex; align-items: center;
   border: 1px solid #d1d5db; border-radius: 6px;
-  font-size: 0.875rem; margin-top: 0.25rem;
+  overflow: hidden; margin-top: 0.25rem;
+}
+.input-icon__prefix {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  background: #f3f4f6; border-right: 1px solid #d1d5db;
+  color: #6b7280; font-size: 0.875rem;
+}
+.input-icon input {
+  flex: 1; padding: 0.5rem 0.75rem;
+  border: none; font-size: 0.875rem;
+  outline: none;
 }
 .card-signin__form label {
   display: block; font-size: 0.875rem;
@@ -210,6 +219,32 @@ const cardSignInCode = `<!-- Modelo Card (Sign In) — FNDE -->
   color: #D98217; font-weight: 500;
   text-decoration: none;
 }
+.card-signin__footer {
+  text-align: center; font-size: 0.75rem;
+  color: #9ca3af; margin-top: 1.5rem;
+}
+.card-signin__image {
+  position: relative;
+}
+.card-signin__image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.card-signin__overlay {
+  position: absolute; inset: 0;
+  background: rgba(13,56,87,0.4);
+}
+.card-signin__caption {
+  position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+}
+.card-signin__caption strong {
+  display: block; color: rgba(255,255,255,0.9);
+  font-size: 0.875rem;
+}
+.card-signin__caption span {
+  display: block; color: rgba(255,255,255,0.6);
+  font-size: 0.75rem; margin-top: 0.25rem;
+}
 @media (max-width: 768px) {
   .card-signin { grid-template-columns: 1fr; }
   .card-signin__image { display: none; }
@@ -220,7 +255,7 @@ export default function CardSignInSection() {
   return (
     <ComponentPreview
       title="Modelo Card (Sign In)"
-      description="Layout com imagem institucional à esquerda e formulário de autenticação à direita, seguindo o padrão visual FNDE."
+      description="Layout com formulário à esquerda com ícones nos campos e imagem institucional à direita, seguindo o padrão visual FNDE."
       code={cardSignInCode}
     >
       <CardSignInPreview />
