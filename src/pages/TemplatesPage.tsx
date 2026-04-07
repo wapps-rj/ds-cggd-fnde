@@ -453,6 +453,16 @@ export default function TemplatesPage() {
         <AuthTemplatesSection />
       </div>
 
+      {/* ═══ CARD SIGN IN ═══ */}
+      <SectionHeader
+        id="modelo-card"
+        title="Modelo Card (Sign In)"
+        description="Template de login com layout em duas colunas: imagem institucional à esquerda e formulário de autenticação à direita."
+      />
+      <div className="mb-12">
+        <CardSignInSection />
+      </div>
+
       {/* ═══ TEMPLATE CARDS (existing) ═══ */}
       <SectionHeader
         id="templates-modelos"
