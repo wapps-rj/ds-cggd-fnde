@@ -5,6 +5,8 @@ import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import fndeLogo from "@/assets/marca-fnde-negativa.svg";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
+import fndeLogoCompleta2 from "@/assets/logo-fnde-completa-2.svg";
+import fndeLogoReduzida2 from "@/assets/logo-fnde-reduzida-2.png";
 import marcaGov from "@/assets/marca-gov.png";
 
 /* ─── Header variant type ─── */
@@ -12,7 +14,7 @@ interface HeaderVariant {
   id: string;
   title: string;
   description: string;
-  audience: "interno" | "interno-classificado" | "externo" | "claro-completa" | "claro-reduzida";
+  audience: "interno" | "interno-classificado" | "externo" | "claro-completa" | "claro-reduzida" | "claro-sem-gov";
   brandStyle: "completa" | "reduzida";
   menuPosition: "esquerda" | "direita" | "sem";
   showClassification?: boolean;
@@ -39,6 +41,9 @@ const headerVariants: HeaderVariant[] = [
   { id: "claro-red", title: "Fundo claro · Marca reduzida + Gov.br", description: "Header com fundo dourado, marca reduzida FNDE, título do programa e assinatura Gov.br.", audience: "claro-reduzida", brandStyle: "reduzida", menuPosition: "sem", showTitle: true },
   { id: "claro-full-clean", title: "Fundo claro · Marca completa · Sem título", description: "Header limpo com fundo dourado, marca completa FNDE e assinatura Gov.br, sem título do programa.", audience: "claro-completa", brandStyle: "completa", menuPosition: "sem", showTitle: false },
   { id: "claro-red-clean", title: "Fundo claro · Marca reduzida · Sem título", description: "Header limpo com fundo dourado, marca reduzida FNDE e assinatura Gov.br, sem título do programa.", audience: "claro-reduzida", brandStyle: "reduzida", menuPosition: "sem", showTitle: false },
+  // Fundo claro — Sem Gov.br
+  { id: "claro-full-nogov", title: "Fundo claro · Marca completa · Sem Gov.br", description: "Header com fundo dourado e marca completa FNDE, sem assinatura Gov.br.", audience: "claro-sem-gov", brandStyle: "completa", menuPosition: "sem", showTitle: false },
+  { id: "claro-red-nogov", title: "Fundo claro · Marca reduzida · Sem Gov.br", description: "Header com fundo dourado e marca reduzida FNDE, sem assinatura Gov.br.", audience: "claro-sem-gov", brandStyle: "reduzida", menuPosition: "sem", showTitle: false },
 ];
 
 function getHeaderBg(audience: string) {
