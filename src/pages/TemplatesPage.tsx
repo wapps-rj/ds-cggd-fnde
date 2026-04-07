@@ -5,6 +5,8 @@ import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import fndeLogo from "@/assets/marca-fnde-negativa.svg";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
+import fndeLogoCompleta2 from "@/assets/logo-fnde-completa-2.svg";
+import fndeLogoReduzida2 from "@/assets/logo-fnde-reduzida-2.png";
 import marcaGov from "@/assets/marca-gov.png";
 
 /* ─── Header variant type ─── */
@@ -12,7 +14,7 @@ interface HeaderVariant {
   id: string;
   title: string;
   description: string;
-  audience: "interno" | "interno-classificado" | "externo" | "claro-completa" | "claro-reduzida";
+  audience: "interno" | "interno-classificado" | "externo" | "claro-completa" | "claro-reduzida" | "claro-sem-gov";
   brandStyle: "completa" | "reduzida";
   menuPosition: "esquerda" | "direita" | "sem";
   showClassification?: boolean;
@@ -39,17 +41,20 @@ const headerVariants: HeaderVariant[] = [
   { id: "claro-red", title: "Fundo claro · Marca reduzida + Gov.br", description: "Header com fundo dourado, marca reduzida FNDE, título do programa e assinatura Gov.br.", audience: "claro-reduzida", brandStyle: "reduzida", menuPosition: "sem", showTitle: true },
   { id: "claro-full-clean", title: "Fundo claro · Marca completa · Sem título", description: "Header limpo com fundo dourado, marca completa FNDE e assinatura Gov.br, sem título do programa.", audience: "claro-completa", brandStyle: "completa", menuPosition: "sem", showTitle: false },
   { id: "claro-red-clean", title: "Fundo claro · Marca reduzida · Sem título", description: "Header limpo com fundo dourado, marca reduzida FNDE e assinatura Gov.br, sem título do programa.", audience: "claro-reduzida", brandStyle: "reduzida", menuPosition: "sem", showTitle: false },
+  // Fundo claro — Sem Gov.br
+  { id: "claro-full-nogov", title: "Fundo claro · Marca completa · Sem Gov.br", description: "Header com fundo dourado e marca completa FNDE, sem assinatura Gov.br.", audience: "claro-sem-gov", brandStyle: "completa", menuPosition: "sem", showTitle: false },
+  { id: "claro-red-nogov", title: "Fundo claro · Marca reduzida · Sem Gov.br", description: "Header com fundo dourado e marca reduzida FNDE, sem assinatura Gov.br.", audience: "claro-sem-gov", brandStyle: "reduzida", menuPosition: "sem", showTitle: false },
 ];
 
 function getHeaderBg(audience: string) {
   if (audience === "externo") return "bg-[#D98217]";
-  if (audience === "claro-completa" || audience === "claro-reduzida") return "bg-[#FBDFA2]";
+  if (audience === "claro-completa" || audience === "claro-reduzida" || audience === "claro-sem-gov") return "bg-[#FBDFA2]";
   return "bg-[#0d3857]";
 }
 
 function getHeaderBgHex(audience: string) {
   if (audience === "externo") return "#D98217";
-  if (audience === "claro-completa" || audience === "claro-reduzida") return "#FBDFA2";
+  if (audience === "claro-completa" || audience === "claro-reduzida" || audience === "claro-sem-gov") return "#FBDFA2";
   return "#0d3857";
 }
 
@@ -64,7 +69,7 @@ function getClassificationText(audience: string) {
 }
 
 function isLightHeader(audience: string) {
-  return audience === "claro-completa" || audience === "claro-reduzida";
+  return audience === "claro-completa" || audience === "claro-reduzida" || audience === "claro-sem-gov";
 }
 
 /* ─── Single Header Preview ─── */
@@ -83,6 +88,10 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
           <div className="flex items-center gap-3 shrink-0">
             {variant.audience === "claro-completa" ? (
               <img src={fndeLogoCompleta} alt="FNDE" className="h-9 w-auto" />
+            ) : variant.audience === "claro-sem-gov" && variant.brandStyle === "completa" ? (
+              <img src={fndeLogoCompleta2} alt="FNDE" className="h-9 w-auto" />
+            ) : variant.audience === "claro-sem-gov" && variant.brandStyle === "reduzida" ? (
+              <img src={fndeLogoReduzida2} alt="FNDE" className="h-9 w-auto" />
             ) : (
               <img src={fndeLogoReduzida} alt="FNDE" className="h-9 w-auto" />
             )}
@@ -111,8 +120,10 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
             <span className="text-[10px] text-[#0d3857]/70 hidden sm:inline">Menu</span>
           </button>
 
-          {/* Gov.br */}
-          <img src={marcaGov} alt="Governo do Brasil" className="h-10 w-auto shrink-0" />
+          {/* Gov.br (only for non claro-sem-gov) */}
+          {variant.audience !== "claro-sem-gov" && (
+            <img src={marcaGov} alt="Governo do Brasil" className="h-10 w-auto shrink-0" />
+          )}
         </div>
       </div>
     );
@@ -333,7 +344,7 @@ export default function TemplatesPage() {
   const filteredVariants = activeAudience === "all"
     ? headerVariants
     : activeAudience === "claro"
-      ? headerVariants.filter(v => v.audience === "claro-completa" || v.audience === "claro-reduzida")
+      ? headerVariants.filter(v => v.audience === "claro-completa" || v.audience === "claro-reduzida" || v.audience === "claro-sem-gov")
       : headerVariants.filter(v => v.audience === activeAudience);
 
   return (
