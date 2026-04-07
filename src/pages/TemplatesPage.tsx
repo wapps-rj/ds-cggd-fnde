@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
-import { Menu, ChevronDown } from "lucide-react";
+import { Menu, Sun, Moon } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import fndeLogo from "@/assets/marca-fnde-negativa.svg";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
@@ -111,12 +111,6 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
     <div className="rounded-lg overflow-hidden border border-border">
       {/* Header bar */}
       <div className={`${bg} text-white flex items-center px-4 py-2.5 gap-3 min-h-[44px]`}>
-        {variant.menuPosition === "esquerda" && (
-          <button className="p-1 hover:bg-white/10 rounded" aria-label="Menu">
-            <Menu size={18} />
-          </button>
-        )}
-
         {/* Logo area */}
         <div className="flex items-center gap-2 flex-1 min-w-0">
           {variant.brandStyle === "completa" ? (
@@ -129,12 +123,16 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
           <span className="text-sm text-white/80 truncate">{systemName}</span>
         </div>
 
-        {variant.menuPosition === "direita" && (
-          <button className="p-1 hover:bg-white/10 rounded flex items-center gap-1 text-xs" aria-label="Menu">
-            <Menu size={18} />
-            <span className="hidden sm:inline text-[10px]">Menu</span>
-          </button>
-        )}
+        {/* Theme toggle */}
+        <button className="p-1.5 hover:bg-white/10 rounded transition-colors" aria-label="Alternar tema">
+          <Sun size={16} className="text-white/80" />
+        </button>
+
+        {/* Menu hamburger (right) */}
+        <button className="p-1.5 hover:bg-white/10 rounded flex items-center gap-1.5 transition-colors" aria-label="Menu">
+          <Menu size={18} />
+          <span className="text-[10px] hidden sm:inline">Menu</span>
+        </button>
       </div>
 
       {/* Classification bar */}
@@ -356,7 +354,7 @@ export default function TemplatesPage() {
       </div>
 
       {/* Header variants grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+      <div className="grid grid-cols-1 gap-6 mb-12">
         {filteredVariants.map(variant => (
           <div key={variant.id} className="fnde-card">
             {/* Label */}
