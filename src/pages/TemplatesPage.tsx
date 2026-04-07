@@ -48,13 +48,13 @@ const headerVariants: HeaderVariant[] = [
 
 function getHeaderBg(audience: string) {
   if (audience === "externo") return "bg-[#D98217]";
-  if (audience === "claro-completa" || audience === "claro-reduzida") return "bg-[#FBDFA2]";
+  if (audience === "claro-completa" || audience === "claro-reduzida" || audience === "claro-sem-gov") return "bg-[#FBDFA2]";
   return "bg-[#0d3857]";
 }
 
 function getHeaderBgHex(audience: string) {
   if (audience === "externo") return "#D98217";
-  if (audience === "claro-completa" || audience === "claro-reduzida") return "#FBDFA2";
+  if (audience === "claro-completa" || audience === "claro-reduzida" || audience === "claro-sem-gov") return "#FBDFA2";
   return "#0d3857";
 }
 
@@ -69,7 +69,7 @@ function getClassificationText(audience: string) {
 }
 
 function isLightHeader(audience: string) {
-  return audience === "claro-completa" || audience === "claro-reduzida";
+  return audience === "claro-completa" || audience === "claro-reduzida" || audience === "claro-sem-gov";
 }
 
 /* ─── Single Header Preview ─── */
