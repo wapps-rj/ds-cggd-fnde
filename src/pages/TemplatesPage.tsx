@@ -344,7 +344,7 @@ export default function TemplatesPage() {
   const filteredVariants = activeAudience === "all"
     ? headerVariants
     : activeAudience === "claro"
-      ? headerVariants.filter(v => v.audience === "claro-completa" || v.audience === "claro-reduzida")
+      ? headerVariants.filter(v => v.audience === "claro-completa" || v.audience === "claro-reduzida" || v.audience === "claro-sem-gov")
       : headerVariants.filter(v => v.audience === activeAudience);
 
   return (
