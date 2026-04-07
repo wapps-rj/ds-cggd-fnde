@@ -3,6 +3,7 @@ import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents"
 import { Menu, Sun, Moon } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import AuthTemplatesSection from "@/components/templates/AuthTemplates";
+import CardSignInSection from "@/components/templates/CardSignIn";
 import fndeLogo from "@/assets/marca-fnde-negativa.svg";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
