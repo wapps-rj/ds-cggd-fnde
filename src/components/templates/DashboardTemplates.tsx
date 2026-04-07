@@ -247,28 +247,23 @@ function DashboardCompleta() {
           </div>
         </div>
 
-        {/* Middle: Table + Donut */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-          <div className="lg:col-span-3 bg-card rounded-lg border border-border p-4">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-bold text-[#D98217]">Auditoria e Irregularidade</p>
-              <div className="flex items-center gap-3 text-[10px]">
-                <StatusDot status="Atenção" />
-                <StatusDot status="Regular" />
-                <StatusDot status="Em Ajuste" />
-              </div>
+        {/* Table — full width */}
+        <div className="bg-card rounded-lg border border-border p-4">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-sm font-bold text-[#D98217]">Auditoria e Irregularidade</p>
+            <div className="flex items-center gap-3 text-[10px]">
+              <StatusDot status="Atenção" />
+              <StatusDot status="Regular" />
+              <StatusDot status="Em Ajuste" />
             </div>
-            <AuditTable />
           </div>
-          <div className="lg:col-span-2">
-            <DonutSection title="Distribuição por Modalidade" subtitle="20 programas listados" />
-          </div>
+          <AuditTable />
         </div>
 
-        {/* Bottom: Bar chart + Performance */}
+        {/* Bottom: Donut + Bar chart */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <DonutSection title="Distribuição por Modalidade" subtitle="20 programas listados" />
           <BarChartSection />
-          <PerformanceSection />
         </div>
       </div>
 
