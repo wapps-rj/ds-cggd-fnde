@@ -3,10 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   Home, Palette, Code2, Component, LayoutTemplate, Stamp,
   FileText, Accessibility, ChevronDown, ChevronRight, Search,
-  Menu, X, BookOpen, PanelLeftClose, PanelLeftOpen, Sun, Moon,
+  Menu, X, PanelLeftClose, PanelLeftOpen, Sun, Moon,
   SearchX, Users
 } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
+import logoFndeCompleta2 from "@/assets/logo-fnde-completa-2.svg";
 
 interface NavItem {
   label: string;
