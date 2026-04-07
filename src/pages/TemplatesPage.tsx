@@ -100,6 +100,17 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
           )}
           {variant.showTitle === false && <div className="flex-1" />}
 
+          {/* Theme toggle */}
+          <button className="p-1.5 hover:bg-[#0d3857]/10 rounded transition-colors shrink-0" aria-label="Alternar tema">
+            <Sun size={16} className="text-[#0d3857]/70" />
+          </button>
+
+          {/* Menu hamburger (right) */}
+          <button className="p-1.5 hover:bg-[#0d3857]/10 rounded flex items-center gap-1.5 transition-colors shrink-0" aria-label="Menu">
+            <Menu size={18} className="text-[#0d3857]" />
+            <span className="text-[10px] text-[#0d3857]/70 hidden sm:inline">Menu</span>
+          </button>
+
           {/* Gov.br */}
           <img src={marcaGov} alt="Governo do Brasil" className="h-10 w-auto shrink-0" />
         </div>
