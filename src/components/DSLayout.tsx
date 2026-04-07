@@ -276,45 +276,46 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="h-14 text-primary-foreground flex items-center px-4 gap-3 fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: 'hsl(var(--header-background))' }}>
+      <header className="h-14 flex items-center px-4 gap-3 fixed top-0 left-0 right-0 z-50 border-b border-[#e0b86a]" style={{ backgroundColor: '#FBDFA2' }}>
         <button
-          className="lg:hidden p-1.5 rounded hover:bg-primary-foreground/10 transition-colors"
+          className="lg:hidden p-1.5 rounded hover:bg-black/10 transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={mobileOpen}
           aria-controls="mobile-sidebar"
         >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          {mobileOpen ? <X size={20} className="text-[#0D3857]" /> : <Menu size={20} className="text-[#0D3857]" />}
         </button>
 
         <button
-          className="hidden lg:flex p-1.5 rounded hover:bg-primary-foreground/10 transition-colors items-center justify-center"
+          className="hidden lg:flex p-1.5 rounded hover:bg-black/10 transition-colors items-center justify-center"
           onClick={() => setCollapsed(!collapsed)}
           aria-label={collapsed ? "Expandir menu lateral" : "Recolher menu lateral"}
           aria-expanded={!collapsed}
           aria-controls="desktop-sidebar"
         >
-          {collapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
+          {collapsed ? <PanelLeftOpen size={20} className="text-[#0D3857]" /> : <PanelLeftClose size={20} className="text-[#0D3857]" />}
         </button>
 
-        <div className="flex items-center gap-2.5">
-          <BookOpen size={22} className="text-secondary" />
-          <div className="leading-tight">
-            <span className="font-semibold text-sm block">Design System FNDE</span>
-            <span className="text-[10px] opacity-70 block -mt-0.5">CGGD · Coordenação Geral de Governança</span>
-          </div>
+        <img src={logoFndeCompleta2} alt="FNDE" className="h-8" />
+
+        <div className="h-6 w-px bg-[#0D3857]/20 hidden sm:block" />
+
+        <div className="leading-tight hidden sm:block">
+          <span className="font-semibold text-sm block text-[#0D3857]">Design System FNDE</span>
+          <span className="text-[10px] text-[#0D3857]/70 block -mt-0.5">CGGD · Coordenação Geral de Governança</span>
         </div>
 
         <div className="ml-auto flex items-center gap-2">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg hover:bg-primary-foreground/10 transition-colors"
+            className="p-2 rounded-lg hover:bg-black/10 transition-colors"
             aria-label={theme === "light" ? "Ativar modo escuro" : "Ativar modo claro"}
             title={theme === "light" ? "Modo escuro" : "Modo claro"}
           >
-            {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+            {theme === "light" ? <Moon size={18} className="text-[#0D3857]" /> : <Sun size={18} className="text-[#0D3857]" />}
           </button>
-          <span className="fnde-badge-secondary text-[10px] hidden sm:inline-flex">v1.0.0</span>
+          <span className="text-[10px] font-medium text-[#0D3857]/70 bg-[#0D3857]/10 px-2 py-0.5 rounded hidden sm:inline-flex">v1.0.0</span>
         </div>
       </header>
 
