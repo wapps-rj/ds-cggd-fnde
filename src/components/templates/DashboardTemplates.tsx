@@ -320,14 +320,15 @@ function DashboardReduzida() {
                 <StatusDot status="Em Ajuste" />
               </div>
             </div>
-            <AuditTable rows={[...tableRows, ...tableRows.slice(0, 3)]} />
+            <div className="overflow-x-auto">
+              <div className="min-w-[800px]">
+                <AuditTable rows={[...tableRows, ...tableRows.slice(0, 3)]} />
+              </div>
+            </div>
           </div>
 
-          {/* Bottom charts */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <BarChartSection />
-            <PerformanceSection />
-          </div>
+          {/* Bottom chart — full width */}
+          <DonutSection title="Distribuição por Modalidade" subtitle="20 programas listados" />
         </div>
       </div>
 
