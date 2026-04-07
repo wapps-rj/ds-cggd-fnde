@@ -319,18 +319,18 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <div className="flex pt-14 min-h-screen">
+      <div className="flex pt-[160px] min-h-screen">
         {mobileOpen && <div className="fixed inset-0 bg-foreground/30 z-30 lg:hidden" onClick={() => setMobileOpen(false)} aria-hidden="true" />}
 
         {/* Mobile sidebar */}
         <aside id="mobile-sidebar" role="navigation" aria-label="Menu de navegação"
-          className={`fixed top-14 bottom-0 left-0 w-64 bg-sidebar text-sidebar-foreground z-40 overflow-y-auto transition-transform duration-200 lg:hidden ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
+          className={`fixed top-[160px] bottom-0 left-0 w-64 bg-sidebar text-sidebar-foreground z-40 overflow-y-auto transition-transform duration-200 lg:hidden ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
           {renderNav(false)}
         </aside>
 
         {/* Desktop sidebar */}
         <aside id="desktop-sidebar" role="navigation" aria-label="Menu de navegação"
-          className={`hidden lg:flex lg:flex-col sticky top-14 h-[calc(100vh-3.5rem)] bg-sidebar text-sidebar-foreground overflow-y-auto transition-all duration-200 ${collapsed ? "w-16" : "w-64"}`}>
+          className={`hidden lg:flex lg:flex-col sticky top-[160px] h-[calc(100vh-160px)] bg-sidebar text-sidebar-foreground overflow-y-auto transition-all duration-200 ${collapsed ? "w-16" : "w-64"}`}>
           <div className="flex-1 overflow-y-auto">{renderNav(collapsed)}</div>
           <div className={`border-t border-sidebar-border p-2 ${collapsed ? "flex justify-center" : "px-3"}`}>
             <button onClick={() => setCollapsed(!collapsed)}
