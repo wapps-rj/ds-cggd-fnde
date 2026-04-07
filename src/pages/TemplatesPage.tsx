@@ -242,11 +242,14 @@ export default function TemplatesPage() {
     { key: "interno", label: "Público interno" },
     { key: "interno-classificado", label: "Interno + Classificação" },
     { key: "externo", label: "Público externo" },
+    { key: "claro", label: "Fundo claro" },
   ];
 
   const filteredVariants = activeAudience === "all"
     ? headerVariants
-    : headerVariants.filter(v => v.audience === activeAudience);
+    : activeAudience === "claro"
+      ? headerVariants.filter(v => v.audience === "claro-completa" || v.audience === "claro-reduzida")
+      : headerVariants.filter(v => v.audience === activeAudience);
 
   return (
     <div>
