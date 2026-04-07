@@ -16,6 +16,7 @@ interface HeaderVariant {
   brandStyle: "completa" | "reduzida";
   menuPosition: "esquerda" | "direita" | "sem";
   showClassification?: boolean;
+  showTitle?: boolean;
 }
 
 const headerVariants: HeaderVariant[] = [
@@ -34,8 +35,10 @@ const headerVariants: HeaderVariant[] = [
   { id: "ext-full-right", title: "Público externo · Menu direito", description: "Versão externa com menu à direita.", audience: "externo", brandStyle: "completa", menuPosition: "direita" },
   { id: "ext-red-left", title: "Público externo · Marca reduzida", description: "Versão reduzida para público externo.", audience: "externo", brandStyle: "reduzida", menuPosition: "esquerda" },
   // Fundo claro — Programa e Gestão
-  { id: "claro-full", title: "Fundo claro · Marca completa + Gov.br", description: "Header com fundo dourado, marca completa FNDE, título do programa e assinatura Gov.br.", audience: "claro-completa", brandStyle: "completa", menuPosition: "sem" },
-  { id: "claro-red", title: "Fundo claro · Marca reduzida + Gov.br", description: "Header com fundo dourado, marca reduzida FNDE, título do programa e assinatura Gov.br.", audience: "claro-reduzida", brandStyle: "reduzida", menuPosition: "sem" },
+  { id: "claro-full", title: "Fundo claro · Marca completa + Gov.br", description: "Header com fundo dourado, marca completa FNDE, título do programa e assinatura Gov.br.", audience: "claro-completa", brandStyle: "completa", menuPosition: "sem", showTitle: true },
+  { id: "claro-red", title: "Fundo claro · Marca reduzida + Gov.br", description: "Header com fundo dourado, marca reduzida FNDE, título do programa e assinatura Gov.br.", audience: "claro-reduzida", brandStyle: "reduzida", menuPosition: "sem", showTitle: true },
+  { id: "claro-full-clean", title: "Fundo claro · Marca completa · Sem título", description: "Header limpo com fundo dourado, marca completa FNDE e assinatura Gov.br, sem título do programa.", audience: "claro-completa", brandStyle: "completa", menuPosition: "sem", showTitle: false },
+  { id: "claro-red-clean", title: "Fundo claro · Marca reduzida · Sem título", description: "Header limpo com fundo dourado, marca reduzida FNDE e assinatura Gov.br, sem título do programa.", audience: "claro-reduzida", brandStyle: "reduzida", menuPosition: "sem", showTitle: false },
 ];
 
 function getHeaderBg(audience: string) {
@@ -85,14 +88,17 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
             )}
           </div>
 
-          {/* Separator */}
-          <div className="w-px h-8 bg-[#0d3857]/30 shrink-0" />
-
-          {/* Title */}
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-[#0d3857] leading-tight">Título do Programa - Exemplo</p>
-            <p className="text-xs text-[#0d3857]/70 leading-tight">Apenas um exemplo de subtítulo do programa</p>
-          </div>
+          {/* Separator + Title (conditional) */}
+          {variant.showTitle !== false && (
+            <>
+              <div className="w-px h-8 bg-[#0d3857]/30 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-[#0d3857] leading-tight">Título do Programa - Exemplo</p>
+                <p className="text-xs text-[#0d3857]/70 leading-tight">Apenas um exemplo de subtítulo do programa</p>
+              </div>
+            </>
+          )}
+          {variant.showTitle === false && <div className="flex-1" />}
 
           {/* Gov.br */}
           <img src={marcaGov} alt="Governo do Brasil" className="h-10 w-auto shrink-0" />
