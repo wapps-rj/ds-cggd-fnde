@@ -12,7 +12,7 @@ interface HeaderVariant {
   id: string;
   title: string;
   description: string;
-  audience: "interno" | "interno-classificado" | "externo";
+  audience: "interno" | "interno-classificado" | "externo" | "claro-completa" | "claro-reduzida";
   brandStyle: "completa" | "reduzida";
   menuPosition: "esquerda" | "direita" | "sem";
   showClassification?: boolean;
@@ -33,6 +33,9 @@ const headerVariants: HeaderVariant[] = [
   { id: "ext-full-left", title: "Público externo · Marca completa", description: "Header em tom claro para portais externos.", audience: "externo", brandStyle: "completa", menuPosition: "esquerda" },
   { id: "ext-full-right", title: "Público externo · Menu direito", description: "Versão externa com menu à direita.", audience: "externo", brandStyle: "completa", menuPosition: "direita" },
   { id: "ext-red-left", title: "Público externo · Marca reduzida", description: "Versão reduzida para público externo.", audience: "externo", brandStyle: "reduzida", menuPosition: "esquerda" },
+  // Fundo claro — Programa e Gestão
+  { id: "claro-full", title: "Fundo claro · Marca completa + Gov.br", description: "Header com fundo dourado, marca completa FNDE, título do programa e assinatura Gov.br.", audience: "claro-completa", brandStyle: "completa", menuPosition: "sem" },
+  { id: "claro-red", title: "Fundo claro · Marca reduzida + Gov.br", description: "Header com fundo dourado, marca reduzida FNDE, título do programa e assinatura Gov.br.", audience: "claro-reduzida", brandStyle: "reduzida", menuPosition: "sem" },
 ];
 
 function getHeaderBg(audience: string) {
