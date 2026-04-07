@@ -304,14 +304,14 @@ function DashboardReduzida() {
         </div>
 
         {/* Main content */}
-        <div className="p-4 space-y-4">
+        <div className="p-4 space-y-4 min-w-0">
           {/* Search bar */}
           <p className="text-xs text-muted-foreground">
             <span className="font-bold italic">Pesquisa:</span> Categoria - prioridade - setor
           </p>
 
           {/* Table */}
-          <div className="bg-card rounded-lg border border-border p-4">
+          <div className="bg-card rounded-lg border border-border p-4 min-w-0">
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm font-bold text-[#D98217]">Auditoria e Irregularidade</p>
               <div className="flex items-center gap-3 text-[10px]">
@@ -320,10 +320,43 @@ function DashboardReduzida() {
                 <StatusDot status="Em Ajuste" />
               </div>
             </div>
-            <div className="overflow-x-auto">
-              <div className="min-w-[800px]">
-                <AuditTable rows={[...tableRows, ...tableRows.slice(0, 3)]} />
-              </div>
+            <div className="overflow-x-auto max-w-full">
+              <table className="w-full text-xs" style={{ minWidth: 900 }}>
+                <thead>
+                  <tr className="bg-[#0d3857] text-white">
+                    <th className="px-3 py-2 text-left font-medium">ID</th>
+                    <th className="px-3 py-2 text-left font-medium">Servidor</th>
+                    <th className="px-3 py-2 text-left font-medium">Diretoria</th>
+                    <th className="px-3 py-2 text-left font-medium">Status</th>
+                    <th className="px-3 py-2 text-left font-medium">Prazo</th>
+                    <th className="px-3 py-2 text-left font-medium">Descontos</th>
+                    <th className="px-3 py-2 text-left font-medium">Modalidade</th>
+                    <th className="px-3 py-2 text-left font-medium">Unidade</th>
+                    <th className="px-3 py-2 text-left font-medium">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...tableRows, ...tableRows.slice(0, 3)].map((r, i) => (
+                    <tr key={i} className={i % 2 === 0 ? "bg-card" : "bg-muted/30"}>
+                      <td className="px-3 py-2 text-muted-foreground">{r.id}</td>
+                      <td className="px-3 py-2">{r.servidor}</td>
+                      <td className="px-3 py-2">{r.diretoria}</td>
+                      <td className="px-3 py-2">{r.status}</td>
+                      <td className="px-3 py-2">{r.prazo}</td>
+                      <td className="px-3 py-2">{r.descontos}</td>
+                      <td className="px-3 py-2">{r.modalidade}</td>
+                      <td className="px-3 py-2">{r.unidade}</td>
+                      <td className="px-3 py-2"><StatusDot status={r.statusTag} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="border-t border-border">
+                    <td colSpan={7} className="px-3 py-2 font-semibold text-xs">Total:</td>
+                    <td colSpan={2} className="px-3 py-2 font-semibold text-xs text-right">2500</td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           </div>
 
