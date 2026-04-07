@@ -475,6 +475,16 @@ export default function TemplatesPage() {
         <DashboardTemplatesSection />
       </div>
 
+      {/* ═══ HUB DE PAINÉIS ═══ */}
+      <SectionHeader
+        id="hub-paineis"
+        title="Modelo Hub de Painéis"
+        description="Template de portal centralizado para acesso a múltiplos painéis gerenciais, com cards interativos e efeito flip."
+      />
+      <div className="mb-12">
+        <HubPaineisSection />
+      </div>
+
       {/* ═══ TEMPLATE CARDS (existing) ═══ */}
       <SectionHeader
         id="templates-modelos"
