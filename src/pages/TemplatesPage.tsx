@@ -2,6 +2,7 @@ import { useState } from "react";
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
 import { Menu, Sun, Moon } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
+import AuthTemplatesSection from "@/components/templates/AuthTemplates";
 import fndeLogo from "@/assets/marca-fnde-negativa.svg";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
@@ -440,6 +441,16 @@ export default function TemplatesPage() {
       />
       <div className="mb-12">
         <SidebarMenuSection />
+      </div>
+
+      {/* ═══ AUTH TEMPLATES ═══ */}
+      <SectionHeader
+        id="modelos-login"
+        title="Modelos de Login"
+        description="Templates de autenticação prontos para uso nos sistemas FNDE. Sign In e Sign Up com a identidade visual do órgão."
+      />
+      <div className="mb-12">
+        <AuthTemplatesSection />
       </div>
 
       {/* ═══ TEMPLATE CARDS (existing) ═══ */}
