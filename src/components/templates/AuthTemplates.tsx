@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { CodeBlock } from "@/components/DSComponents";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ShieldCheck } from "lucide-react";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
 
 /* ─── Sign In Preview ─── */
