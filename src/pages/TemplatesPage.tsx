@@ -67,8 +67,39 @@ function isLightHeader(audience: string) {
 /* ─── Single Header Preview ─── */
 function HeaderPreview({ variant }: { variant: HeaderVariant }) {
   const bg = getHeaderBg(variant.audience);
+  const light = isLightHeader(variant.audience);
   const sigla = "SIGLA";
   const systemName = "Nome do sistema";
+
+  // Light header (fundo claro) — special layout
+  if (light) {
+    return (
+      <div className="rounded-lg overflow-hidden border border-border">
+        <div className={`${bg} flex items-center px-5 py-3 gap-4 min-h-[56px]`}>
+          {/* Logo FNDE */}
+          <div className="flex items-center gap-3 shrink-0">
+            {variant.audience === "claro-completa" ? (
+              <img src={fndeLogoCompleta} alt="FNDE" className="h-9 w-auto" />
+            ) : (
+              <img src={fndeLogoReduzida} alt="FNDE" className="h-9 w-auto" />
+            )}
+          </div>
+
+          {/* Separator */}
+          <div className="w-px h-8 bg-[#0d3857]/30 shrink-0" />
+
+          {/* Title */}
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-[#0d3857] leading-tight">Título do Programa - Exemplo</p>
+            <p className="text-xs text-[#0d3857]/70 leading-tight">Apenas um exemplo de subtítulo do programa</p>
+          </div>
+
+          {/* Gov.br */}
+          <img src={marcaGov} alt="Governo do Brasil" className="h-10 w-auto shrink-0" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-lg overflow-hidden border border-border">
