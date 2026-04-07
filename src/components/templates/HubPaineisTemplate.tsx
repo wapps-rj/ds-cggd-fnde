@@ -6,6 +6,10 @@ import {
 } from "lucide-react";
 import { ComponentPreview } from "@/components/DSComponents";
 import logoFndeCompleta2 from "@/assets/logo-fnde-completa-2.svg";
+import hubThumb1 from "@/assets/hub-thumb-1.jpg";
+import hubThumb2 from "@/assets/hub-thumb-2.jpg";
+import hubThumb3 from "@/assets/hub-thumb-3.jpg";
+import hubThumb4 from "@/assets/hub-thumb-4.jpg";
 
 interface PainelCard {
   id: string;
@@ -14,6 +18,7 @@ interface PainelCard {
   titulo: string;
   descricao: string;
   icon: React.ReactNode;
+  imagem?: string;
 }
 
 const paineis: PainelCard[] = [
@@ -24,6 +29,7 @@ const paineis: PainelCard[] = [
     titulo: "Painel de Gestão de ATAS",
     descricao: "Painel estratégico para monitorar a recuperação de créditos, aprimorando a gestão financeira.",
     icon: <ClipboardList size={32} />,
+    imagem: hubThumb1,
   },
   {
     id: "ouvidoria-sic",
@@ -32,6 +38,7 @@ const paineis: PainelCard[] = [
     titulo: "Ouvidoria SIC",
     descricao: "Painel do Setor de Ouvidoria (SIC) para monitoramento das manifestações dos cidadãos.",
     icon: <Users size={32} />,
+    imagem: hubThumb2,
   },
   {
     id: "ouvidoria-gestao",
@@ -40,6 +47,7 @@ const paineis: PainelCard[] = [
     titulo: "Ouvidoria e Gestão de Ouvidoria",
     descricao: "Painel da Ouvidoria e Gestão de Ouvidoria do FNDE para acompanhamento das manifestações.",
     icon: <FileText size={32} />,
+    imagem: hubThumb3,
   },
   {
     id: "cadastro-base",
@@ -48,6 +56,7 @@ const paineis: PainelCard[] = [
     titulo: "Cadastro Base — Prefeitos e Secretários",
     descricao: "Acompanhamento da situação dos prefeitos e secretários municipais e estaduais da educação.",
     icon: <Building2 size={32} />,
+    imagem: hubThumb4,
   },
   {
     id: "painel-pdtic",
@@ -56,6 +65,7 @@ const paineis: PainelCard[] = [
     titulo: "Painel PDTIC",
     descricao: "Painel do Plano Diretor de Tecnologia da Informação e Comunicação do órgão.",
     icon: <BarChart3 size={32} />,
+    imagem: hubThumb1,
   },
   {
     id: "pacto-retomada",
@@ -64,6 +74,7 @@ const paineis: PainelCard[] = [
     titulo: "Pacto de Retomada",
     descricao: "Acompanhamento do Pacto Nacional pela Retomada de Obras da Educação Básica.",
     icon: <Landmark size={32} />,
+    imagem: hubThumb2,
   },
   {
     id: "reprogramacao-saldos",
@@ -72,6 +83,7 @@ const paineis: PainelCard[] = [
     titulo: "Reprogramação de Saldos",
     descricao: "Acompanhamento de Saldos a serem passíveis de reprogramação financeira.",
     icon: <TrendingUp size={32} />,
+    imagem: hubThumb3,
   },
   {
     id: "gestao-orcamentaria",
@@ -80,6 +92,7 @@ const paineis: PainelCard[] = [
     titulo: "Gestão Orçamentária e Financeira",
     descricao: "Acompanhamento do orçamento e da execução orçamentária do FNDE.",
     icon: <PieChart size={32} />,
+    imagem: hubThumb4,
   },
   {
     id: "prestacao-contas",
@@ -88,6 +101,7 @@ const paineis: PainelCard[] = [
     titulo: "Gestão de Prestação de Contas",
     descricao: "Painel de monitoramento transparente dos processos de prestação de contas.",
     icon: <Scale size={32} />,
+    imagem: hubThumb1,
   },
   {
     id: "pdde-basico",
@@ -96,6 +110,7 @@ const paineis: PainelCard[] = [
     titulo: "PDDE Básico",
     descricao: "O PDDE é um programa que transfere recursos diretamente às escolas públicas.",
     icon: <GraduationCap size={32} />,
+    imagem: hubThumb2,
   },
   {
     id: "atividade-coger",
@@ -104,6 +119,7 @@ const paineis: PainelCard[] = [
     titulo: "Atividade COGER",
     descricao: "A COGER do FNDE atua na atividade correicional, apurando irregularidades.",
     icon: <Shield size={32} />,
+    imagem: hubThumb3,
   },
   {
     id: "escola-integral",
@@ -112,9 +128,11 @@ const paineis: PainelCard[] = [
     titulo: "Programa Escola em Tempo Integral",
     descricao: "Os recursos do Programa apoiam a ampliação da jornada escolar.",
     icon: <BookOpen size={32} />,
+    imagem: hubThumb4,
   },
 ];
 
+/* ── Card com ícone (original) ── */
 function FlipCard({ card }: { card: PainelCard }) {
   const [flipped, setFlipped] = useState(false);
 
@@ -166,6 +184,64 @@ function FlipCard({ card }: { card: PainelCard }) {
   );
 }
 
+/* ── Card com imagem (nova variação) ── */
+function FlipCardImage({ card }: { card: PainelCard }) {
+  const [flipped, setFlipped] = useState(false);
+
+  return (
+    <div
+      className="h-[300px]"
+      style={{ perspective: "1000px" }}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+    >
+      <div
+        className="relative w-full h-full transition-transform duration-500"
+        style={{
+          transformStyle: "preserve-3d",
+          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+        }}
+      >
+        {/* Front — imagem */}
+        <div
+          className="absolute inset-0 rounded-xl border border-border bg-card shadow-sm overflow-hidden flex flex-col"
+          style={{ backfaceVisibility: "hidden" }}
+        >
+          <div className="h-[170px] overflow-hidden">
+            <img
+              src={card.imagem}
+              alt={card.titulo}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <div className="relative px-4 pb-4 pt-2 flex-1 flex flex-col justify-center">
+            <span className={`absolute -top-3 right-4 text-[10px] font-bold text-white px-2.5 py-0.5 rounded ${card.siglaCor}`}>
+              {card.sigla}
+            </span>
+            <h4 className="font-semibold text-sm text-foreground leading-tight mt-1">{card.titulo}</h4>
+            <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{card.descricao}</p>
+          </div>
+        </div>
+
+        {/* Back */}
+        <div
+          className="absolute inset-0 rounded-xl border border-fnde-blue bg-fnde-blue text-white overflow-hidden flex flex-col items-center justify-center p-6 text-center"
+          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+        >
+          <div className="mb-3 opacity-80">{card.icon}</div>
+          <h4 className="font-semibold text-sm mb-2">{card.titulo}</h4>
+          <p className="text-xs opacity-80 mb-4 line-clamp-3">{card.descricao}</p>
+          <button className="bg-white text-fnde-blue font-semibold text-xs px-5 py-2 rounded-lg hover:bg-white/90 transition-colors">
+            Acessar Painel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Hub original (ícones) ── */
 function HubPaineisPreview() {
   const [searchTerm, setSearchTerm] = useState("");
   const [darkMode, setDarkMode] = useState(false);
@@ -237,6 +313,102 @@ function HubPaineisPreview() {
         <p className="text-[10px] text-muted-foreground mt-1">FNDE | Coordenação Geral de Governança</p>
       </div>
     </div>
+  );
+}
+
+/* ── Hub com imagens ── */
+function HubPaineisImagePreview() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
+
+  const filtered = searchTerm
+    ? paineis.filter(
+        (p) =>
+          p.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          p.sigla.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : paineis;
+
+  return (
+    <div className={`rounded-xl border border-border overflow-hidden ${darkMode ? "dark bg-[#1a1a2e]" : "bg-background"}`}>
+      {/* Header */}
+      <div className="h-[60px] flex items-center px-4 gap-3 border-b" style={{ backgroundColor: darkMode ? "#1e293b" : "#FBDFA2" }}>
+        <img src={logoFndeCompleta2} alt="FNDE" className="h-6" />
+        <div className="h-5 w-px bg-foreground/20" />
+        <span className="font-semibold text-xs" style={{ color: "#0D3857" }}>Hub de Painéis Gerenciais</span>
+        <div className="ml-auto">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-1.5 rounded hover:bg-black/10 transition-colors"
+          >
+            {darkMode ? <Sun size={14} style={{ color: "#0D3857" }} /> : <Moon size={14} style={{ color: "#0D3857" }} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Search */}
+      <div className="flex justify-center py-4 px-4">
+        <div className="relative w-full max-w-md">
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Buscar painel..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full bg-muted/50 text-foreground text-xs rounded-lg pl-9 pr-9 py-2.5 border border-border focus:outline-none focus:ring-1 focus:ring-fnde-blue placeholder:text-muted-foreground"
+          />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            >
+              <X size={12} />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Cards Grid */}
+      <div className="px-4 pb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {filtered.map((card) => (
+          <FlipCardImage key={card.id} card={card} />
+        ))}
+        {filtered.length === 0 && (
+          <div className="col-span-full text-center py-12 text-muted-foreground text-sm">
+            Nenhum painel encontrado para "{searchTerm}"
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="border-t border-border py-4 px-4 text-center">
+        <div className="flex items-center justify-center gap-3">
+          <img src={logoFndeCompleta2} alt="FNDE" className="h-5 opacity-60" />
+        </div>
+        <p className="text-[10px] text-muted-foreground mt-1">FNDE | Coordenação Geral de Governança</p>
+      </div>
+    </div>
+  );
+}
+
+export function HubPaineisImageSection() {
+  return (
+    <ComponentPreview
+      title="Hub de Painéis — Modelo com Imagens"
+      description="Variação do Hub de Painéis com imagens ilustrativas de cada dashboard na parte frontal dos cards. O efeito flip revela a descrição e o botão de acesso."
+      whenToUse={[
+        "Quando cada painel possui uma prévia visual ou thumbnail do dashboard",
+        "Portais que priorizam identificação visual rápida dos painéis",
+        "Catálogos de relatórios ou dashboards com captura de tela",
+      ]}
+      accessibility={[
+        "Imagens possuem alt text descritivo",
+        "Efeito flip mantém acessibilidade via teclado",
+        "Contraste adequado em ambos os modos",
+      ]}
+    >
+      <HubPaineisImagePreview />
+    </ComponentPreview>
   );
 }
 
