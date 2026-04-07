@@ -236,8 +236,8 @@ function DashboardCompleta() {
             <span className="font-bold italic">Resumo da Pesquisa:</span> Categoria - prioridade - setor
           </p>
 
-          {/* KPI row */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          {/* KPI row — 3 colunas */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <KPICard icon={Users} title="Total de Servidores" subtitle="Servidores em análise (filtrados)" value="1.019" borderColor="#0D3857" />
             <KPICard icon={FileCheck} title="Servidores Regulares" subtitle="Filtro (listar todos)" value="80.00%" borderColor="#16A34A" />
             <KPICard icon={FileX} title="Servidores Irregulares" subtitle="Filtro (listar todos)" value="20.00%" borderColor="#DC2626" />
@@ -257,7 +257,11 @@ function DashboardCompleta() {
               <StatusDot status="Em Ajuste" />
             </div>
           </div>
-          <AuditTable />
+          <div className="overflow-x-auto max-w-full">
+            <div style={{ minWidth: 900 }}>
+              <AuditTable />
+            </div>
+          </div>
         </div>
 
         {/* Bottom: Donut + Bar chart */}
