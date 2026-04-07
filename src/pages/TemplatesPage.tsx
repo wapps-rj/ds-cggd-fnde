@@ -88,6 +88,10 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
           <div className="flex items-center gap-3 shrink-0">
             {variant.audience === "claro-completa" ? (
               <img src={fndeLogoCompleta} alt="FNDE" className="h-9 w-auto" />
+            ) : variant.audience === "claro-sem-gov" && variant.brandStyle === "completa" ? (
+              <img src={fndeLogoCompleta2} alt="FNDE" className="h-9 w-auto" />
+            ) : variant.audience === "claro-sem-gov" && variant.brandStyle === "reduzida" ? (
+              <img src={fndeLogoReduzida2} alt="FNDE" className="h-9 w-auto" />
             ) : (
               <img src={fndeLogoReduzida} alt="FNDE" className="h-9 w-auto" />
             )}
@@ -116,8 +120,10 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
             <span className="text-[10px] text-[#0d3857]/70 hidden sm:inline">Menu</span>
           </button>
 
-          {/* Gov.br */}
-          <img src={marcaGov} alt="Governo do Brasil" className="h-10 w-auto shrink-0" />
+          {/* Gov.br (only for non claro-sem-gov) */}
+          {variant.audience !== "claro-sem-gov" && (
+            <img src={marcaGov} alt="Governo do Brasil" className="h-10 w-auto shrink-0" />
+          )}
         </div>
       </div>
     );
