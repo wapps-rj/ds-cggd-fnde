@@ -83,6 +83,7 @@ const navItems: NavItem[] = [
       { label: "Modelos de Login", path: "/templates#modelos-login" },
       { label: "Modelo de login (Card Sign In)", path: "/templates#modelo-card" },
       { label: "Modelos de Dashboard", path: "/templates#dashboards" },
+      { label: "Modelo Hub de Painéis", path: "/templates#hub-paineis" },
       { label: "Modelos de Página", path: "/templates#templates-modelos" },
     ],
   },

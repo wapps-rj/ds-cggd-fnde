@@ -5,6 +5,7 @@ import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import AuthTemplatesSection from "@/components/templates/AuthTemplates";
 import CardSignInSection from "@/components/templates/CardSignIn";
 import DashboardTemplatesSection from "@/components/templates/DashboardTemplates";
+import HubPaineisSection from "@/components/templates/HubPaineisTemplate";
 import fndeLogo from "@/assets/marca-fnde-negativa.svg";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
@@ -473,6 +474,16 @@ export default function TemplatesPage() {
       />
       <div className="mb-12">
         <DashboardTemplatesSection />
+      </div>
+
+      {/* ═══ HUB DE PAINÉIS ═══ */}
+      <SectionHeader
+        id="hub-paineis"
+        title="Modelo Hub de Painéis"
+        description="Template de portal centralizado para acesso a múltiplos painéis gerenciais, com cards interativos e efeito flip."
+      />
+      <div className="mb-12">
+        <HubPaineisSection />
       </div>
 
       {/* ═══ TEMPLATE CARDS (existing) ═══ */}
