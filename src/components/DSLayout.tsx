@@ -82,6 +82,7 @@ const navItems: NavItem[] = [
       { label: "Menu Lateral", path: "/templates#menu-lateral" },
       { label: "Modelos de Login", path: "/templates#modelos-login" },
       { label: "Modelo Card", path: "/templates#modelo-card" },
+      { label: "Modelos de Dashboard", path: "/templates#dashboards" },
       { label: "Modelos de Página", path: "/templates#templates-modelos" },
     ],
   },

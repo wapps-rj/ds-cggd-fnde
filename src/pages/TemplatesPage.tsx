@@ -4,6 +4,7 @@ import { Menu, Sun, Moon } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import AuthTemplatesSection from "@/components/templates/AuthTemplates";
 import CardSignInSection from "@/components/templates/CardSignIn";
+import DashboardTemplatesSection from "@/components/templates/DashboardTemplates";
 import fndeLogo from "@/assets/marca-fnde-negativa.svg";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
@@ -462,6 +463,16 @@ export default function TemplatesPage() {
       />
       <div className="mb-12">
         <CardSignInSection />
+      </div>
+
+      {/* ═══ DASHBOARD TEMPLATES ═══ */}
+      <SectionHeader
+        id="dashboards"
+        title="Modelos de Dashboard"
+        description="Templates de painéis de controle baseados em layouts Power BI, com KPIs, tabelas, gráficos e indicadores de desempenho."
+      />
+      <div className="mb-12">
+        <DashboardTemplatesSection />
       </div>
 
       {/* ═══ TEMPLATE CARDS (existing) ═══ */}
