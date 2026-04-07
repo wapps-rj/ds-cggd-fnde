@@ -3,13 +3,16 @@ import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents"
 import { Menu, ChevronDown } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import fndeLogo from "@/assets/marca-fnde-negativa.svg";
+import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
+import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
+import marcaGov from "@/assets/marca-gov.png";
 
 /* ─── Header variant type ─── */
 interface HeaderVariant {
   id: string;
   title: string;
   description: string;
-  audience: "interno" | "interno-classificado" | "externo";
+  audience: "interno" | "interno-classificado" | "externo" | "claro-completa" | "claro-reduzida";
   brandStyle: "completa" | "reduzida";
   menuPosition: "esquerda" | "direita" | "sem";
   showClassification?: boolean;
@@ -30,15 +33,20 @@ const headerVariants: HeaderVariant[] = [
   { id: "ext-full-left", title: "Público externo · Marca completa", description: "Header em tom claro para portais externos.", audience: "externo", brandStyle: "completa", menuPosition: "esquerda" },
   { id: "ext-full-right", title: "Público externo · Menu direito", description: "Versão externa com menu à direita.", audience: "externo", brandStyle: "completa", menuPosition: "direita" },
   { id: "ext-red-left", title: "Público externo · Marca reduzida", description: "Versão reduzida para público externo.", audience: "externo", brandStyle: "reduzida", menuPosition: "esquerda" },
+  // Fundo claro — Programa e Gestão
+  { id: "claro-full", title: "Fundo claro · Marca completa + Gov.br", description: "Header com fundo dourado, marca completa FNDE, título do programa e assinatura Gov.br.", audience: "claro-completa", brandStyle: "completa", menuPosition: "sem" },
+  { id: "claro-red", title: "Fundo claro · Marca reduzida + Gov.br", description: "Header com fundo dourado, marca reduzida FNDE, título do programa e assinatura Gov.br.", audience: "claro-reduzida", brandStyle: "reduzida", menuPosition: "sem" },
 ];
 
 function getHeaderBg(audience: string) {
   if (audience === "externo") return "bg-[#D98217]";
+  if (audience === "claro-completa" || audience === "claro-reduzida") return "bg-[#FBDFA2]";
   return "bg-[#0d3857]";
 }
 
 function getHeaderBgHex(audience: string) {
   if (audience === "externo") return "#D98217";
+  if (audience === "claro-completa" || audience === "claro-reduzida") return "#FBDFA2";
   return "#0d3857";
 }
 
@@ -52,11 +60,46 @@ function getClassificationText(audience: string) {
   return "text-[#082841]";
 }
 
+function isLightHeader(audience: string) {
+  return audience === "claro-completa" || audience === "claro-reduzida";
+}
+
 /* ─── Single Header Preview ─── */
 function HeaderPreview({ variant }: { variant: HeaderVariant }) {
   const bg = getHeaderBg(variant.audience);
+  const light = isLightHeader(variant.audience);
   const sigla = "SIGLA";
   const systemName = "Nome do sistema";
+
+  // Light header (fundo claro) — special layout
+  if (light) {
+    return (
+      <div className="rounded-lg overflow-hidden border border-border">
+        <div className={`${bg} flex items-center px-5 py-3 gap-4 min-h-[56px]`}>
+          {/* Logo FNDE */}
+          <div className="flex items-center gap-3 shrink-0">
+            {variant.audience === "claro-completa" ? (
+              <img src={fndeLogoCompleta} alt="FNDE" className="h-9 w-auto" />
+            ) : (
+              <img src={fndeLogoReduzida} alt="FNDE" className="h-9 w-auto" />
+            )}
+          </div>
+
+          {/* Separator */}
+          <div className="w-px h-8 bg-[#0d3857]/30 shrink-0" />
+
+          {/* Title */}
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-[#0d3857] leading-tight">Título do Programa - Exemplo</p>
+            <p className="text-xs text-[#0d3857]/70 leading-tight">Apenas um exemplo de subtítulo do programa</p>
+          </div>
+
+          {/* Gov.br */}
+          <img src={marcaGov} alt="Governo do Brasil" className="h-10 w-auto shrink-0" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-lg overflow-hidden border border-border">
@@ -101,6 +144,72 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
 /* ─── Code generator ─── */
 function generateHeaderCode(variant: HeaderVariant): string {
   const bgHex = getHeaderBgHex(variant.audience);
+  const light = isLightHeader(variant.audience);
+
+  // Light header code
+  if (light) {
+    const logoSrc = variant.audience === "claro-completa"
+      ? "/assets/logo-fnde-completa.svg"
+      : "/assets/logo-fnde-reduzida.png";
+    return `<!-- Header FNDE: ${variant.title} -->
+<header class="fnde-header-light" style="background-color: ${bgHex};">
+  <div class="fnde-header-light__inner">
+    <img src="${logoSrc}" alt="FNDE" class="fnde-header-light__logo" />
+    <div class="fnde-header-light__separator"></div>
+    <div class="fnde-header-light__title">
+      <strong>Título do Programa - Exemplo</strong>
+      <span>Apenas um exemplo de subtítulo do programa</span>
+    </div>
+    <img src="/assets/marca-gov.png" alt="Governo do Brasil" class="fnde-header-light__gov" />
+  </div>
+</header>
+
+<style>
+.fnde-header-light {
+  font-family: 'Poppins', sans-serif;
+}
+.fnde-header-light__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  min-height: 56px;
+}
+.fnde-header-light__logo {
+  height: 36px;
+  width: auto;
+  flex-shrink: 0;
+}
+.fnde-header-light__separator {
+  width: 1px;
+  height: 32px;
+  background: rgba(13, 56, 87, 0.3);
+  flex-shrink: 0;
+}
+.fnde-header-light__title {
+  flex: 1;
+  min-width: 0;
+}
+.fnde-header-light__title strong {
+  display: block;
+  font-size: 0.875rem;
+  color: #0d3857;
+  line-height: 1.3;
+}
+.fnde-header-light__title span {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(13, 56, 87, 0.7);
+  line-height: 1.3;
+}
+.fnde-header-light__gov {
+  height: 40px;
+  width: auto;
+  flex-shrink: 0;
+}
+</style>`;
+  }
+
   const menuLeft = variant.menuPosition === "esquerda";
   const menuRight = variant.menuPosition === "direita";
   const logoHtml = variant.brandStyle === "completa"
@@ -199,11 +308,14 @@ export default function TemplatesPage() {
     { key: "interno", label: "Público interno" },
     { key: "interno-classificado", label: "Interno + Classificação" },
     { key: "externo", label: "Público externo" },
+    { key: "claro", label: "Fundo claro" },
   ];
 
   const filteredVariants = activeAudience === "all"
     ? headerVariants
-    : headerVariants.filter(v => v.audience === activeAudience);
+    : activeAudience === "claro"
+      ? headerVariants.filter(v => v.audience === "claro-completa" || v.audience === "claro-reduzida")
+      : headerVariants.filter(v => v.audience === activeAudience);
 
   return (
     <div>
@@ -243,8 +355,8 @@ export default function TemplatesPage() {
                 <h4 className="text-sm font-semibold text-foreground">{variant.title}</h4>
                 <p className="text-xs text-muted-foreground mt-0.5">{variant.description}</p>
               </div>
-              <span className={`fnde-badge-${variant.audience === "externo" ? "success" : "primary"} shrink-0 text-[10px]`}>
-                {variant.audience === "externo" ? "Externo" : variant.audience === "interno-classificado" ? "Classificado" : "Interno"}
+              <span className={`fnde-badge-${variant.audience === "externo" ? "success" : isLightHeader(variant.audience) ? "warning" : "primary"} shrink-0 text-[10px]`}>
+                {variant.audience === "externo" ? "Externo" : isLightHeader(variant.audience) ? "Fundo claro" : variant.audience === "interno-classificado" ? "Classificado" : "Interno"}
               </span>
             </div>
 
