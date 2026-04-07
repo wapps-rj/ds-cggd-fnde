@@ -144,6 +144,72 @@ function HeaderPreview({ variant }: { variant: HeaderVariant }) {
 /* ─── Code generator ─── */
 function generateHeaderCode(variant: HeaderVariant): string {
   const bgHex = getHeaderBgHex(variant.audience);
+  const light = isLightHeader(variant.audience);
+
+  // Light header code
+  if (light) {
+    const logoSrc = variant.audience === "claro-completa"
+      ? "/assets/logo-fnde-completa.svg"
+      : "/assets/logo-fnde-reduzida.png";
+    return `<!-- Header FNDE: ${variant.title} -->
+<header class="fnde-header-light" style="background-color: ${bgHex};">
+  <div class="fnde-header-light__inner">
+    <img src="${logoSrc}" alt="FNDE" class="fnde-header-light__logo" />
+    <div class="fnde-header-light__separator"></div>
+    <div class="fnde-header-light__title">
+      <strong>Título do Programa - Exemplo</strong>
+      <span>Apenas um exemplo de subtítulo do programa</span>
+    </div>
+    <img src="/assets/marca-gov.png" alt="Governo do Brasil" class="fnde-header-light__gov" />
+  </div>
+</header>
+
+<style>
+.fnde-header-light {
+  font-family: 'Poppins', sans-serif;
+}
+.fnde-header-light__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  min-height: 56px;
+}
+.fnde-header-light__logo {
+  height: 36px;
+  width: auto;
+  flex-shrink: 0;
+}
+.fnde-header-light__separator {
+  width: 1px;
+  height: 32px;
+  background: rgba(13, 56, 87, 0.3);
+  flex-shrink: 0;
+}
+.fnde-header-light__title {
+  flex: 1;
+  min-width: 0;
+}
+.fnde-header-light__title strong {
+  display: block;
+  font-size: 0.875rem;
+  color: #0d3857;
+  line-height: 1.3;
+}
+.fnde-header-light__title span {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(13, 56, 87, 0.7);
+  line-height: 1.3;
+}
+.fnde-header-light__gov {
+  height: 40px;
+  width: auto;
+  flex-shrink: 0;
+}
+</style>`;
+  }
+
   const menuLeft = variant.menuPosition === "esquerda";
   const menuRight = variant.menuPosition === "direita";
   const logoHtml = variant.brandStyle === "completa"
