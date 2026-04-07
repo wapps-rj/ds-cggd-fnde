@@ -486,6 +486,10 @@ export default function TemplatesPage() {
         <HubPaineisSection />
       </div>
 
+      <div className="mb-12">
+        <HubPaineisImageSection />
+      </div>
+
       {/* ═══ TEMPLATE CARDS (existing) ═══ */}
       <SectionHeader
         id="templates-modelos"
