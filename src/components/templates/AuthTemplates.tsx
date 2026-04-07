@@ -259,15 +259,151 @@ const signUpCode = `<!-- Sign Up — FNDE Design System -->
   </div>
 </div>`;
 
+/* ─── Two-Factor Preview ─── */
+function TwoFactorPreview() {
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+
+  const handleChange = (idx: number, value: string) => {
+    if (!/^\d?$/.test(value)) return;
+    const next = [...otp];
+    next[idx] = value;
+    setOtp(next);
+    if (value && idx < 5) inputsRef.current[idx + 1]?.focus();
+  };
+
+  const handleKeyDown = (idx: number, e: React.KeyboardEvent) => {
+    if (e.key === "Backspace" && !otp[idx] && idx > 0) {
+      inputsRef.current[idx - 1]?.focus();
+    }
+  };
+
+  return (
+    <div className="bg-muted/40 rounded-xl p-8 flex items-center justify-center min-h-[480px]">
+      <div className="w-full max-w-[420px]">
+        {/* Logo */}
+        <div className="flex justify-center mb-6">
+          <img src={fndeLogoCompleta} alt="FNDE" className="h-12" />
+        </div>
+
+        {/* Icon */}
+        <div className="flex justify-center mb-4">
+          <div className="w-14 h-14 rounded-full bg-[#0D3857]/10 flex items-center justify-center">
+            <ShieldCheck size={28} className="text-[#0D3857]" />
+          </div>
+        </div>
+
+        <h3 className="text-center text-lg font-semibold text-foreground mb-1">Verificação em duas etapas</h3>
+        <p className="text-center text-xs text-muted-foreground mb-6">
+          Insira o código de 6 dígitos enviado para o seu e-mail ou aplicativo autenticador.
+        </p>
+
+        {/* Card */}
+        <div className="bg-card rounded-xl border shadow-sm p-6 space-y-5">
+          {/* OTP inputs */}
+          <div className="flex justify-center gap-3">
+            {otp.map((digit, idx) => (
+              <input
+                key={idx}
+                ref={el => { inputsRef.current[idx] = el; }}
+                type="text"
+                inputMode="numeric"
+                maxLength={1}
+                value={digit}
+                onChange={e => handleChange(idx, e.target.value)}
+                onKeyDown={e => handleKeyDown(idx, e)}
+                className="w-11 h-12 text-center text-lg font-semibold rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-[#0D3857]/30 transition-all"
+              />
+            ))}
+          </div>
+
+          <button className="w-full h-10 rounded-lg bg-[#0D3857] text-white text-sm font-medium hover:bg-[#0D3857]/90 transition-colors">
+            Verificar código
+          </button>
+
+          <div className="text-center space-y-2">
+            <p className="text-xs text-muted-foreground">
+              Não recebeu o código?{" "}
+              <a href="#" className="font-medium text-[#D98217] hover:underline">Reenviar código</a>
+            </p>
+            <a href="#" className="text-xs font-medium text-[#0D3857] hover:underline">
+              Voltar para o login
+            </a>
+          </div>
+        </div>
+
+        <p className="text-center text-[10px] text-muted-foreground mt-6">
+          © 2026 FNDE — Fundo Nacional de Desenvolvimento da Educação
+        </p>
+      </div>
+    </div>
+  );
+}
+
+const twoFactorCode = `<!-- Two-Factor Auth — FNDE Design System -->
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f4f4f5;font-family:'Poppins',sans-serif">
+  <div style="width:100%;max-width:420px;padding:2rem;text-align:center">
+    <div style="margin-bottom:1.5rem">
+      <img src="/assets/logo-fnde-completa.svg" alt="FNDE" style="height:48px">
+    </div>
+    <div style="width:56px;height:56px;border-radius:50%;background:rgba(13,56,87,.1);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0D3857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>
+      </svg>
+    </div>
+    <h3 style="font-size:1.125rem;font-weight:600;margin-bottom:4px">Verificação em duas etapas</h3>
+    <p style="font-size:0.75rem;color:#71717a;margin-bottom:1.5rem">
+      Insira o código de 6 dígitos enviado para o seu e-mail ou aplicativo autenticador.
+    </p>
+    <div style="background:#fff;border-radius:0.75rem;border:1px solid #e4e4e7;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+      <div style="display:flex;justify-content:center;gap:12px;margin-bottom:1.25rem">
+        <input type="text" maxlength="1" inputmode="numeric" style="width:44px;height:48px;text-align:center;font-size:1.125rem;font-weight:600;border-radius:8px;border:1px solid #e4e4e7">
+        <input type="text" maxlength="1" inputmode="numeric" style="width:44px;height:48px;text-align:center;font-size:1.125rem;font-weight:600;border-radius:8px;border:1px solid #e4e4e7">
+        <input type="text" maxlength="1" inputmode="numeric" style="width:44px;height:48px;text-align:center;font-size:1.125rem;font-weight:600;border-radius:8px;border:1px solid #e4e4e7">
+        <input type="text" maxlength="1" inputmode="numeric" style="width:44px;height:48px;text-align:center;font-size:1.125rem;font-weight:600;border-radius:8px;border:1px solid #e4e4e7">
+        <input type="text" maxlength="1" inputmode="numeric" style="width:44px;height:48px;text-align:center;font-size:1.125rem;font-weight:600;border-radius:8px;border:1px solid #e4e4e7">
+        <input type="text" maxlength="1" inputmode="numeric" style="width:44px;height:48px;text-align:center;font-size:1.125rem;font-weight:600;border-radius:8px;border:1px solid #e4e4e7">
+      </div>
+      <button style="width:100%;height:40px;border-radius:8px;background:#0D3857;color:#fff;font-size:0.875rem;font-weight:500;border:none;cursor:pointer">
+        Verificar código
+      </button>
+      <p style="font-size:0.75rem;color:#71717a;margin-top:1rem">
+        Não recebeu o código? <a href="#" style="color:#D98217;font-weight:500">Reenviar código</a>
+      </p>
+      <a href="#" style="font-size:0.75rem;color:#0D3857;font-weight:500">Voltar para o login</a>
+    </div>
+    <p style="font-size:10px;color:#a1a1aa;margin-top:1.5rem">© 2026 FNDE</p>
+  </div>
+</div>`;
+
 /* ─── Exported Section ─── */
 export default function AuthTemplatesSection() {
-  const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin");
+  const [activeTab, setActiveTab] = useState<"signin" | "signup" | "2fa">("signin");
   const [showCode, setShowCode] = useState(false);
 
   const tabs = [
     { key: "signin" as const, label: "Sign In" },
     { key: "signup" as const, label: "Sign Up" },
+    { key: "2fa" as const, label: "Two-Factor" },
   ];
+
+  const titles: Record<string, string> = {
+    signin: "Tela de Login (Sign In)",
+    signup: "Tela de Cadastro (Sign Up)",
+    "2fa": "Autenticação de Dois Fatores (2FA)",
+  };
+
+  const descriptions: Record<string, string> = {
+    signin: "Modelo de autenticação com e-mail e senha, opção de lembrar e recuperação de senha.",
+    signup: "Formulário de criação de conta com nome, e-mail, CPF, senha e aceite de termos.",
+    "2fa": "Verificação em duas etapas com código OTP de 6 dígitos, reenvio e navegação de retorno.",
+  };
+
+  const codeMap: Record<string, string> = {
+    signin: signInCode,
+    signup: signUpCode,
+    "2fa": twoFactorCode,
+  };
 
   return (
     <div>
@@ -292,19 +428,15 @@ export default function AuthTemplatesSection() {
       <div className="fnde-card">
         <div className="flex items-start justify-between mb-3">
           <div>
-            <h4 className="text-sm font-semibold text-foreground">
-              {activeTab === "signin" ? "Tela de Login (Sign In)" : "Tela de Cadastro (Sign Up)"}
-            </h4>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {activeTab === "signin"
-                ? "Modelo de autenticação com e-mail e senha, opção de lembrar e recuperação de senha."
-                : "Formulário de criação de conta com nome, e-mail, CPF, senha e aceite de termos."}
-            </p>
+            <h4 className="text-sm font-semibold text-foreground">{titles[activeTab]}</h4>
+            <p className="text-xs text-muted-foreground mt-0.5">{descriptions[activeTab]}</p>
           </div>
           <span className="fnde-badge-primary shrink-0 text-[10px]">Autenticação</span>
         </div>
 
-        {activeTab === "signin" ? <SignInPreview /> : <SignUpPreview />}
+        {activeTab === "signin" && <SignInPreview />}
+        {activeTab === "signup" && <SignUpPreview />}
+        {activeTab === "2fa" && <TwoFactorPreview />}
 
         <button
           onClick={() => setShowCode(!showCode)}
@@ -314,9 +446,9 @@ export default function AuthTemplatesSection() {
         </button>
         {showCode && (
           <CodeBlock
-            code={activeTab === "signin" ? signInCode : signUpCode}
+            code={codeMap[activeTab]}
             language="html"
-            title={activeTab === "signin" ? "Sign In — HTML" : "Sign Up — HTML"}
+            title={`${titles[activeTab]} — HTML`}
           />
         )}
       </div>
