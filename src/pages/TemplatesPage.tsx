@@ -3,6 +3,9 @@ import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents"
 import { Menu, ChevronDown } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import fndeLogo from "@/assets/marca-fnde-negativa.svg";
+import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
+import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
+import marcaGov from "@/assets/marca-gov.png";
 
 /* ─── Header variant type ─── */
 interface HeaderVariant {
