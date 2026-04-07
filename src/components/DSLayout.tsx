@@ -80,6 +80,7 @@ const navItems: NavItem[] = [
     children: [
       { label: "Header FNDE", path: "/templates#header" },
       { label: "Menu Lateral", path: "/templates#menu-lateral" },
+      { label: "Modelos de Login", path: "/templates#modelos-login" },
       { label: "Modelos de Página", path: "/templates#templates-modelos" },
     ],
   },
