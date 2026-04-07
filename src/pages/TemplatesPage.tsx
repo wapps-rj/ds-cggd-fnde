@@ -157,15 +157,19 @@ function generateHeaderCode(variant: HeaderVariant): string {
     const logoSrc = variant.audience === "claro-completa"
       ? "/assets/logo-fnde-completa.svg"
       : "/assets/logo-fnde-reduzida.png";
-    return `<!-- Header FNDE: ${variant.title} -->
-<header class="fnde-header-light" style="background-color: ${bgHex};">
-  <div class="fnde-header-light__inner">
-    <img src="${logoSrc}" alt="FNDE" class="fnde-header-light__logo" />
+    const titleHtml = variant.showTitle !== false
+      ? `
     <div class="fnde-header-light__separator"></div>
     <div class="fnde-header-light__title">
       <strong>Título do Programa - Exemplo</strong>
       <span>Apenas um exemplo de subtítulo do programa</span>
-    </div>
+    </div>`
+      : `
+    <div style="flex:1"></div>`;
+    return `<!-- Header FNDE: ${variant.title} -->
+<header class="fnde-header-light" style="background-color: ${bgHex};">
+  <div class="fnde-header-light__inner">
+    <img src="${logoSrc}" alt="FNDE" class="fnde-header-light__logo" />${titleHtml}
     <img src="/assets/marca-gov.png" alt="Governo do Brasil" class="fnde-header-light__gov" />
   </div>
 </header>
