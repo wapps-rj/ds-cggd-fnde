@@ -1,5 +1,5 @@
 import { PageHeader, SectionHeader } from "@/components/DSComponents";
-import { Mail, Phone, Globe, Linkedin, Briefcase, GraduationCap, Layers, Target, Megaphone, Cpu } from "lucide-react";
+import { Mail, Phone, Globe, Linkedin, Briefcase, Lightbulb, Sparkles, Layout, Smartphone, LayoutGrid, Monitor, Award, Megaphone, Bot } from "lucide-react";
 
 const clients = [
   "CAIXA Econômica Federal", "Petrobras", "FNDE", "ANATEL",
@@ -7,12 +7,15 @@ const clients = [
 ];
 
 const skills = [
-  { icon: <Target size={18} />, label: "User Experience (UX)" },
-  { icon: <Layers size={18} />, label: "Design de Interface (UI)" },
-  { icon: <Cpu size={18} />, label: "Design System" },
-  { icon: <Megaphone size={18} />, label: "Marketing Digital Estratégico" },
-  { icon: <Briefcase size={18} />, label: "Metodologia Ágil" },
-  { icon: <Globe size={18} />, label: "Dev Low-Code" },
+  { icon: <Lightbulb size={20} />, label: "Design Thinking", desc: "Abordagem centrada no usuário para resolver problemas de forma criativa e inovadora." },
+  { icon: <Sparkles size={20} />, label: "UX Design", desc: "Criação de experiências positivas e eficientes para os usuários em produtos e serviços." },
+  { icon: <Layout size={20} />, label: "Design de Interface", desc: "Junção de forma e função de maneira intuitiva para criação de Produtos Digitais." },
+  { icon: <Smartphone size={20} />, label: "Design de Aplicativos", desc: "Criação de interfaces e experiências intuitivas para aplicativos móveis e web." },
+  { icon: <LayoutGrid size={20} />, label: "Design de Sistema", desc: "Criação de arquiteturas eficientes e escaláveis para software e hardware." },
+  { icon: <Monitor size={20} />, label: "Web Design", desc: "Criação e manutenção de sites, focando MKT Estratégico, usabilidade e experiência do usuário." },
+  { icon: <Award size={20} />, label: "Marca e Branding", desc: "Construção e gestão de uma marca para criar identidade e valor percebido." },
+  { icon: <Megaphone size={20} />, label: "MKT Dig. Estratégico", desc: "Planejamento e execução de ações para alcançar objetivos de mercado." },
+  { icon: <Bot size={20} />, label: "Automação e AI", desc: "Otimize processos, aumente a eficiência e reduza custos operacionais com automação." },
 ];
 
 const services = [
