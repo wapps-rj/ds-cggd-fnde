@@ -65,7 +65,7 @@ export default function AutorPage() {
       </div>
 
       <SectionHeader id="contato" title="Contato" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
         <a href="mailto:japaweb@gmail.com" className="fnde-card-hover flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-lg bg-accent text-accent-foreground flex items-center justify-center">
             <Mail size={18} />
