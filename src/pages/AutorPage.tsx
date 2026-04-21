@@ -111,13 +111,14 @@ export default function AutorPage() {
 
       {/* Habilidades */}
       <SectionHeader id="habilidades" title="Habilidades" />
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
         {skills.map((s) => (
-          <div key={s.label} className="fnde-card text-center">
-            <div className="w-10 h-10 rounded-lg bg-accent text-accent-foreground flex items-center justify-center mx-auto mb-2">
+          <div key={s.label} className="fnde-card">
+            <div className="w-10 h-10 rounded-lg bg-accent text-accent-foreground flex items-center justify-center mb-3">
               {s.icon}
             </div>
-            <p className="text-xs font-medium">{s.label}</p>
+            <h3 className="text-sm font-semibold mb-1">{s.label}</h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
           </div>
         ))}
       </div>
