@@ -23,6 +23,7 @@ const career = [
   { company: "Fundo Nacional de Desenvolvimento da Educação (FNDE)", period: "", via: "G4F / DF" },
   { company: "CAIXA Econômica Federal", period: "junho 2022 – atual", via: "Globalweb / DF" },
   { company: "PETROBRAS", period: "maio 2021 – junho 2022", via: "Spassu / ES" },
+  { company: "Target Brasil Meios de Pagamento", period: "agosto de 2011 – junho de 2013", via: "Coordenador Web - Argentina / RJ" },
   { company: "Air Parts Equipamentos Pneumáticos", period: "março 2021", via: "RJ / SP" },
   { company: "EVO Serviços Financeiros", period: "junho 2018 – março 2021", via: "Evo RJ" },
 ];
