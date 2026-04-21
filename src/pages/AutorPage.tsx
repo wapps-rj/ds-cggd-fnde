@@ -1,5 +1,5 @@
 import { PageHeader, SectionHeader } from "@/components/DSComponents";
-import { Mail, Phone, Globe, Linkedin, Briefcase, GraduationCap, Layers, Target, Megaphone, Cpu } from "lucide-react";
+import { Mail, Phone, Globe, Linkedin, Briefcase, Lightbulb, Sparkles, Layout, Smartphone, LayoutGrid, Monitor, Award, Megaphone, Bot } from "lucide-react";
 
 const clients = [
   "CAIXA Econômica Federal", "Petrobras", "FNDE", "ANATEL",
@@ -7,12 +7,15 @@ const clients = [
 ];
 
 const skills = [
-  { icon: <Target size={18} />, label: "User Experience (UX)" },
-  { icon: <Layers size={18} />, label: "Design de Interface (UI)" },
-  { icon: <Cpu size={18} />, label: "Design System" },
-  { icon: <Megaphone size={18} />, label: "Marketing Digital Estratégico" },
-  { icon: <Briefcase size={18} />, label: "Metodologia Ágil" },
-  { icon: <Globe size={18} />, label: "Dev Low-Code" },
+  { icon: <Lightbulb size={20} />, label: "Design Thinking", desc: "Abordagem centrada no usuário para resolver problemas de forma criativa e inovadora." },
+  { icon: <Sparkles size={20} />, label: "UX Design", desc: "Criação de experiências positivas e eficientes para os usuários em produtos e serviços." },
+  { icon: <Layout size={20} />, label: "Design de Interface", desc: "Junção de forma e função de maneira intuitiva para criação de Produtos Digitais." },
+  { icon: <Smartphone size={20} />, label: "Design de Aplicativos", desc: "Criação de interfaces e experiências intuitivas para aplicativos móveis e web." },
+  { icon: <LayoutGrid size={20} />, label: "Design de Sistema", desc: "Criação de arquiteturas eficientes e escaláveis para software e hardware." },
+  { icon: <Monitor size={20} />, label: "Web Design", desc: "Criação e manutenção de sites, focando MKT Estratégico, usabilidade e experiência do usuário." },
+  { icon: <Award size={20} />, label: "Marca e Branding", desc: "Construção e gestão de uma marca para criar identidade e valor percebido." },
+  { icon: <Megaphone size={20} />, label: "MKT Dig. Estratégico", desc: "Planejamento e execução de ações para alcançar objetivos de mercado." },
+  { icon: <Bot size={20} />, label: "Automação e AI", desc: "Otimize processos, aumente a eficiência e reduza custos operacionais com automação." },
 ];
 
 const services = [
@@ -108,13 +111,14 @@ export default function AutorPage() {
 
       {/* Habilidades */}
       <SectionHeader id="habilidades" title="Habilidades" />
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
         {skills.map((s) => (
-          <div key={s.label} className="fnde-card text-center">
-            <div className="w-10 h-10 rounded-lg bg-accent text-accent-foreground flex items-center justify-center mx-auto mb-2">
+          <div key={s.label} className="fnde-card">
+            <div className="w-10 h-10 rounded-lg bg-accent text-accent-foreground flex items-center justify-center mb-3">
               {s.icon}
             </div>
-            <p className="text-xs font-medium">{s.label}</p>
+            <h3 className="text-sm font-semibold mb-1">{s.label}</h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
           </div>
         ))}
       </div>
