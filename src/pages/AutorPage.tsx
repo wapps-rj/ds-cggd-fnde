@@ -30,7 +30,7 @@ const career = [
 ];
 
 const projects = [
-  { title: "PowerBi FNDE - BBÁgil", desc: "Dados centrados no usuário", url: "https://designerux.com.br/portfolios/fnde-bb-agil-powerbi/" },
+  { title: "PowerBi FNDE - BBÁgil", desc: "Dados centrados no usuário - GOV Federal FNDE", url: "https://designerux.com.br/portfolios/fnde-bb-agil-powerbi/" },
   { title: "App Auxílio Brasil", desc: "Design de Aplicativo – GOV Federal e CAIXA", url: "https://designerux.com.br/portfolios/app-auxilio-brasil/" },
   { title: "Chatbot ANATEL", desc: "Redesign do assistente virtual", url: "https://designerux.com.br/portfolios/chatbot-anatel/" },
   { title: "Sou CAIXA", desc: "Projeto corporativo CAIXA – Mobile First", url: "https://designerux.com.br/portfolios/mobile-first-no-sou-caixa/" },
