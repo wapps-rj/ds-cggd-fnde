@@ -18,11 +18,6 @@ const skills = [
   { icon: <Megaphone size={20} />, label: "MKT Dig. Estratégico", desc: "Planejamento e execução de ações para alcançar objetivos de mercado." },
 ];
 
-const services = [
-  "Service Blueprint", "Design Thinking", "Experiência do Usuário – UX",
-  "Design de Interfaces – UI", "Design System", "Marketing Digital Estratégico",
-  "Gestão e desenvolvimento de Marcas e Branding", "Comunicação Corporativa"
-];
 
 const career = [
   { company: "Fundo Nacional de Desenvolvimento da Educação (FNDE)", period: "", via: "G4F / DF" },
@@ -147,15 +142,6 @@ export default function AutorPage() {
         ))}
       </div>
 
-      {/* Serviços */}
-      <SectionHeader id="servicos" title="Serviços" />
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
-        {services.map((s) => (
-          <div key={s} className="fnde-card text-center">
-            <p className="text-xs font-medium">{s}</p>
-          </div>
-        ))}
-      </div>
 
     </div>
   );
