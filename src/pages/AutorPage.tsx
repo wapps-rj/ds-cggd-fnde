@@ -8,7 +8,7 @@ const clients = [
 
 const skills = [
   { icon: <Bot size={20} />, label: "IA First", desc: "Otimize processos, aumente a eficiência e reduza custos operacionais com a inteligência artificial." },
-  { icon: <Lightbulb size={20} />, label: "Design Thinking", desc: "Abordagem centrada no usuário para resolver problemas de forma criativa e inovadora." },
+  { icon: <Lightbulb size={20} />, label: "Design de Serviços", desc: "Abordagem centrada no usuário para resolver problemas de forma criativa e inovadora com Service BluePrint." },
   { icon: <Sparkles size={20} />, label: "UX Design", desc: "Criação de experiências positivas e eficientes para os usuários em produtos e serviços." },
   { icon: <Layout size={20} />, label: "Design de Interface", desc: "Junção de forma e função de maneira intuitiva para criação de Produtos Digitais." },
   { icon: <Smartphone size={20} />, label: "Design de Aplicativos", desc: "Criação de interfaces e experiências intuitivas para aplicativos móveis e web." },
