@@ -51,7 +51,7 @@ export default function AutorPage() {
           Atua como Designer de Produto Digital com mais de 10 anos de experiência. Conduz entrevistas com usuários, realiza o mapeamento de jornadas para o desenvolvimento de produtos digitais e desenvolve protótipos interativos de alta fidelidade para aplicativos móveis e de desktop. Possui experiência em projetos nos setores de tecnologia e financeiro.
         </p>
         <p className="text-sm text-muted-foreground leading-relaxed">
-          Formado em Design e Pós-graduado em Design Thinking, User Experience (UX) e User Interface (UI), Inteligência Artificial e Engenharia de Software.
+          <strong className="font-semibold text-foreground">Formado em Design e Pós-graduado em Design Thinking, User Experience (UX) e User Interface (UI), Inteligência Artificial e Engenharia de Software.</strong>
         </p>
       </div>
 
