@@ -45,7 +45,7 @@ export default function AutorPage() {
       />
 
       {/* Bio */}
-      <SectionHeader id="sobre" title="Alessandro Pontes" description="Product Designer" />
+      <SectionHeader id="sobre" title="Alessandro Pontes" description="Product Designer · UX / UI Design - Product Design - CX / SD / AI FIRST / BI - GovTech" />
       <div className="fnde-card mb-8">
         <p className="text-sm text-muted-foreground leading-relaxed mb-4">
           Atua como Designer de Produto Digital com mais de 10 anos de experiência. Conduz entrevistas com usuários, realiza o mapeamento de jornadas para o desenvolvimento de produtos digitais e desenvolve protótipos interativos de alta fidelidade para aplicativos móveis e de desktop. Possui experiência em projetos nos setores de tecnologia e financeiro.
