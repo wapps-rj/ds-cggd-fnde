@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink } from "lucide-react";
+import thumbDashboardInstitucional from "@/assets/thumb-dashboard-institucional.jpg";
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
 import { Menu, Sun, Moon } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
@@ -503,16 +504,29 @@ export default function TemplatesPage() {
           const isDashboard = t.title === "Dashboard Institucional";
           const cardInner = (
             <>
-              <div className={`h-32 ${t.preview} rounded-lg mb-4 flex items-center justify-center`}>
-                <div className="w-4/5 space-y-2">
-                  <div className="h-3 bg-primary/10 rounded w-1/3" />
-                  <div className="flex gap-2">
-                    <div className="h-16 bg-primary/10 rounded flex-1" />
-                    <div className="h-16 bg-primary/10 rounded flex-1" />
-                  </div>
-                  <div className="h-3 bg-primary/10 rounded w-2/3" />
+              {isDashboard ? (
+                <div className="h-32 rounded-lg mb-4 overflow-hidden bg-[#EFF3F8]">
+                  <img
+                    src={thumbDashboardInstitucional}
+                    alt="Thumbnail do Dashboard Institucional com KPIs, gráfico donut e barras"
+                    loading="lazy"
+                    width={1280}
+                    height={800}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              </div>
+              ) : (
+                <div className={`h-32 ${t.preview} rounded-lg mb-4 flex items-center justify-center`}>
+                  <div className="w-4/5 space-y-2">
+                    <div className="h-3 bg-primary/10 rounded w-1/3" />
+                    <div className="flex gap-2">
+                      <div className="h-16 bg-primary/10 rounded flex-1" />
+                      <div className="h-16 bg-primary/10 rounded flex-1" />
+                    </div>
+                    <div className="h-3 bg-primary/10 rounded w-2/3" />
+                  </div>
+                </div>
+              )}
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <h3 className="font-semibold text-sm mb-1">{t.title}</h3>
