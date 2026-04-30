@@ -499,22 +499,54 @@ export default function TemplatesPage() {
         description="Padrões de layout pré-definidos para os principais fluxos."
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {templates.map(t => (
-          <div key={t.title} className="fnde-card overflow-hidden">
-            <div className={`h-32 ${t.preview} rounded-lg mb-4 flex items-center justify-center`}>
-              <div className="w-4/5 space-y-2">
-                <div className="h-3 bg-primary/10 rounded w-1/3" />
-                <div className="flex gap-2">
-                  <div className="h-16 bg-primary/10 rounded flex-1" />
-                  <div className="h-16 bg-primary/10 rounded flex-1" />
+        {templates.map(t => {
+          const isDashboard = t.title === "Dashboard Institucional";
+          const cardInner = (
+            <>
+              <div className={`h-32 ${t.preview} rounded-lg mb-4 flex items-center justify-center`}>
+                <div className="w-4/5 space-y-2">
+                  <div className="h-3 bg-primary/10 rounded w-1/3" />
+                  <div className="flex gap-2">
+                    <div className="h-16 bg-primary/10 rounded flex-1" />
+                    <div className="h-16 bg-primary/10 rounded flex-1" />
+                  </div>
+                  <div className="h-3 bg-primary/10 rounded w-2/3" />
                 </div>
-                <div className="h-3 bg-primary/10 rounded w-2/3" />
               </div>
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <h3 className="font-semibold text-sm mb-1">{t.title}</h3>
+                  <p className="text-xs text-muted-foreground">{t.desc}</p>
+                </div>
+                {isDashboard && (
+                  <span className="shrink-0 inline-flex items-center gap-1 text-[10px] font-semibold text-primary">
+                    Ver página <ExternalLink size={10} />
+                  </span>
+                )}
+              </div>
+            </>
+          );
+
+          if (isDashboard) {
+            return (
+              <Link
+                key={t.title}
+                to="/templates/dashboard-institucional"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fnde-card overflow-hidden block hover:shadow-lg hover:border-primary/40 transition-all"
+              >
+                {cardInner}
+              </Link>
+            );
+          }
+
+          return (
+            <div key={t.title} className="fnde-card overflow-hidden">
+              {cardInner}
             </div>
-            <h3 className="font-semibold text-sm mb-1">{t.title}</h3>
-            <p className="text-xs text-muted-foreground">{t.desc}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
