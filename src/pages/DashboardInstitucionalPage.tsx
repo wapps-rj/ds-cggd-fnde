@@ -350,6 +350,32 @@ export default function DashboardInstitucionalPage() {
 
         {/* ─── Conteúdo (Dashboard Layout Completa, sem header) ─── */}
         <main className="flex-1 min-w-0 overflow-x-auto">
+          {/* Breadcrumb */}
+          <nav
+            aria-label="Navegação estrutural"
+            className="flex items-center gap-1.5 px-5 py-2.5 bg-card border-b border-border text-xs"
+          >
+            <a
+              href="#"
+              className="flex items-center gap-1 text-muted-foreground hover:text-[#D98217] transition-colors"
+            >
+              <Home size={12} />
+              <span>Início</span>
+            </a>
+            <ChevronRight size={12} className="text-muted-foreground/50" />
+            <a href="#" className="text-muted-foreground hover:text-[#D98217] transition-colors">
+              Painéis
+            </a>
+            <ChevronRight size={12} className="text-muted-foreground/50" />
+            <a href="#" className="text-muted-foreground hover:text-[#D98217] transition-colors">
+              Indicadores
+            </a>
+            <ChevronRight size={12} className="text-muted-foreground/50" />
+            <span className="font-semibold text-[#0d3857] dark:text-foreground" aria-current="page">
+              Dashboard Institucional
+            </span>
+          </nav>
+
           {/* Filter bar */}
           <div className="flex items-center gap-2 px-5 py-2 bg-card border-b border-border">
             <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0d3857] text-white text-xs rounded">
