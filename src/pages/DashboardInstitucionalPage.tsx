@@ -228,7 +228,7 @@ export default function DashboardInstitucionalPage() {
 
         {/* Separator + Título */}
         <div className="w-px h-8 bg-[#0d3857]/30 shrink-0" />
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 hidden md:block">
           <p className="text-sm font-semibold text-[#0d3857] leading-tight">
             Dashboard Institucional
           </p>
@@ -236,6 +236,7 @@ export default function DashboardInstitucionalPage() {
             Visão geral consolidada · Programas e Indicadores
           </p>
         </div>
+        <div className="flex-1 md:hidden" />
 
         {/* Theme toggle */}
         <button
