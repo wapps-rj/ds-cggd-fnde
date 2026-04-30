@@ -20,20 +20,31 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
-        <DSLayout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/fundamentos" element={<FundamentosPage />} />
-            <Route path="/tokens" element={<TokensPage />} />
-            <Route path="/componentes" element={<ComponentesPage />} />
-            <Route path="/templates" element={<TemplatesPage />} />
-            <Route path="/marca" element={<MarcaPage />} />
-            <Route path="/conteudo" element={<ConteudoPage />} />
-            <Route path="/acessibilidade" element={<AcessibilidadePage />} />
-            <Route path="/autor" element={<AutorPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </DSLayout>
+        <Routes>
+          {/* Standalone template page (sem DSLayout) */}
+          <Route path="/templates/dashboard-institucional" element={<DashboardInstitucionalPage />} />
+
+          {/* Demais rotas dentro do DSLayout */}
+          <Route
+            path="*"
+            element={
+              <DSLayout>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/fundamentos" element={<FundamentosPage />} />
+                  <Route path="/tokens" element={<TokensPage />} />
+                  <Route path="/componentes" element={<ComponentesPage />} />
+                  <Route path="/templates" element={<TemplatesPage />} />
+                  <Route path="/marca" element={<MarcaPage />} />
+                  <Route path="/conteudo" element={<ConteudoPage />} />
+                  <Route path="/acessibilidade" element={<AcessibilidadePage />} />
+                  <Route path="/autor" element={<AutorPage />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </DSLayout>
+            }
+          />
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
