@@ -11,6 +11,7 @@ import MarcaPage from "@/pages/MarcaPage";
 import ConteudoPage from "@/pages/ConteudoPage";
 import AcessibilidadePage from "@/pages/AcessibilidadePage";
 import AutorPage from "@/pages/AutorPage";
+import DashboardInstitucionalPage from "@/pages/DashboardInstitucionalPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
