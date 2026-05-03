@@ -288,7 +288,12 @@ export default function TelaListagemPage() {
 
       {/* Header */}
       <header className="bg-[#FBDFA2] flex items-center px-5 py-3 gap-4 min-h-[64px] shrink-0">
-        <button className="p-2 hover:bg-[#0d3857]/10 rounded transition-colors flex items-center gap-1.5 shrink-0" aria-label="Abrir menu">
+        <button
+          onClick={() => setSidebarOpen((o) => !o)}
+          className="p-2 hover:bg-[#0d3857]/10 rounded transition-colors flex items-center gap-1.5 shrink-0"
+          aria-label={sidebarOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={sidebarOpen}
+        >
           <Menu size={20} className="text-[#0d3857]" />
           <span className="text-xs text-[#0d3857]/70 hidden sm:inline">Menu</span>
         </button>
