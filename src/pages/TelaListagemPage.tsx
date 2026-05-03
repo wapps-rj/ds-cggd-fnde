@@ -310,6 +310,105 @@ export default function TelaListagemPage() {
         <img src={marcaGov} alt="Governo do Brasil" className="h-10 w-auto shrink-0" />
       </header>
 
+      {/* ═══ BODY: Sidebar + Conteúdo ═══ */}
+      <div className="flex-1 flex min-h-0">
+        {/* ─── Sidebar lateral ─── */}
+        {sidebarOpen && (
+          <aside className="w-[260px] bg-[#0d3857] text-white flex flex-col shrink-0 border-r border-[#0d3857]">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <img src={iconeFndeNegativo} alt="FNDE" className="h-5 w-5" />
+                <span className="text-sm font-semibold">SIGLA</span>
+              </div>
+              <button
+                onClick={() => setSidebarOpen(false)}
+                className="p-1 rounded hover:bg-white/10 transition-colors"
+                aria-label="Fechar menu"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="px-3 py-2">
+              <div className="relative">
+                <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-white/40" />
+                <input
+                  ref={menuSearchRef}
+                  type="text"
+                  placeholder="Buscar no menu..."
+                  value={menuSearch}
+                  onChange={(e) => setMenuSearch(e.target.value)}
+                  className="w-full bg-white/10 text-white text-xs rounded pl-8 pr-8 py-2 placeholder:text-white/40 border border-white/10 focus:outline-none focus:ring-1 focus:ring-[#D98217]/50 focus:border-[#D98217]/50"
+                />
+                {menuSearch && (
+                  <button
+                    onClick={() => { setMenuSearch(""); menuSearchRef.current?.focus(); }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+                    aria-label="Limpar busca"
+                  >
+                    <X size={12} />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <nav className="flex-1 overflow-y-auto px-2 pb-4" aria-label="Menu principal">
+              {filteredMenu.map((item) => (
+                <div key={item.label}>
+                  <button
+                    onClick={() => {
+                      setActiveMenu(item.label);
+                      if (item.children) setMenuExpanded((p) => ({ ...p, [item.label]: !p[item.label] }));
+                    }}
+                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded text-sm transition-colors ${
+                      activeMenu === item.label
+                        ? "bg-white/15 text-white font-medium"
+                        : "text-white/70 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    <span className="flex-shrink-0">{item.icon}</span>
+                    <span className="flex-1 text-left text-[13px]">{item.label}</span>
+                    {item.children && (
+                      menuExpanded[item.label]
+                        ? <ChevronDown size={14} className="text-white/40" />
+                        : <ChevronRight size={14} className="text-white/40" />
+                    )}
+                  </button>
+                  {item.children && menuExpanded[item.label] && (
+                    <div className="ml-7 mt-0.5 space-y-0.5 mb-1">
+                      {item.children
+                        .filter((c) => !menuQuery || c.label.toLowerCase().includes(menuQuery))
+                        .map((child) => (
+                          <button
+                            key={child.label}
+                            onClick={() => setActiveMenu(child.label)}
+                            className={`block w-full text-left text-xs px-3 py-1.5 rounded transition-colors ${
+                              activeMenu === child.label
+                                ? "text-white bg-white/10 font-medium"
+                                : "text-white/50 hover:text-white hover:bg-white/10"
+                            }`}
+                          >
+                            {child.label}
+                          </button>
+                        ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </nav>
+
+            <div className="border-t border-white/10 px-3 py-2">
+              <div className="flex items-center gap-2 px-2 py-1.5 text-white/50 text-[10px]">
+                <Folder size={12} />
+                <span>CGGD · FNDE</span>
+              </div>
+            </div>
+          </aside>
+        )}
+
+        {/* ─── Conteúdo ─── */}
+        <div className="flex-1 min-w-0 flex flex-col">
+
       {/* Breadcrumb */}
       <nav aria-label="Navegação estrutural" className="flex items-center gap-1.5 px-5 py-2.5 bg-card border-b border-border text-xs">
         <a href="#" className="flex items-center gap-1 text-muted-foreground hover:text-[#D98217] transition-colors">
