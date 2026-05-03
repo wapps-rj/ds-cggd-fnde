@@ -430,7 +430,10 @@ export default function TelaListagemPage() {
           <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs border border-border rounded hover:bg-muted transition-colors">
             <Download size={12} /> Exportar
           </button>
-          <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs bg-[#D98217] hover:bg-[#D98217]/90 text-white rounded transition-colors">
+          <button
+            onClick={() => setModalOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs bg-[#D98217] hover:bg-[#D98217]/90 text-white rounded transition-colors"
+          >
             <Plus size={12} /> Novo registro
           </button>
         </div>
