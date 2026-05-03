@@ -677,11 +677,165 @@ export default function TelaListagemPage() {
         </div>
       </main>
 
-      {/* Footer institucional */}
-      <div className="flex items-center justify-end gap-3 px-5 py-3 border-t border-border bg-muted/30">
-        <img src={fndeLogoReduzida} alt="FNDE" className="h-5 w-auto opacity-60" />
-        <span className="text-[10px] text-muted-foreground">Tela de Listagem · v.1.0</span>
+          {/* Footer institucional */}
+          <div className="flex items-center justify-end gap-3 px-5 py-3 border-t border-border bg-muted/30">
+            <img src={fndeLogoReduzida} alt="FNDE" className="h-5 w-auto opacity-60" />
+            <span className="text-[10px] text-muted-foreground">Tela de Listagem · v.1.0</span>
+          </div>
+        </div>
       </div>
+
+      {/* ═══ MODAL: Novo registro ═══ */}
+      {modalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+        >
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200"
+            onClick={() => setModalOpen(false)}
+          />
+          <div className="relative bg-card rounded-lg shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-border animate-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-border bg-[#FBDFA2]">
+              <div>
+                <h2 id="modal-title" className="text-base font-bold text-[#0d3857]">Novo registro</h2>
+                <p className="text-[11px] text-[#0d3857]/70">Cadastre um novo programa de repasse.</p>
+              </div>
+              <button
+                onClick={() => setModalOpen(false)}
+                className="p-1.5 hover:bg-[#0d3857]/10 rounded transition-colors"
+                aria-label="Fechar modal"
+              >
+                <X size={16} className="text-[#0d3857]" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="p-5 space-y-4">
+              <div>
+                <label htmlFor="f-programa" className="block text-xs font-medium text-foreground mb-1.5">
+                  Programa <span className="text-[#D98217]">*</span>
+                </label>
+                <input
+                  id="f-programa"
+                  type="text"
+                  required
+                  value={form.programa}
+                  onChange={(e) => setForm({ ...form, programa: e.target.value })}
+                  placeholder="Ex.: PNAE — Alimentação Escolar"
+                  className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40 focus:border-[#D98217]/40"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="f-resp" className="block text-xs font-medium text-foreground mb-1.5">
+                  Responsável <span className="text-[#D98217]">*</span>
+                </label>
+                <input
+                  id="f-resp"
+                  type="text"
+                  required
+                  value={form.responsavel}
+                  onChange={(e) => setForm({ ...form, responsavel: e.target.value })}
+                  placeholder="Nome completo"
+                  className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40 focus:border-[#D98217]/40"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="f-unidade" className="block text-xs font-medium text-foreground mb-1.5">Unidade</label>
+                  <select
+                    id="f-unidade"
+                    value={form.unidade}
+                    onChange={(e) => setForm({ ...form, unidade: e.target.value })}
+                    className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40"
+                  >
+                    <option>DIRAE/FNDE</option>
+                    <option>DIPRO/FNDE</option>
+                    <option>DIFIN/FNDE</option>
+                    <option>CGGD/FNDE</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="f-modalidade" className="block text-xs font-medium text-foreground mb-1.5">Modalidade</label>
+                  <select
+                    id="f-modalidade"
+                    value={form.modalidade}
+                    onChange={(e) => setForm({ ...form, modalidade: e.target.value })}
+                    className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40"
+                  >
+                    <option>Repasse mensal</option>
+                    <option>Repasse trimestral</option>
+                    <option>Repasse semestral</option>
+                    <option>Repasse anual</option>
+                    <option>Aquisição direta</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="f-valor" className="block text-xs font-medium text-foreground mb-1.5">
+                    Valor (R$) <span className="text-[#D98217]">*</span>
+                  </label>
+                  <input
+                    id="f-valor"
+                    type="text"
+                    required
+                    inputMode="decimal"
+                    value={form.valor}
+                    onChange={(e) => setForm({ ...form, valor: e.target.value })}
+                    placeholder="0,00"
+                    className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40 focus:border-[#D98217]/40"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="f-inicio" className="block text-xs font-medium text-foreground mb-1.5">
+                    Data de início
+                  </label>
+                  <input
+                    id="f-inicio"
+                    type="text"
+                    placeholder="DD/MM/AAAA"
+                    value={form.inicio}
+                    onChange={(e) => setForm({ ...form, inicio: e.target.value })}
+                    className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40 focus:border-[#D98217]/40"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-border">
+                <button
+                  type="button"
+                  onClick={() => setModalOpen(false)}
+                  className="px-4 py-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium bg-[#0d3857] hover:bg-[#0d3857]/90 text-white rounded transition-colors"
+                >
+                  <Plus size={12} /> Criar registro
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ═══ Toast ═══ */}
+      {toast && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-5 right-5 z-50 max-w-sm bg-[#0d3857] text-white text-xs px-4 py-3 rounded-lg shadow-2xl border border-[#D98217]/40 animate-in slide-in-from-bottom-2 duration-200"
+        >
+          {toast}
+        </div>
+      )}
     </div>
   );
 }
