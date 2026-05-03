@@ -375,8 +375,8 @@ export default function TelaListagemPage() {
                 {filtered.map((r, i) => {
                   const isOpen = !!expanded[r.id];
                   return (
-                    <>
-                      <tr key={r.id} className={`${i % 2 === 0 ? "bg-card" : "bg-muted/30"} border-b border-border hover:bg-muted/50 transition-colors`}>
+                    <React.Fragment key={r.id}>
+                      <tr className={`${i % 2 === 0 ? "bg-card" : "bg-muted/30"} border-b border-border hover:bg-muted/50 transition-colors`}>
                         <td className="px-2 py-2 text-center">
                           <button
                             onClick={() => setExpanded({ ...expanded, [r.id]: !isOpen })}
