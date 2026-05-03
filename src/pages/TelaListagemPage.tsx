@@ -5,6 +5,7 @@ import {
   Search, Filter, X, Download, Plus, MoreVertical,
   TrendingUp, Trophy,
   ChevronLeft,
+  Eye, Pencil, Trash2,
   GraduationCap, Wallet, BarChart3, Users, FileText, Bell, Shield, Settings, HelpCircle, Folder,
 } from "lucide-react";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
