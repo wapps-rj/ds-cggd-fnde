@@ -1,14 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Menu, Sun, Moon, ArrowLeft, Home, ChevronRight, ChevronDown,
   Search, Filter, X, Download, Plus, MoreVertical,
-  TrendingUp, TrendingDown, Users, FileCheck, Target, Trophy,
+  TrendingUp, Trophy,
   ChevronLeft,
+  GraduationCap, Wallet, BarChart3, Users, FileText, Bell, Shield, Settings, HelpCircle, Folder,
 } from "lucide-react";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
 import marcaGov from "@/assets/marca-gov.png";
+import iconeFndeNegativo from "@/assets/icone-fnde-negativo.svg";
 import { useTheme } from "@/hooks/useTheme";
+
+/* ─── Menu items ─── */
+interface MenuItem {
+  label: string;
+  icon: React.ReactNode;
+  children?: { label: string }[];
+}
+
+const menuItems: MenuItem[] = [
+  { label: "Início", icon: <Home size={16} /> },
+  {
+    label: "Programas", icon: <GraduationCap size={16} />,
+    children: [{ label: "PNAE" }, { label: "PNATE" }, { label: "PDDE" }, { label: "Caminho da Escola" }],
+  },
+  {
+    label: "Financeiro", icon: <Wallet size={16} />,
+    children: [{ label: "Prestação de Contas" }, { label: "Repasses" }, { label: "Convênios" }],
+  },
+  {
+    label: "Relatórios", icon: <BarChart3 size={16} />,
+    children: [{ label: "Indicadores" }, { label: "Dashboards" }, { label: "Exportações" }],
+  },
+  { label: "Usuários", icon: <Users size={16} /> },
+  {
+    label: "Documentos", icon: <FileText size={16} />,
+    children: [{ label: "Normativos" }, { label: "Manuais" }, { label: "Resoluções" }],
+  },
+  { label: "Notificações", icon: <Bell size={16} /> },
+  { label: "Segurança", icon: <Shield size={16} /> },
+  { label: "Configurações", icon: <Settings size={16} /> },
+  { label: "Ajuda", icon: <HelpCircle size={16} /> },
+];
 
 /* ─── Mock data ─── */
 interface SubItem {
