@@ -5,6 +5,7 @@ import {
   Search, Filter, X, Download, Plus, MoreVertical,
   TrendingUp, Trophy,
   ChevronLeft,
+  Eye, Pencil, Trash2,
   GraduationCap, Wallet, BarChart3, Users, FileText, Bell, Shield, Settings, HelpCircle, Folder,
 } from "lucide-react";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
@@ -226,6 +227,14 @@ export default function TelaListagemPage() {
   const [chips, setChips] = useState<string[]>(["2026", "Repasse mensal"]);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({ "PRG-00021": true });
   const [page, setPage] = useState(1);
+  const [kebabOpen, setKebabOpen] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!kebabOpen) return;
+    const onClick = () => setKebabOpen(null);
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [kebabOpen]);
 
   // Sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -572,10 +581,63 @@ export default function TelaListagemPage() {
                         <td className="px-3 py-2 text-muted-foreground">{r.modalidade}</td>
                         <td className="px-3 py-2 text-right font-semibold">{r.valor}</td>
                         <td className="px-3 py-2"><StatusBadge status={r.status} /></td>
-                        <td className="px-2 py-2 text-center">
-                          <button className="p-1 hover:bg-foreground/10 rounded" aria-label="Mais ações">
+                        <td className="px-2 py-2 text-center relative">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setKebabOpen(kebabOpen === r.id ? null : r.id);
+                            }}
+                            className="p-1 hover:bg-foreground/10 rounded transition-colors"
+                            aria-label="Mais ações"
+                            aria-haspopup="menu"
+                            aria-expanded={kebabOpen === r.id}
+                          >
                             <MoreVertical size={14} />
                           </button>
+                          {kebabOpen === r.id && (
+                            <div
+                              role="menu"
+                              onClick={(e) => e.stopPropagation()}
+                              className="absolute right-2 top-full mt-1 z-20 w-44 bg-card border border-border rounded-md shadow-lg py-1 text-left animate-in fade-in zoom-in-95 duration-150"
+                            >
+                              <button
+                                role="menuitem"
+                                onClick={() => {
+                                  setKebabOpen(null);
+                                  setToast(`Visualizando registro ${r.id} — ${r.programa}`);
+                                  setTimeout(() => setToast(null), 4000);
+                                }}
+                                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-foreground hover:bg-muted transition-colors"
+                              >
+                                <Eye size={12} className="text-[#0d3857] dark:text-foreground" /> Visualizar
+                              </button>
+                              <button
+                                role="menuitem"
+                                onClick={() => {
+                                  setKebabOpen(null);
+                                  setToast(`Edição iniciada para ${r.id}.`);
+                                  setTimeout(() => setToast(null), 4000);
+                                }}
+                                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-foreground hover:bg-muted transition-colors"
+                              >
+                                <Pencil size={12} className="text-[#D98217]" /> Editar
+                              </button>
+                              <div className="my-1 h-px bg-border" />
+                              <button
+                                role="menuitem"
+                                onClick={() => {
+                                  setKebabOpen(null);
+                                  if (confirm(`Apagar o registro ${r.id} — ${r.programa}?`)) {
+                                    setToast(`Registro ${r.id} apagado.`);
+                                    setTimeout(() => setToast(null), 4000);
+                                  }
+                                }}
+                                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                              >
+                                <Trash2 size={12} /> Apagar
+                              </button>
+                            </div>
+                          )}
                         </td>
                       </tr>
                       {isOpen && (
