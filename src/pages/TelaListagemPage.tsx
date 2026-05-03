@@ -227,6 +227,35 @@ export default function TelaListagemPage() {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({ "PRG-00021": true });
   const [page, setPage] = useState(1);
 
+  // Sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [menuExpanded, setMenuExpanded] = useState<Record<string, boolean>>({ Programas: true });
+  const [activeMenu, setActiveMenu] = useState("Programas");
+  const [menuSearch, setMenuSearch] = useState("");
+  const menuSearchRef = useRef<HTMLInputElement>(null);
+  const menuQuery = menuSearch.toLowerCase().trim();
+  const filteredMenu = menuQuery
+    ? menuItems.filter(
+        (it) =>
+          it.label.toLowerCase().includes(menuQuery) ||
+          it.children?.some((c) => c.label.toLowerCase().includes(menuQuery))
+      )
+    : menuItems;
+
+  // Modal "Novo registro"
+  const [modalOpen, setModalOpen] = useState(false);
+  const [form, setForm] = useState({
+    programa: "", responsavel: "", unidade: "DIRAE/FNDE",
+    modalidade: "Repasse mensal", valor: "", inicio: "",
+  });
+  const [toast, setToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setModalOpen(false); };
+    if (modalOpen) document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [modalOpen]);
+
   const filtered = rows.filter(r => {
     if (search && !`${r.programa} ${r.responsavel} ${r.id}`.toLowerCase().includes(search.toLowerCase())) return false;
     if (filtroUnidade !== "todas" && r.unidade !== filtroUnidade) return false;
@@ -236,6 +265,14 @@ export default function TelaListagemPage() {
 
   const limpar = () => {
     setSearch(""); setFiltroUnidade("todas"); setFiltroStatus("todos"); setChips([]);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setModalOpen(false);
+    setToast(`Registro "${form.programa || "Sem título"}" criado com sucesso.`);
+    setForm({ programa: "", responsavel: "", unidade: "DIRAE/FNDE", modalidade: "Repasse mensal", valor: "", inicio: "" });
+    setTimeout(() => setToast(null), 4000);
   };
 
   const totalPages = 8;
