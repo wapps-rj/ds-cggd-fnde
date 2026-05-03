@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink } from "lucide-react";
 import thumbDashboardInstitucional from "@/assets/thumb-dashboard-institucional.jpg";
+import thumbTelaListagem from "@/assets/thumb-tela-listagem.jpg";
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
 import { Menu, Sun, Moon } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
@@ -332,7 +333,7 @@ export default function TemplatesPage() {
 
   const templates = [
     { title: "Dashboard Institucional", desc: "Painel com indicadores, gráficos e resumos executivos.", preview: "bg-fnde-blue-50" },
-    { title: "Tela de Listagem", desc: "Tabela com filtros, busca e paginação.", preview: "bg-fnde-orange-50" },
+    { title: "Tela de Listagem", desc: "Tabela com filtros dinâmicos, busca, cards estatísticos avançados, tabela aninhada (nesting) e paginação.", preview: "bg-fnde-orange-50" },
     { title: "Tela de Formulário", desc: "Formulário com validação, steps e feedback.", preview: "bg-fnde-blue-50" },
     { title: "Tela de Detalhe", desc: "Visualização detalhada de um registro.", preview: "bg-fnde-orange-50" },
     { title: "Página de Autenticação", desc: "Login com campos, logo e branding FNDE.", preview: "bg-fnde-blue-50" },
@@ -502,13 +503,20 @@ export default function TemplatesPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {templates.map(t => {
           const isDashboard = t.title === "Dashboard Institucional";
+          const isListagem = t.title === "Tela de Listagem";
+          const isInteractive = isDashboard || isListagem;
+          const route = isDashboard ? "/templates/dashboard-institucional" : "/templates/tela-listagem";
+          const thumbSrc = isDashboard ? thumbDashboardInstitucional : thumbTelaListagem;
+          const thumbAlt = isDashboard
+            ? "Thumbnail do Dashboard Institucional com KPIs, gráfico donut e barras"
+            : "Thumbnail da Tela de Listagem com filtros, cards estatísticos e tabela aninhada";
           const cardInner = (
             <>
-              {isDashboard ? (
+              {isInteractive ? (
                 <div className="h-32 rounded-lg mb-4 overflow-hidden bg-[#EFF3F8]">
                   <img
-                    src={thumbDashboardInstitucional}
-                    alt="Thumbnail do Dashboard Institucional com KPIs, gráfico donut e barras"
+                    src={thumbSrc}
+                    alt={thumbAlt}
                     loading="lazy"
                     width={1280}
                     height={800}
@@ -532,7 +540,7 @@ export default function TemplatesPage() {
                   <h3 className="font-semibold text-sm mb-1">{t.title}</h3>
                   <p className="text-xs text-muted-foreground">{t.desc}</p>
                 </div>
-                {isDashboard && (
+                {isInteractive && (
                   <span className="shrink-0 inline-flex items-center gap-1 text-[10px] font-semibold text-primary">
                     Ver página <ExternalLink size={10} />
                   </span>
@@ -541,11 +549,11 @@ export default function TemplatesPage() {
             </>
           );
 
-          if (isDashboard) {
+          if (isInteractive) {
             return (
               <Link
                 key={t.title}
-                to="/templates/dashboard-institucional"
+                to={route}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fnde-card overflow-hidden block hover:shadow-lg hover:border-primary/40 transition-all"
