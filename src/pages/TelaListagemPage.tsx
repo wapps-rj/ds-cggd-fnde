@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Menu, Sun, Moon, ArrowLeft, Home, ChevronRight, ChevronDown,
@@ -431,7 +431,7 @@ export default function TelaListagemPage() {
                           </td>
                         </tr>
                       )}
-                    </>
+                    </React.Fragment>
                   );
                 })}
                 {filtered.length === 0 && (
