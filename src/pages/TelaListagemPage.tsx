@@ -1,14 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Menu, Sun, Moon, ArrowLeft, Home, ChevronRight, ChevronDown,
   Search, Filter, X, Download, Plus, MoreVertical,
-  TrendingUp, TrendingDown, Users, FileCheck, Target, Trophy,
+  TrendingUp, Trophy,
   ChevronLeft,
+  GraduationCap, Wallet, BarChart3, Users, FileText, Bell, Shield, Settings, HelpCircle, Folder,
 } from "lucide-react";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
 import marcaGov from "@/assets/marca-gov.png";
+import iconeFndeNegativo from "@/assets/icone-fnde-negativo.svg";
 import { useTheme } from "@/hooks/useTheme";
+
+/* ─── Menu items ─── */
+interface MenuItem {
+  label: string;
+  icon: React.ReactNode;
+  children?: { label: string }[];
+}
+
+const menuItems: MenuItem[] = [
+  { label: "Início", icon: <Home size={16} /> },
+  {
+    label: "Programas", icon: <GraduationCap size={16} />,
+    children: [{ label: "PNAE" }, { label: "PNATE" }, { label: "PDDE" }, { label: "Caminho da Escola" }],
+  },
+  {
+    label: "Financeiro", icon: <Wallet size={16} />,
+    children: [{ label: "Prestação de Contas" }, { label: "Repasses" }, { label: "Convênios" }],
+  },
+  {
+    label: "Relatórios", icon: <BarChart3 size={16} />,
+    children: [{ label: "Indicadores" }, { label: "Dashboards" }, { label: "Exportações" }],
+  },
+  { label: "Usuários", icon: <Users size={16} /> },
+  {
+    label: "Documentos", icon: <FileText size={16} />,
+    children: [{ label: "Normativos" }, { label: "Manuais" }, { label: "Resoluções" }],
+  },
+  { label: "Notificações", icon: <Bell size={16} /> },
+  { label: "Segurança", icon: <Shield size={16} /> },
+  { label: "Configurações", icon: <Settings size={16} /> },
+  { label: "Ajuda", icon: <HelpCircle size={16} /> },
+];
 
 /* ─── Mock data ─── */
 interface SubItem {
@@ -193,6 +227,35 @@ export default function TelaListagemPage() {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({ "PRG-00021": true });
   const [page, setPage] = useState(1);
 
+  // Sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [menuExpanded, setMenuExpanded] = useState<Record<string, boolean>>({ Programas: true });
+  const [activeMenu, setActiveMenu] = useState("Programas");
+  const [menuSearch, setMenuSearch] = useState("");
+  const menuSearchRef = useRef<HTMLInputElement>(null);
+  const menuQuery = menuSearch.toLowerCase().trim();
+  const filteredMenu = menuQuery
+    ? menuItems.filter(
+        (it) =>
+          it.label.toLowerCase().includes(menuQuery) ||
+          it.children?.some((c) => c.label.toLowerCase().includes(menuQuery))
+      )
+    : menuItems;
+
+  // Modal "Novo registro"
+  const [modalOpen, setModalOpen] = useState(false);
+  const [form, setForm] = useState({
+    programa: "", responsavel: "", unidade: "DIRAE/FNDE",
+    modalidade: "Repasse mensal", valor: "", inicio: "",
+  });
+  const [toast, setToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setModalOpen(false); };
+    if (modalOpen) document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [modalOpen]);
+
   const filtered = rows.filter(r => {
     if (search && !`${r.programa} ${r.responsavel} ${r.id}`.toLowerCase().includes(search.toLowerCase())) return false;
     if (filtroUnidade !== "todas" && r.unidade !== filtroUnidade) return false;
@@ -202,6 +265,14 @@ export default function TelaListagemPage() {
 
   const limpar = () => {
     setSearch(""); setFiltroUnidade("todas"); setFiltroStatus("todos"); setChips([]);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setModalOpen(false);
+    setToast(`Registro "${form.programa || "Sem título"}" criado com sucesso.`);
+    setForm({ programa: "", responsavel: "", unidade: "DIRAE/FNDE", modalidade: "Repasse mensal", valor: "", inicio: "" });
+    setTimeout(() => setToast(null), 4000);
   };
 
   const totalPages = 8;
@@ -217,7 +288,12 @@ export default function TelaListagemPage() {
 
       {/* Header */}
       <header className="bg-[#FBDFA2] flex items-center px-5 py-3 gap-4 min-h-[64px] shrink-0">
-        <button className="p-2 hover:bg-[#0d3857]/10 rounded transition-colors flex items-center gap-1.5 shrink-0" aria-label="Abrir menu">
+        <button
+          onClick={() => setSidebarOpen((o) => !o)}
+          className="p-2 hover:bg-[#0d3857]/10 rounded transition-colors flex items-center gap-1.5 shrink-0"
+          aria-label={sidebarOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={sidebarOpen}
+        >
           <Menu size={20} className="text-[#0d3857]" />
           <span className="text-xs text-[#0d3857]/70 hidden sm:inline">Menu</span>
         </button>
@@ -233,6 +309,105 @@ export default function TelaListagemPage() {
         </button>
         <img src={marcaGov} alt="Governo do Brasil" className="h-10 w-auto shrink-0" />
       </header>
+
+      {/* ═══ BODY: Sidebar + Conteúdo ═══ */}
+      <div className="flex-1 flex min-h-0">
+        {/* ─── Sidebar lateral ─── */}
+        {sidebarOpen && (
+          <aside className="w-[260px] bg-[#0d3857] text-white flex flex-col shrink-0 border-r border-[#0d3857]">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <img src={iconeFndeNegativo} alt="FNDE" className="h-5 w-5" />
+                <span className="text-sm font-semibold">SIGLA</span>
+              </div>
+              <button
+                onClick={() => setSidebarOpen(false)}
+                className="p-1 rounded hover:bg-white/10 transition-colors"
+                aria-label="Fechar menu"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="px-3 py-2">
+              <div className="relative">
+                <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-white/40" />
+                <input
+                  ref={menuSearchRef}
+                  type="text"
+                  placeholder="Buscar no menu..."
+                  value={menuSearch}
+                  onChange={(e) => setMenuSearch(e.target.value)}
+                  className="w-full bg-white/10 text-white text-xs rounded pl-8 pr-8 py-2 placeholder:text-white/40 border border-white/10 focus:outline-none focus:ring-1 focus:ring-[#D98217]/50 focus:border-[#D98217]/50"
+                />
+                {menuSearch && (
+                  <button
+                    onClick={() => { setMenuSearch(""); menuSearchRef.current?.focus(); }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+                    aria-label="Limpar busca"
+                  >
+                    <X size={12} />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <nav className="flex-1 overflow-y-auto px-2 pb-4" aria-label="Menu principal">
+              {filteredMenu.map((item) => (
+                <div key={item.label}>
+                  <button
+                    onClick={() => {
+                      setActiveMenu(item.label);
+                      if (item.children) setMenuExpanded((p) => ({ ...p, [item.label]: !p[item.label] }));
+                    }}
+                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded text-sm transition-colors ${
+                      activeMenu === item.label
+                        ? "bg-white/15 text-white font-medium"
+                        : "text-white/70 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    <span className="flex-shrink-0">{item.icon}</span>
+                    <span className="flex-1 text-left text-[13px]">{item.label}</span>
+                    {item.children && (
+                      menuExpanded[item.label]
+                        ? <ChevronDown size={14} className="text-white/40" />
+                        : <ChevronRight size={14} className="text-white/40" />
+                    )}
+                  </button>
+                  {item.children && menuExpanded[item.label] && (
+                    <div className="ml-7 mt-0.5 space-y-0.5 mb-1">
+                      {item.children
+                        .filter((c) => !menuQuery || c.label.toLowerCase().includes(menuQuery))
+                        .map((child) => (
+                          <button
+                            key={child.label}
+                            onClick={() => setActiveMenu(child.label)}
+                            className={`block w-full text-left text-xs px-3 py-1.5 rounded transition-colors ${
+                              activeMenu === child.label
+                                ? "text-white bg-white/10 font-medium"
+                                : "text-white/50 hover:text-white hover:bg-white/10"
+                            }`}
+                          >
+                            {child.label}
+                          </button>
+                        ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </nav>
+
+            <div className="border-t border-white/10 px-3 py-2">
+              <div className="flex items-center gap-2 px-2 py-1.5 text-white/50 text-[10px]">
+                <Folder size={12} />
+                <span>CGGD · FNDE</span>
+              </div>
+            </div>
+          </aside>
+        )}
+
+        {/* ─── Conteúdo ─── */}
+        <div className="flex-1 min-w-0 flex flex-col">
 
       {/* Breadcrumb */}
       <nav aria-label="Navegação estrutural" className="flex items-center gap-1.5 px-5 py-2.5 bg-card border-b border-border text-xs">
@@ -255,7 +430,10 @@ export default function TelaListagemPage() {
           <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs border border-border rounded hover:bg-muted transition-colors">
             <Download size={12} /> Exportar
           </button>
-          <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs bg-[#D98217] hover:bg-[#D98217]/90 text-white rounded transition-colors">
+          <button
+            onClick={() => setModalOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs bg-[#D98217] hover:bg-[#D98217]/90 text-white rounded transition-colors"
+          >
             <Plus size={12} /> Novo registro
           </button>
         </div>
@@ -499,11 +677,165 @@ export default function TelaListagemPage() {
         </div>
       </main>
 
-      {/* Footer institucional */}
-      <div className="flex items-center justify-end gap-3 px-5 py-3 border-t border-border bg-muted/30">
-        <img src={fndeLogoReduzida} alt="FNDE" className="h-5 w-auto opacity-60" />
-        <span className="text-[10px] text-muted-foreground">Tela de Listagem · v.1.0</span>
+          {/* Footer institucional */}
+          <div className="flex items-center justify-end gap-3 px-5 py-3 border-t border-border bg-muted/30">
+            <img src={fndeLogoReduzida} alt="FNDE" className="h-5 w-auto opacity-60" />
+            <span className="text-[10px] text-muted-foreground">Tela de Listagem · v.1.0</span>
+          </div>
+        </div>
       </div>
+
+      {/* ═══ MODAL: Novo registro ═══ */}
+      {modalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+        >
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200"
+            onClick={() => setModalOpen(false)}
+          />
+          <div className="relative bg-card rounded-lg shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-border animate-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-border bg-[#FBDFA2]">
+              <div>
+                <h2 id="modal-title" className="text-base font-bold text-[#0d3857]">Novo registro</h2>
+                <p className="text-[11px] text-[#0d3857]/70">Cadastre um novo programa de repasse.</p>
+              </div>
+              <button
+                onClick={() => setModalOpen(false)}
+                className="p-1.5 hover:bg-[#0d3857]/10 rounded transition-colors"
+                aria-label="Fechar modal"
+              >
+                <X size={16} className="text-[#0d3857]" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="p-5 space-y-4">
+              <div>
+                <label htmlFor="f-programa" className="block text-xs font-medium text-foreground mb-1.5">
+                  Programa <span className="text-[#D98217]">*</span>
+                </label>
+                <input
+                  id="f-programa"
+                  type="text"
+                  required
+                  value={form.programa}
+                  onChange={(e) => setForm({ ...form, programa: e.target.value })}
+                  placeholder="Ex.: PNAE — Alimentação Escolar"
+                  className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40 focus:border-[#D98217]/40"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="f-resp" className="block text-xs font-medium text-foreground mb-1.5">
+                  Responsável <span className="text-[#D98217]">*</span>
+                </label>
+                <input
+                  id="f-resp"
+                  type="text"
+                  required
+                  value={form.responsavel}
+                  onChange={(e) => setForm({ ...form, responsavel: e.target.value })}
+                  placeholder="Nome completo"
+                  className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40 focus:border-[#D98217]/40"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="f-unidade" className="block text-xs font-medium text-foreground mb-1.5">Unidade</label>
+                  <select
+                    id="f-unidade"
+                    value={form.unidade}
+                    onChange={(e) => setForm({ ...form, unidade: e.target.value })}
+                    className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40"
+                  >
+                    <option>DIRAE/FNDE</option>
+                    <option>DIPRO/FNDE</option>
+                    <option>DIFIN/FNDE</option>
+                    <option>CGGD/FNDE</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="f-modalidade" className="block text-xs font-medium text-foreground mb-1.5">Modalidade</label>
+                  <select
+                    id="f-modalidade"
+                    value={form.modalidade}
+                    onChange={(e) => setForm({ ...form, modalidade: e.target.value })}
+                    className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40"
+                  >
+                    <option>Repasse mensal</option>
+                    <option>Repasse trimestral</option>
+                    <option>Repasse semestral</option>
+                    <option>Repasse anual</option>
+                    <option>Aquisição direta</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="f-valor" className="block text-xs font-medium text-foreground mb-1.5">
+                    Valor (R$) <span className="text-[#D98217]">*</span>
+                  </label>
+                  <input
+                    id="f-valor"
+                    type="text"
+                    required
+                    inputMode="decimal"
+                    value={form.valor}
+                    onChange={(e) => setForm({ ...form, valor: e.target.value })}
+                    placeholder="0,00"
+                    className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40 focus:border-[#D98217]/40"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="f-inicio" className="block text-xs font-medium text-foreground mb-1.5">
+                    Data de início
+                  </label>
+                  <input
+                    id="f-inicio"
+                    type="text"
+                    placeholder="DD/MM/AAAA"
+                    value={form.inicio}
+                    onChange={(e) => setForm({ ...form, inicio: e.target.value })}
+                    className="w-full px-3 py-2 text-xs bg-background border border-border rounded focus:outline-none focus:ring-2 focus:ring-[#D98217]/40 focus:border-[#D98217]/40"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-border">
+                <button
+                  type="button"
+                  onClick={() => setModalOpen(false)}
+                  className="px-4 py-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium bg-[#0d3857] hover:bg-[#0d3857]/90 text-white rounded transition-colors"
+                >
+                  <Plus size={12} /> Criar registro
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ═══ Toast ═══ */}
+      {toast && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-5 right-5 z-50 max-w-sm bg-[#0d3857] text-white text-xs px-4 py-3 rounded-lg shadow-2xl border border-[#D98217]/40 animate-in slide-in-from-bottom-2 duration-200"
+        >
+          {toast}
+        </div>
+      )}
     </div>
   );
 }
