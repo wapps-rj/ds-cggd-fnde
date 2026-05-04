@@ -598,7 +598,7 @@ export default function TelaFormularioPage() {
                     Voltar
                   </button>
                   <div className="flex items-center gap-2">
-                    <button type="button" onClick={() => setToast({ kind: "success", msg: "Rascunho salvo." }) || setTimeout(() => setToast(null), 3000) as unknown as void}
+                    <button type="button" onClick={() => { setToast({ kind: "success", msg: "Rascunho salvo." }); setTimeout(() => setToast(null), 3000); }}
                       className="inline-flex items-center gap-1.5 px-3 py-2 text-xs border border-border rounded hover:bg-muted transition-colors">
                       <Save size={12} /> Salvar rascunho
                     </button>
