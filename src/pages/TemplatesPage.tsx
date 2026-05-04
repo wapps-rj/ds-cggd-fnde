@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ExternalLink } from "lucide-react";
 import thumbDashboardInstitucional from "@/assets/thumb-dashboard-institucional.jpg";
 import thumbTelaListagem from "@/assets/thumb-tela-listagem.jpg";
+import thumbTelaFormulario from "@/assets/thumb-tela-formulario.jpg";
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
 import { Menu, Sun, Moon } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
@@ -504,12 +505,19 @@ export default function TemplatesPage() {
         {templates.map(t => {
           const isDashboard = t.title === "Dashboard Institucional";
           const isListagem = t.title === "Tela de Listagem";
-          const isInteractive = isDashboard || isListagem;
-          const route = isDashboard ? "/templates/dashboard-institucional" : "/templates/tela-listagem";
-          const thumbSrc = isDashboard ? thumbDashboardInstitucional : thumbTelaListagem;
+          const isFormulario = t.title === "Tela de Formulário";
+          const isInteractive = isDashboard || isListagem || isFormulario;
+          const route = isDashboard
+            ? "/templates/dashboard-institucional"
+            : isListagem
+              ? "/templates/tela-listagem"
+              : "/templates/tela-formulario";
+          const thumbSrc = isDashboard ? thumbDashboardInstitucional : isListagem ? thumbTelaListagem : thumbTelaFormulario;
           const thumbAlt = isDashboard
             ? "Thumbnail do Dashboard Institucional com KPIs, gráfico donut e barras"
-            : "Thumbnail da Tela de Listagem com filtros, cards estatísticos e tabela aninhada";
+            : isListagem
+              ? "Thumbnail da Tela de Listagem com filtros, cards estatísticos e tabela aninhada"
+              : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
           const cardInner = (
             <>
               {isInteractive ? (
