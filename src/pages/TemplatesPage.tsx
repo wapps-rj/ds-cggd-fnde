@@ -507,18 +507,29 @@ export default function TemplatesPage() {
           const isDashboard = t.title === "Dashboard Institucional";
           const isListagem = t.title === "Tela de Listagem";
           const isFormulario = t.title === "Tela de Formulário";
-          const isInteractive = isDashboard || isListagem || isFormulario;
+          const isAutenticacao = t.title === "Página de Autenticação";
+          const isInteractive = isDashboard || isListagem || isFormulario || isAutenticacao;
           const route = isDashboard
             ? "/templates/dashboard-institucional"
             : isListagem
               ? "/templates/tela-listagem"
-              : "/templates/tela-formulario";
-          const thumbSrc = isDashboard ? thumbDashboardInstitucional : isListagem ? thumbTelaListagem : thumbTelaFormulario;
+              : isFormulario
+                ? "/templates/tela-formulario"
+                : "/templates/pagina-autenticacao";
+          const thumbSrc = isDashboard 
+            ? thumbDashboardInstitucional 
+            : isListagem 
+              ? thumbTelaListagem 
+              : isFormulario 
+                ? thumbTelaFormulario 
+                : thumbPaginaAutenticacao;
           const thumbAlt = isDashboard
             ? "Thumbnail do Dashboard Institucional com KPIs, gráfico donut e barras"
             : isListagem
               ? "Thumbnail da Tela de Listagem com filtros, cards estatísticos e tabela aninhada"
-              : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
+              : isAutenticacao
+                ? "Thumbnail da Página de Autenticação com login institucional e Gov.br"
+                : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
           const cardInner = (
             <>
               {isInteractive ? (
