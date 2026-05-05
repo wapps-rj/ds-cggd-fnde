@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { CodeBlock } from "@/components/DSComponents";
 import { Eye, EyeOff, ShieldCheck } from "lucide-react";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
@@ -60,7 +61,7 @@ function SignInPreview() {
 
           <p className="text-center text-xs text-muted-foreground">
             Novo por aqui?{" "}
-            <a href="#" className="font-medium text-[#D98217] hover:underline">Criar uma conta</a>
+            <Link to="/templates/cadastro" className="font-medium text-[#D98217] hover:underline">Criar uma conta</Link>
           </p>
         </div>
 
@@ -157,7 +158,7 @@ function SignUpPreview() {
 
           <p className="text-center text-xs text-muted-foreground">
             Já tem uma conta?{" "}
-            <a href="#" className="font-medium text-[#D98217] hover:underline">Entrar</a>
+            <Link to="/templates/pagina-autenticacao" className="font-medium text-[#D98217] hover:underline">Entrar</Link>
           </p>
         </div>
 
@@ -326,9 +327,9 @@ function TwoFactorPreview() {
               Não recebeu o código?{" "}
               <a href="#" className="font-medium text-[#D98217] hover:underline">Reenviar código</a>
             </p>
-            <a href="#" className="text-xs font-medium text-[#0D3857] hover:underline">
+            <Link to="/templates/pagina-autenticacao" className="text-xs font-medium text-[#0D3857] hover:underline">
               Voltar para o login
-            </a>
+            </Link>
           </div>
         </div>
 
