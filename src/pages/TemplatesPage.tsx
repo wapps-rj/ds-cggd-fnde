@@ -338,7 +338,7 @@ export default function TemplatesPage() {
     { title: "Tela de Listagem", desc: "Tabela com filtros dinâmicos, busca, cards estatísticos avançados, tabela aninhada (nesting) e paginação.", preview: "bg-fnde-orange-50" },
     { title: "Tela de Formulário", desc: "Formulário com validação, steps e feedback.", preview: "bg-fnde-blue-50" },
     { title: "Tela de Detalhe", desc: "Visualização detalhada de um registro.", preview: "bg-fnde-orange-50" },
-    { title: "Página de Autenticação", desc: "Login com campos, logo e branding FNDE.", preview: "bg-fnde-blue-50" },
+    { title: "Fluxo de Autenticação Completo", desc: "Login, Cadastro e 2FA com branding FNDE e Gov.br.", preview: "bg-fnde-blue-50" },
     { title: "Página de Erro", desc: "404, 500 e erros genéricos com ação de retorno.", preview: "bg-fnde-orange-50" },
     { title: "Página com Filtros e Tabela", desc: "Combinação de sidebar de filtros com tabela de resultados.", preview: "bg-fnde-blue-50" },
   ];
@@ -507,7 +507,7 @@ export default function TemplatesPage() {
           const isDashboard = t.title === "Dashboard Institucional";
           const isListagem = t.title === "Tela de Listagem";
           const isFormulario = t.title === "Tela de Formulário";
-          const isAutenticacao = t.title === "Página de Autenticação";
+          const isAutenticacao = t.title === "Fluxo de Autenticação Completo";
           const isInteractive = isDashboard || isListagem || isFormulario || isAutenticacao;
           const route = isDashboard
             ? "/templates/dashboard-institucional"
