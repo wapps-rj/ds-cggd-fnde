@@ -14,6 +14,7 @@ import AutorPage from "@/pages/AutorPage";
 import DashboardInstitucionalPage from "@/pages/DashboardInstitucionalPage";
 import TelaListagemPage from "@/pages/TelaListagemPage";
 import TelaFormularioPage from "@/pages/TelaFormularioPage";
+import PaginaAutenticacaoPage from "@/pages/PaginaAutenticacaoPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
