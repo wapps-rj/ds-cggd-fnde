@@ -28,6 +28,7 @@ const App = () => (
           <Route path="/templates/dashboard-institucional" element={<DashboardInstitucionalPage />} />
           <Route path="/templates/tela-listagem" element={<TelaListagemPage />} />
           <Route path="/templates/tela-formulario" element={<TelaFormularioPage />} />
+          <Route path="/templates/pagina-autenticacao" element={<PaginaAutenticacaoPage />} />
 
           {/* Demais rotas dentro do DSLayout */}
           <Route
