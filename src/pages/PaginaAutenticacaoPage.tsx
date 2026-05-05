@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Mail, Lock, Eye, EyeOff, ArrowLeft,
   ChevronRight, Shield, Info, HelpCircle,
-  ExternalLink, Facebook, Instagram, Youtube, Twitter, Linkedin
+  ExternalLink
 } from "lucide-react";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa-2.svg";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
