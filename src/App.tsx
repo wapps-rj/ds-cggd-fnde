@@ -14,6 +14,7 @@ import AutorPage from "@/pages/AutorPage";
 import DashboardInstitucionalPage from "@/pages/DashboardInstitucionalPage";
 import TelaListagemPage from "@/pages/TelaListagemPage";
 import TelaFormularioPage from "@/pages/TelaFormularioPage";
+import PaginaAutenticacaoPage from "@/pages/PaginaAutenticacaoPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/templates/dashboard-institucional" element={<DashboardInstitucionalPage />} />
           <Route path="/templates/tela-listagem" element={<TelaListagemPage />} />
           <Route path="/templates/tela-formulario" element={<TelaFormularioPage />} />
+          <Route path="/templates/pagina-autenticacao" element={<PaginaAutenticacaoPage />} />
 
           {/* Demais rotas dentro do DSLayout */}
           <Route
