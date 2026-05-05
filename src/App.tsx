@@ -15,6 +15,8 @@ import DashboardInstitucionalPage from "@/pages/DashboardInstitucionalPage";
 import TelaListagemPage from "@/pages/TelaListagemPage";
 import TelaFormularioPage from "@/pages/TelaFormularioPage";
 import PaginaAutenticacaoPage from "@/pages/PaginaAutenticacaoPage";
+import CadastroPage from "@/pages/CadastroPage";
+import TwoFactorPage from "@/pages/TwoFactorPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +31,8 @@ const App = () => (
           <Route path="/templates/tela-listagem" element={<TelaListagemPage />} />
           <Route path="/templates/tela-formulario" element={<TelaFormularioPage />} />
           <Route path="/templates/pagina-autenticacao" element={<PaginaAutenticacaoPage />} />
+          <Route path="/templates/cadastro" element={<CadastroPage />} />
+          <Route path="/templates/autenticacao-2fa" element={<TwoFactorPage />} />
 
           {/* Demais rotas dentro do DSLayout */}
           <Route
