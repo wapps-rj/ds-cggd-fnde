@@ -177,9 +177,12 @@ export default function PaginaAutenticacaoPage() {
                     Ainda não possui acesso aos nossos sistemas?
                   </p>
                   <div className="grid grid-cols-2 gap-3">
-                    <button className="flex items-center justify-center gap-2 py-2 px-3 rounded-md border border-border text-xs font-semibold hover:bg-muted transition-colors">
+                    <Link 
+                      to="/templates/cadastro"
+                      className="flex items-center justify-center gap-2 py-2 px-3 rounded-md border border-border text-xs font-semibold hover:bg-muted transition-colors w-full"
+                    >
                       <Shield size={14} className="text-[#D98217]" /> Solicitar Acesso
-                    </button>
+                    </Link>
                     <button className="flex items-center justify-center gap-2 py-2 px-3 rounded-md border border-border text-xs font-semibold hover:bg-muted transition-colors">
                       <HelpCircle size={14} className="text-[#D98217]" /> Central de Ajuda
                     </button>
