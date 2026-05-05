@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Mail, Lock, Eye, EyeOff, ArrowLeft,
   ChevronRight, Shield, Info, HelpCircle,
-  ExternalLink, Facebook, Instagram, Youtube, Twitter, Linkedin
+  ExternalLink
 } from "lucide-react";
 import fndeLogoCompleta from "@/assets/logo-fnde-completa-2.svg";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
@@ -199,23 +199,6 @@ export default function PaginaAutenticacaoPage() {
                 <a href="#" className="hover:text-foreground transition-colors">Cookies</a>
               </div>
 
-              <div className="flex justify-center gap-4">
-                <a href="#" className="p-2 bg-foreground/5 rounded-full hover:bg-[#0D3857]/10 hover:text-[#0D3857] transition-all text-muted-foreground">
-                  <Facebook size={16} />
-                </a>
-                <a href="#" className="p-2 bg-foreground/5 rounded-full hover:bg-[#D98217]/10 hover:text-[#D98217] transition-all text-muted-foreground">
-                  <Instagram size={16} />
-                </a>
-                <a href="#" className="p-2 bg-foreground/5 rounded-full hover:bg-red-500/10 hover:text-red-500 transition-all text-muted-foreground">
-                  <Youtube size={16} />
-                </a>
-                <a href="#" className="p-2 bg-foreground/5 rounded-full hover:bg-blue-400/10 hover:text-blue-400 transition-all text-muted-foreground">
-                  <Twitter size={16} />
-                </a>
-                <a href="#" className="p-2 bg-foreground/5 rounded-full hover:bg-[#0077b5]/10 hover:text-[#0077b5] transition-all text-muted-foreground">
-                  <Linkedin size={16} />
-                </a>
-              </div>
 
               <div className="flex flex-col items-center gap-3">
                 <img src={fndeLogoReduzida} alt="FNDE" className="h-6 opacity-40 grayscale" />
