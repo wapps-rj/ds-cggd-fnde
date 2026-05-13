@@ -1,4 +1,5 @@
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
+import TokenExplorer from "@/components/TokenExplorer";
 
 const tokenGroups = [
   {
@@ -104,6 +105,9 @@ export default function TokensPage() {
         title="Design Tokens"
         description="Tokens são CSS Custom Properties que definem os valores fundamentais do sistema. Todos os tokens possuem variantes para modo claro e escuro."
       />
+
+      <SectionHeader id="explorer" title="Explorador de Tokens" description="Navegue entre cores, tipografia, espaçamentos e bordas com exemplos vivos. Clique em qualquer token para copiá-lo." />
+      <TokenExplorer />
 
       <CodeBlock
         title="Como usar tokens"
