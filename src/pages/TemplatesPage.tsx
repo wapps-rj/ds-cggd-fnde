@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ExternalLink } from "lucide-react";
+import { 
+  ExternalLink, Menu, Sun, Moon, 
+  Search, Check, AlertCircle, Info, 
+  AlertTriangle, ChevronDown, Calendar, 
+  Eye, EyeOff, Loader2, Download, Send,
+  Layout, Type, MousePointer2, Box,
+  MessageSquare, FormInput
+} from "lucide-react";
 import thumbDashboardInstitucional from "@/assets/thumb-dashboard-institucional.jpg";
 import thumbTelaListagem from "@/assets/thumb-tela-listagem.jpg";
 import thumbTelaFormulario from "@/assets/thumb-tela-formulario.jpg";
 import thumbPaginaAutenticacao from "@/assets/thumb-pagina-autenticacao.jpg";
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
-import { Menu, Sun, Moon } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import AuthTemplatesSection from "@/components/templates/AuthTemplates";
 import CardSignInSection from "@/components/templates/CardSignIn";
@@ -332,6 +338,14 @@ ${menuRight ? `    <button class="fnde-header__menu fnde-header__menu--right" ar
 export default function TemplatesPage() {
   const [openCode, setOpenCode] = useState<string | null>(null);
   const [activeAudience, setActiveAudience] = useState<string>("all");
+  const [activeTab, setActiveTab] = useState<string>("botoes");
+
+  const componentTabs = [
+    { id: "botoes", label: "Botões", icon: <MousePointer2 size={14} /> },
+    { id: "inputs", label: "Inputs & Selects", icon: <Type size={14} /> },
+    { id: "formularios", label: "Formulários", icon: <FormInput size={14} /> },
+    { id: "alertas", label: "Alertas & Toast", icon: <MessageSquare size={14} /> },
+  ];
 
   const templates = [
     { title: "Dashboard Institucional", desc: "Painel com indicadores, gráficos e resumos executivos.", preview: "bg-fnde-blue-50" },
@@ -360,6 +374,207 @@ export default function TemplatesPage() {
   return (
     <div>
       <PageHeader title="Templates" description="Padrões de página pré-definidos para os principais fluxos de uso dos produtos digitais do FNDE." />
+
+      {/* ═══ CATÁLOGO DE COMPONENTES ═══ */}
+      <SectionHeader
+        id="catalogo"
+        title="Catálogo de Componentes"
+        description="Biblioteca navegável de elementos essenciais com variações de estados e exemplos de uso."
+      />
+
+      <div className="fnde-card mb-12">
+        <div className="flex flex-wrap gap-1 bg-muted/30 p-1 rounded-xl mb-8 border border-border">
+          {componentTabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+                activeTab === tab.id
+                  ? "bg-primary text-primary-foreground shadow-md scale-[1.02]"
+                  : "text-muted-foreground hover:bg-background/50 hover:text-foreground"
+              }`}
+            >
+              {tab.icon}
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="min-h-[400px]">
+          {activeTab === "botoes" && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="space-y-6">
+                <div>
+                  <h5 className="text-sm font-bold mb-3 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    Variações de Estilo
+                  </h5>
+                  <div className="flex flex-wrap gap-3 p-4 bg-muted/20 rounded-lg border border-border/50">
+                    <button className="bg-primary text-primary-foreground px-4 py-2 rounded text-xs font-bold hover:brightness-110 transition-all">Primário</button>
+                    <button className="bg-secondary text-secondary-foreground px-4 py-2 rounded text-xs font-bold hover:brightness-110 transition-all">Secundário</button>
+                    <button className="border border-input bg-background hover:bg-muted px-4 py-2 rounded text-xs font-bold transition-all">Outline</button>
+                    <button className="hover:bg-muted text-foreground px-4 py-2 rounded text-xs font-bold transition-all">Ghost</button>
+                    <button className="bg-error text-white px-4 py-2 rounded text-xs font-bold hover:brightness-110 transition-all">Destrutivo</button>
+                  </div>
+                </div>
+                <div>
+                  <h5 className="text-sm font-bold mb-3 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    Estados Interativos
+                  </h5>
+                  <div className="flex flex-wrap gap-3 p-4 bg-muted/20 rounded-lg border border-border/50">
+                    <button className="bg-primary text-primary-foreground px-4 py-2 rounded text-xs font-bold opacity-60 cursor-not-allowed" disabled>Desabilitado</button>
+                    <button className="bg-primary text-primary-foreground px-4 py-2 rounded text-xs font-bold flex items-center gap-2">
+                      <Loader2 size={14} className="animate-spin" /> Carregando
+                    </button>
+                    <button className="bg-primary/10 text-primary border border-primary/20 px-4 py-2 rounded text-xs font-bold ring-2 ring-primary/30">Focado</button>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <div>
+                  <h5 className="text-sm font-bold mb-3 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    Tamanhos e Ícones
+                  </h5>
+                  <div className="flex flex-wrap items-center gap-4 p-4 bg-muted/20 rounded-lg border border-border/50">
+                    <button className="bg-primary text-primary-foreground px-3 py-1.5 rounded text-[10px] font-bold">SM</button>
+                    <button className="bg-primary text-primary-foreground px-4 py-2 rounded text-xs font-bold">MD (Padrão)</button>
+                    <button className="bg-primary text-primary-foreground px-6 py-3 rounded text-sm font-bold">LG</button>
+                    <div className="w-px h-8 bg-border mx-2" />
+                    <button className="p-2.5 bg-secondary text-secondary-foreground rounded-full hover:rotate-12 transition-transform shadow-sm">
+                      <Download size={16} />
+                    </button>
+                    <button className="bg-primary text-primary-foreground px-4 py-2 rounded text-xs font-bold flex items-center gap-2">
+                      Enviar <Send size={14} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "inputs" && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="space-y-6">
+                <div className="space-y-4 p-5 bg-muted/20 rounded-lg border border-border/50">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Campo Padrão</label>
+                    <input type="text" placeholder="Digite algo..." className="w-full h-10 px-4 rounded-lg border border-input bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-error ml-1 flex items-center gap-1">
+                      <AlertCircle size={10} /> Campo com Erro
+                    </label>
+                    <input type="email" defaultValue="email-invalido" className="w-full h-10 px-4 rounded-lg border border-error bg-error/5 focus:ring-2 focus:ring-error/20 outline-none transition-all text-sm" />
+                    <p className="text-[10px] text-error font-medium ml-1">E-mail institucional obrigatório.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <div className="space-y-4 p-5 bg-muted/20 rounded-lg border border-border/50">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Select Customizado</label>
+                    <div className="relative">
+                      <select className="w-full h-10 px-4 pr-10 rounded-lg border border-input bg-background appearance-none focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm cursor-pointer">
+                        <option>Opção 01</option>
+                        <option>Opção 02</option>
+                        <option>Opção 03</option>
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" size={16} />
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">Campo com Ícone</label>
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
+                      <input type="text" placeholder="Buscar no sistema..." className="w-full h-10 pl-10 pr-4 rounded-lg border border-input bg-background focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "formularios" && (
+            <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="bg-background rounded-xl border border-border shadow-sm overflow-hidden">
+                <div className="bg-primary/5 p-6 border-b border-border">
+                  <h5 className="font-bold flex items-center gap-2">
+                    <FormInput size={18} className="text-primary" />
+                    Exemplo de Formulário
+                  </h5>
+                  <p className="text-[11px] text-muted-foreground mt-1">Preencha os campos abaixo para demonstração de estados.</p>
+                </div>
+                <div className="p-8 space-y-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-foreground">Nome</label>
+                      <input type="text" placeholder="Seu nome" className="w-full h-10 px-4 rounded-lg border border-input bg-muted/30 focus:bg-background outline-none transition-all text-sm" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-foreground">CPF</label>
+                      <input type="text" placeholder="000.000.000-00" className="w-full h-10 px-4 rounded-lg border border-input bg-muted/30 focus:bg-background outline-none transition-all text-sm" />
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-foreground">Data de Nascimento</label>
+                    <div className="relative">
+                      <input type="text" placeholder="dd/mm/aaaa" className="w-full h-10 px-4 rounded-lg border border-input bg-muted/30 focus:bg-background outline-none transition-all text-sm" />
+                      <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 pt-2">
+                    <input type="checkbox" id="terms" className="w-4 h-4 rounded border-input text-primary focus:ring-primary/20 cursor-pointer" />
+                    <label htmlFor="terms" className="text-xs text-muted-foreground cursor-pointer select-none">Eu concordo com as diretrizes do sistema.</label>
+                  </div>
+                  <div className="flex justify-end gap-3 pt-4 border-t border-border">
+                    <button className="px-5 py-2 rounded-lg text-xs font-bold text-muted-foreground hover:bg-muted transition-all">Cancelar</button>
+                    <button className="px-8 py-2 bg-primary text-primary-foreground rounded-lg text-xs font-bold shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">Salvar Alterações</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "alertas" && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="space-y-4">
+                <div className="flex items-start gap-4 p-4 bg-info/10 border border-info/30 rounded-xl">
+                  <Info className="text-info shrink-0 mt-0.5" size={20} />
+                  <div>
+                    <h6 className="text-sm font-bold text-info">Informativo</h6>
+                    <p className="text-xs text-info/80 mt-1">Este é um alerta para informações neutras ou guias de sistema.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-4 bg-success/10 border border-success/30 rounded-xl">
+                  <Check className="text-success shrink-0 mt-0.5" size={20} />
+                  <div>
+                    <h6 className="text-sm font-bold text-success">Sucesso</h6>
+                    <p className="text-xs text-success/80 mt-1">Sua operação foi concluída com êxito conforme esperado.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4 p-4 bg-warning/10 border border-warning/30 rounded-xl">
+                  <AlertTriangle className="text-warning shrink-0 mt-0.5" size={20} />
+                  <div>
+                    <h6 className="text-sm font-bold text-warning">Atenção</h6>
+                    <p className="text-xs text-warning/80 mt-1">Revise os dados antes de prosseguir com esta ação.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-4 bg-error/10 border border-error/30 rounded-xl">
+                  <AlertCircle className="text-error shrink-0 mt-0.5" size={20} />
+                  <div>
+                    <h6 className="text-sm font-bold text-error">Erro Crítico</h6>
+                    <p className="text-xs text-error/80 mt-1">Houve um problema ao processar sua solicitação no servidor.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* ═══ HEADER SECTION ═══ */}
       <SectionHeader
