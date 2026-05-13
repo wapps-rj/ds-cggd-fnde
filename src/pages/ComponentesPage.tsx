@@ -1479,13 +1479,10 @@ function PaginationSection() {
             <ChevronDown size={18} className="rotate-90" />
           </button>
           
-          <div className="flex flex-col items-center min-w-[80px]">
-            <span className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Página</span>
-            <div className="flex items-baseline gap-1">
-              <span className="text-sm font-bold text-primary">{page}</span>
-              <span className="text-xs text-muted-foreground">de</span>
-              <span className="text-sm font-bold">10</span>
-            </div>
+          <div className="flex items-center gap-2 min-w-[60px] justify-center">
+            <span className="text-sm font-bold text-primary">{page}</span>
+            <span className="text-xs text-muted-foreground font-medium italic">de</span>
+            <span className="text-sm font-bold text-foreground">10</span>
           </div>
 
           <button
