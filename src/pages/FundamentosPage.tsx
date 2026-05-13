@@ -56,6 +56,65 @@ export default function FundamentosPage() {
         </div>
       </div>
 
+      <div className="fnde-card mb-6">
+        <h4 className="text-sm font-semibold mb-6">Aplicabilidade e Composição</h4>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="space-y-6">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Título Principal (H1)</h1>
+              <p className="text-lg font-medium text-muted-foreground">Este é um exemplo de lead text ou subtítulo que acompanha o título principal para dar mais contexto.</p>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-3xl font-bold border-b pb-2">Título de Seção (H2)</h2>
+              <p className="leading-relaxed">
+                Este é um exemplo de <strong>texto corrido</strong> (body text) demonstrando a legibilidade e o espaçamento entre linhas padrão do Design System FNDE. 
+                Podemos utilizar variações como <em>texto em itálico</em> para dar ênfase, <span className="underline">texto sublinhado</span> para links ou termos específicos, 
+                e combinações de <strong><em>negrito com itálico</em></strong> quando necessário.
+              </p>
+              
+              <h3 className="text-2xl font-semibold">Subtítulo de Nível 3 (H3)</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Textos auxiliares menores mantêm uma boa mancha tipográfica mesmo com redução de corpo, ideal para descrições detalhadas que não devem competir visualmente com o conteúdo principal.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-muted/30 p-6 rounded-lg border border-border">
+              <h4 className="text-sm font-bold uppercase tracking-wider mb-4 text-primary">Listas e Organização</h4>
+              
+              <div className="space-y-6">
+                <div>
+                  <p className="font-semibold mb-2">Lista com Bullets:</p>
+                  <ul className="list-disc pl-5 space-y-1 text-sm">
+                    <li>Primeiro item da lista com bullet</li>
+                    <li>Segundo item com mais conteúdo para testar a quebra de linha automática e o recuo do texto.</li>
+                    <li>Terceiro item importante</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="font-semibold mb-2">Lista Numerada:</p>
+                  <ol className="list-decimal pl-5 space-y-1 text-sm">
+                    <li>Passo inicial do processo</li>
+                    <li>Execução da tarefa principal</li>
+                    <li>Finalização e feedback do usuário</li>
+                  </ol>
+                </div>
+
+                <div className="pt-4 border-t border-border">
+                  <p className="text-xs text-muted-foreground italic">
+                    Nota: O espaçamento entre linhas (line-height) é calculado para garantir que olhos não se percam durante a leitura de blocos densos de informação.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <CodeBlock
         title="Uso da tipografia"
         code={`/* Poppins é importada via Google Fonts */
@@ -135,15 +194,15 @@ body {
         title="Uso com Lucide React"
         code={`import { Search, User, Bell } from "lucide-react";
 
-{/* Tamanho inline com texto */}
+// Tamanho inline com texto
 <span><Search size={14} /> Buscar</span>
 
-{/* Ícone informativo – precisa de aria-label */}
+// Ícone informativo – precisa de aria-label
 <button aria-label="Notificações">
   <Bell size={20} />
 </button>
 
-{/* Ícone decorativo – usar aria-hidden */}
+// Ícone decorativo – usar aria-hidden
 <span aria-hidden="true"><Star size={16} /></span>`}
         language="tsx"
       />
