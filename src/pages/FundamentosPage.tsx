@@ -194,15 +194,15 @@ body {
         title="Uso com Lucide React"
         code={`import { Search, User, Bell } from "lucide-react";
 
-{/* Tamanho inline com texto */}
+// Tamanho inline com texto
 <span><Search size={14} /> Buscar</span>
 
-{/* Ícone informativo – precisa de aria-label */}
+// Ícone informativo – precisa de aria-label
 <button aria-label="Notificações">
   <Bell size={20} />
 </button>
 
-{/* Ícone decorativo – usar aria-hidden */}
+// Ícone decorativo – usar aria-hidden
 <span aria-hidden="true"><Star size={16} /></span>`}
         language="tsx"
       />
