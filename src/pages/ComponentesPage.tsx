@@ -2867,7 +2867,6 @@ function MetricsSection() {
               { title: "Vendas Totais", badge: "Mensal", value: "R$ 250K", subtitle: "Total mensal de vendas", pct: 72, color: "text-primary" },
               { title: "Total de Ordens", badge: "Mensal", value: "180", subtitle: "Total mensal de ordens", pct: 58, color: "text-info" },
               { title: "Novos Cadastros", badge: "Mensal", value: "50.895", subtitle: "Novos cadastros mensais", pct: 85, color: "text-success" },
-              { title: "Receita", badge: "Mensal", value: "R$ 50,33K", subtitle: "Receita mensal", pct: 45, color: "text-secondary" },
             ].map((m, i) => (
               <div key={i} className="bg-card border border-border rounded-lg p-5" aria-label={`${m.title}: ${m.value}`}>
                 <div className="flex items-center justify-between mb-4">
@@ -2894,7 +2893,6 @@ function MetricsSection() {
               { title: "Projeto A - Vendas", value: "R$ 320K", subtitle: "Vendas mensais Projeto A", data: [40, 65, 35, 80, 55, 70, 90] },
               { title: "Projeto B - Receita", value: "R$ 450K", subtitle: "Receita mensal Projeto B", data: [50, 40, 70, 60, 80, 75, 95] },
               { title: "Projeto C - Engajamento", value: "R$ 580K", subtitle: "Engajamento mensal Projeto C", data: [30, 55, 45, 70, 60, 85, 75] },
-              { title: "Projeto D - Despesas", value: "R$ 700K", subtitle: "Despesas mensais Projeto D", data: [60, 45, 75, 50, 65, 80, 55] },
             ].map((m, i) => (
               <div key={i} className="bg-card border border-border rounded-lg p-5" aria-label={`${m.title}: ${m.value}`}>
                 <div className="flex items-center justify-between mb-4">
@@ -2921,7 +2919,6 @@ function MetricsSection() {
               { title: "Greenfield Towers", trend: "+R$ 40K", up: true, value: "R$ 550K", subtitle: "Variação de vendas", data: [20, 35, 30, 50, 45, 60, 55, 70, 65, 80] },
               { title: "Oceanview Residences", trend: "-R$ 20K", up: false, value: "R$ 230K", subtitle: "Variação de vendas", data: [60, 55, 50, 45, 40, 35, 42, 38, 30, 25] },
               { title: "Sunset Bay Villas", trend: "+R$ 50K", up: true, value: "R$ 650K", subtitle: "Variação de vendas", data: [30, 40, 35, 55, 50, 65, 60, 75, 80, 90] },
-              { title: "Maple Grove Homes", trend: "+R$ 30K", up: true, value: "R$ 480K", subtitle: "Variação de vendas", data: [25, 30, 45, 40, 55, 50, 60, 55, 70, 65] },
             ].map((m, i) => (
               <div key={i} className="bg-card border border-border rounded-lg p-5" aria-label={`${m.title}: ${m.value}`}>
                 <div className="flex items-center justify-between mb-3">
@@ -2950,7 +2947,6 @@ function MetricsSection() {
               { title: "Receita Total", trend: "+8,2%", up: true, value: "R$ 1.240K", subtitle: "Este trimestre", pct: 78, colors: ["text-primary", "text-info"] },
               { title: "Total Despesas", trend: "-2,1%", up: false, value: "R$ 840K", subtitle: "Este trimestre", pct: 55, colors: ["text-secondary", "text-warning"] },
               { title: "Lucro Líquido", trend: "Estável", up: true, value: "R$ 400K", subtitle: "Este trimestre", pct: 42, colors: ["text-success", "text-primary"] },
-              { title: "Fluxo de Caixa", trend: "+5,6%", up: true, value: "R$ 720K", subtitle: "Este trimestre", pct: 65, colors: ["text-info", "text-success"] },
             ].map((m, i) => (
               <div key={i} className="bg-card border border-border rounded-lg p-5" aria-label={`${m.title}: ${m.value}`}>
                 <div className="flex items-center justify-between mb-4">
