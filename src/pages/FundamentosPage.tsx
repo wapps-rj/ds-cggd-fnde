@@ -115,7 +115,7 @@ export default function FundamentosPage() {
         </div>
       </div>
 
-
+      <CodeBlock
         title="Uso da tipografia"
         code={`/* Poppins é importada via Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
