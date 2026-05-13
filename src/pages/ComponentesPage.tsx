@@ -2862,7 +2862,7 @@ function MetricsSection() {
         {/* ===== ROW 1: Cards com donut ===== */}
         <div>
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Cards com gráfico circular (donut)</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { title: "Vendas Totais", badge: "Mensal", value: "R$ 250K", subtitle: "Total mensal de vendas", pct: 72, color: "text-primary" },
               { title: "Total de Ordens", badge: "Mensal", value: "180", subtitle: "Total mensal de ordens", pct: 58, color: "text-info" },
@@ -2889,7 +2889,7 @@ function MetricsSection() {
         {/* ===== ROW 2: Cards com sparkline bars ===== */}
         <div>
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Cards com mini barras (sparkline)</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { title: "Projeto A - Vendas", value: "R$ 320K", subtitle: "Vendas mensais Projeto A", data: [40, 65, 35, 80, 55, 70, 90] },
               { title: "Projeto B - Receita", value: "R$ 450K", subtitle: "Receita mensal Projeto B", data: [50, 40, 70, 60, 80, 75, 95] },
@@ -2916,7 +2916,7 @@ function MetricsSection() {
         {/* ===== ROW 3: Cards com área chart + trend badge ===== */}
         <div>
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Cards com gráfico de área e variação</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { title: "Greenfield Towers", trend: "+R$ 40K", up: true, value: "R$ 550K", subtitle: "Variação de vendas", data: [20, 35, 30, 50, 45, 60, 55, 70, 65, 80] },
               { title: "Oceanview Residences", trend: "-R$ 20K", up: false, value: "R$ 230K", subtitle: "Variação de vendas", data: [60, 55, 50, 45, 40, 35, 42, 38, 30, 25] },
@@ -2945,7 +2945,7 @@ function MetricsSection() {
         {/* ===== ROW 4: Cards com donut colorido (multi-segmento) + trend ===== */}
         <div>
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Cards com donut e trend trimestral</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { title: "Receita Total", trend: "+8,2%", up: true, value: "R$ 1.240K", subtitle: "Este trimestre", pct: 78, colors: ["text-primary", "text-info"] },
               { title: "Total Despesas", trend: "-2,1%", up: false, value: "R$ 840K", subtitle: "Este trimestre", pct: 55, colors: ["text-secondary", "text-warning"] },
