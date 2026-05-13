@@ -1413,50 +1413,92 @@ function BreadcrumbSection() {
 function PaginationSection() {
   const [page, setPage] = useState(1);
   return (
-    <ComponentPreview
-      title="Paginação"
-      description="Navegação entre páginas de resultados."
-      whenToUse={["Listagens com muitos itens", "Resultados de busca"]}
-      accessibility={["nav com aria-label='Paginação'", "aria-current='page' na página atual"]}
-      code={`<nav aria-label="Paginação">
+    <div className="space-y-8">
+      <ComponentPreview
+        title="Paginação Numérica"
+        description="Navegação entre páginas de resultados utilizando botões numéricos."
+        whenToUse={["Listagens com muitos itens", "Resultados de busca"]}
+        accessibility={["nav com aria-label='Paginação'", "aria-current='page' na página atual"]}
+        code={`<nav aria-label="Paginação">
   <button aria-label="Anterior">←</button>
   <button aria-current="page">1</button>
   <button>2</button>
   <button>3</button>
   <button aria-label="Próxima">→</button>
 </nav>`}
-    >
-      <nav aria-label="Paginação" className="flex items-center gap-1">
-        <button
-          onClick={() => setPage(Math.max(1, page - 1))}
-          disabled={page === 1}
-          className="p-2 rounded hover:bg-muted transition-colors disabled:opacity-30"
-          aria-label="Página anterior"
-        >
-          <ArrowLeft size={16} />
-        </button>
-        {[1, 2, 3, 4, 5].map(p => (
+      >
+        <nav aria-label="Paginação" className="flex items-center gap-1">
           <button
-            key={p}
-            onClick={() => setPage(p)}
-            aria-current={page === p ? "page" : undefined}
-            className={`w-9 h-9 rounded text-sm font-medium transition-colors ${
-              page === p ? "bg-primary text-primary-foreground" : "hover:bg-muted"
-            }`}
+            onClick={() => setPage(Math.max(1, page - 1))}
+            disabled={page === 1}
+            className="p-2 rounded hover:bg-muted transition-colors disabled:opacity-30"
+            aria-label="Página anterior"
           >
-            {p}
+            <ArrowLeft size={16} />
           </button>
-        ))}
-        <button
-          onClick={() => setPage(Math.min(5, page + 1))}
-          disabled={page === 5}
-          className="p-2 rounded hover:bg-muted transition-colors disabled:opacity-30"
-          aria-label="Próxima página"
-        >
-          <ArrowRight size={16} />
-        </button>
-      </nav>
-    </ComponentPreview>
+          {[1, 2, 3, 4, 5].map(p => (
+            <button
+              key={p}
+              onClick={() => setPage(p)}
+              aria-current={page === p ? "page" : undefined}
+              className={`w-9 h-9 rounded text-sm font-medium transition-colors ${
+                page === p ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+              }`}
+            >
+              {p}
+            </button>
+          ))}
+          <button
+            onClick={() => setPage(Math.min(5, page + 1))}
+            disabled={page === 5}
+            className="p-2 rounded hover:bg-muted transition-colors disabled:opacity-30"
+            aria-label="Próxima página"
+          >
+            <ArrowRight size={16} />
+          </button>
+        </nav>
+      </ComponentPreview>
+
+      <ComponentPreview
+        title="Paginação de Contador"
+        description="Modelo simplificado que exibe a posição atual em relação ao total de páginas (ex: 1 de 10)."
+        whenToUse={["Interfaces mobile", "Layouts compactos", "Quando o número exato de páginas é muito alto"]}
+        code={`<nav class="pagination-counter">
+  <button>Anterior</button>
+  <span>Página 1 de 10</span>
+  <button>Próxima</button>
+</nav>`}
+      >
+        <nav aria-label="Paginação de contador" className="flex items-center gap-4 bg-muted/20 p-2 rounded-lg border border-border w-fit">
+          <button
+            onClick={() => setPage(Math.max(1, page - 1))}
+            disabled={page === 1}
+            className="p-1.5 rounded bg-background border border-border hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
+            aria-label="Voltar página"
+          >
+            <ChevronDown size={18} className="rotate-90" />
+          </button>
+          
+          <div className="flex flex-col items-center min-w-[80px]">
+            <span className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Página</span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-sm font-bold text-primary">{page}</span>
+              <span className="text-xs text-muted-foreground">de</span>
+              <span className="text-sm font-bold">10</span>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setPage(Math.min(10, page + 1))}
+            disabled={page === 10}
+            className="p-1.5 rounded bg-background border border-border hover:bg-muted transition-colors disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
+            aria-label="Avançar página"
+          >
+            <ChevronDown size={18} className="-rotate-90" />
+          </button>
+        </nav>
+      </ComponentPreview>
+    </div>
   );
 }
 
