@@ -1465,7 +1465,7 @@ function PaginationSection() {
         whenToUse={["Interfaces mobile", "Layouts compactos", "Quando o número exato de páginas é muito alto"]}
         code={`<nav class="pagination-counter">
   <button>Anterior</button>
-  <span>Página 1 de 10</span>
+  <span>1 de 10</span>
   <button>Próxima</button>
 </nav>`}
       >
