@@ -200,7 +200,22 @@ function ButtonSection() {
         </div>
       </ComponentPreview>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <ComponentPreview
+          title="Botão com Loading"
+          description="Indicador de processamento para ações assíncronas."
+          code={`<button class="btn btn-primary" disabled>
+  <svg class="animate-spin">...</svg>
+  Carregando...
+</button>`}
+        >
+          <div className="flex justify-center">
+            <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium opacity-80 cursor-wait" disabled>
+              <Loader2 size={18} className="animate-spin" /> Carregando...
+            </button>
+          </div>
+        </ComponentPreview>
+
         <ComponentPreview
           title="Botão com ícone à esquerda"
           description="Utilizado para reforçar o significado da ação com um ícone de suporte no início."
