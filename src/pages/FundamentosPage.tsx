@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
 import ColorSection from "@/components/ColorSection";
 import GridSection from "@/components/GridSection";
