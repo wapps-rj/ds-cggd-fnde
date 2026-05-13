@@ -310,7 +310,7 @@ body {
 
       <div className="fnde-card mb-8">
         <h4 className="text-sm font-semibold mb-3">Durações</h4>
-        <div className="space-y-2 mb-4">
+        <div className="space-y-2 mb-6">
           {[
             { label: "Fast", value: "100ms", desc: "Hover, focus" },
             { label: "Normal", value: "200ms", desc: "Transições de estado" },
@@ -324,10 +324,116 @@ body {
             </div>
           ))}
         </div>
-        <h4 className="text-sm font-semibold mb-2">Easings</h4>
-        <p className="text-xs text-muted-foreground">
-          Use <code className="bg-muted px-1 rounded">ease-out</code> para entradas, <code className="bg-muted px-1 rounded">ease-in</code> para saídas e <code className="bg-muted px-1 rounded">ease-in-out</code> para transições contínuas.
-        </p>
+
+        <h4 className="text-sm font-semibold mb-6">Exemplos Práticos</h4>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Exemplo 1: Entrada Suave */}
+          <div className="p-5 border border-border rounded-xl bg-muted/20">
+            <div className="flex items-center justify-between mb-4">
+              <h5 className="text-xs font-bold uppercase tracking-wider">01. Entrada Suave</h5>
+              <button 
+                onClick={() => setKey1(prev => prev + 1)}
+                className="text-[10px] bg-primary/10 text-primary px-2 py-1 rounded font-bold hover:bg-primary/20 transition-colors"
+              >
+                Reiniciar
+              </button>
+            </div>
+            <motion.div 
+              key={key1}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="bg-card p-4 rounded-lg border border-border shadow-sm"
+            >
+              <div className="h-3 w-1/3 bg-primary/20 rounded mb-2" />
+              <div className="h-3 w-full bg-muted rounded mb-1" />
+              <div className="h-3 w-2/3 bg-muted rounded" />
+            </motion.div>
+            <p className="text-[10px] text-muted-foreground mt-3 italic">Use para carregar novos blocos de conteúdo ou seções da página.</p>
+          </div>
+
+          {/* Exemplo 2: Micro-interação */}
+          <div className="p-5 border border-border rounded-xl bg-muted/20">
+            <h5 className="text-xs font-bold uppercase tracking-wider mb-4">02. Micro-interação</h5>
+            <div className="flex flex-col items-center justify-center gap-4 h-[100px]">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg text-xs font-bold shadow-lg shadow-primary/20"
+              >
+                Pressione-me
+              </motion.button>
+              <motion.div
+                whileHover={{ rotate: 5 }}
+                className="text-[10px] text-muted-foreground flex items-center gap-1 cursor-help"
+              >
+                Passe o mouse para feedback <Info size={12} />
+              </motion.div>
+            </div>
+            <p className="text-[10px] text-muted-foreground mt-3 italic">Feedback tátil para botões e elementos clicáveis.</p>
+          </div>
+
+          {/* Exemplo 3: Lista em Cascata */}
+          <div className="p-5 border border-border rounded-xl bg-muted/20">
+            <div className="flex items-center justify-between mb-4">
+              <h5 className="text-xs font-bold uppercase tracking-wider">03. Lista em Cascata</h5>
+              <button 
+                onClick={() => setKey3(prev => prev + 1)}
+                className="text-[10px] bg-primary/10 text-primary px-2 py-1 rounded font-bold hover:bg-primary/20 transition-colors"
+              >
+                Reiniciar
+              </button>
+            </div>
+            <div className="space-y-2">
+              {[1, 2, 3].map((i) => (
+                <motion.div
+                  key={`${key3}-${i}`}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center gap-3 p-2 bg-card rounded border border-border"
+                >
+                  <div className="w-2 h-2 rounded-full bg-secondary" />
+                  <div className="h-2 flex-1 bg-muted rounded" />
+                </motion.div>
+              ))}
+            </div>
+            <p className="text-[10px] text-muted-foreground mt-3 italic">Use para carregar múltiplos itens (tabelas, cards, menus).</p>
+          </div>
+
+          {/* Exemplo 4: Atenção/Estado */}
+          <div className="p-5 border border-border rounded-xl bg-muted/20">
+            <h5 className="text-xs font-bold uppercase tracking-wider mb-4">04. Feedback de Estado</h5>
+            <div className="flex items-center justify-center h-[100px] gap-8">
+              <div className="relative">
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                  className="absolute inset-0 bg-error/20 rounded-full"
+                />
+                <div className="relative bg-error text-white p-3 rounded-full">
+                  <Bell size={20} />
+                </div>
+              </div>
+              <motion.div
+                animate={{ y: [0, -4, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                className="bg-warning/20 border border-warning/30 p-2 rounded text-[10px] font-bold text-warning"
+              >
+                Ação pendente
+              </motion.div>
+            </div>
+            <p className="text-[10px] text-muted-foreground mt-3 italic">Destaque para elementos que exigem ação imediata do usuário.</p>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-border">
+          <h4 className="text-sm font-semibold mb-2">Easings</h4>
+          <p className="text-xs text-muted-foreground">
+            Use <code className="bg-muted px-1 rounded">ease-out</code> para entradas, <code className="bg-muted px-1 rounded">ease-in</code> para saídas e <code className="bg-muted px-1 rounded">ease-in-out</code> para transições contínuas.
+          </p>
+        </div>
       </div>
 
       {/* Responsiveness */}
