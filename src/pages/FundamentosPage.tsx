@@ -297,7 +297,7 @@ body {
             { label: "Full", value: "9999px", cls: "rounded-full" },
           ].map(r => (
             <div key={r.label} className="text-center">
-              <div className={`w-16 h-16 bg-primary/10 border-2 border-primary ${r.cls} mb-1`} />
+              <div className={`w-16 h-16 bg-primary/10 border border-primary ${r.cls} mb-1`} />
               <p className="text-xs font-medium">{r.label}</p>
               <p className="text-[10px] text-muted-foreground">{r.value}</p>
             </div>
