@@ -200,7 +200,7 @@ function ButtonSection() {
         </div>
       </ComponentPreview>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ComponentPreview
           title="Botão com Loading"
           description="Indicador de processamento para ações assíncronas."
