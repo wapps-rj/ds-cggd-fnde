@@ -338,6 +338,14 @@ ${menuRight ? `    <button class="fnde-header__menu fnde-header__menu--right" ar
 export default function TemplatesPage() {
   const [openCode, setOpenCode] = useState<string | null>(null);
   const [activeAudience, setActiveAudience] = useState<string>("all");
+  const [activeTab, setActiveTab] = useState<string>("botoes");
+
+  const componentTabs = [
+    { id: "botoes", label: "Botões", icon: <MousePointer2 size={14} /> },
+    { id: "inputs", label: "Inputs & Selects", icon: <Type size={14} /> },
+    { id: "formularios", label: "Formulários", icon: <FormInput size={14} /> },
+    { id: "alertas", label: "Alertas & Toast", icon: <MessageSquare size={14} /> },
+  ];
 
   const templates = [
     { title: "Dashboard Institucional", desc: "Painel com indicadores, gráficos e resumos executivos.", preview: "bg-fnde-blue-50" },
