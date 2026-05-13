@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ExternalLink } from "lucide-react";
+import { 
+  ExternalLink, Menu, Sun, Moon, 
+  Search, Check, AlertCircle, Info, 
+  AlertTriangle, ChevronDown, Calendar, 
+  Eye, EyeOff, Loader2, Download, Send,
+  Layout, Type, MousePointer2, Box,
+  MessageSquare, FormInput
+} from "lucide-react";
 import thumbDashboardInstitucional from "@/assets/thumb-dashboard-institucional.jpg";
 import thumbTelaListagem from "@/assets/thumb-tela-listagem.jpg";
 import thumbTelaFormulario from "@/assets/thumb-tela-formulario.jpg";
 import thumbPaginaAutenticacao from "@/assets/thumb-pagina-autenticacao.jpg";
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
-import { Menu, Sun, Moon } from "lucide-react";
 import SidebarMenuSection from "@/components/templates/SidebarMenuPreview";
 import AuthTemplatesSection from "@/components/templates/AuthTemplates";
 import CardSignInSection from "@/components/templates/CardSignIn";
