@@ -138,13 +138,14 @@ export default function ComponentesPage() {
 /* ==================== BUTTON ==================== */
 function ButtonSection() {
   return (
-    <ComponentPreview
-      title="Variantes de botão"
-      description="Botões primários, secundários, outline, ghost e destructive em múltiplos tamanhos."
-      whenToUse={["Ações principais e secundárias", "Submissão de formulários", "Navegação importante"]}
-      whenNotToUse={["Navegação simples (use links)", "Ações dentro de texto corrido"]}
-      accessibility={["Sempre ter texto acessível ou aria-label", "Foco visível em navegação por teclado", "Estados disabled com opacity e pointer-events-none"]}
-      code={`<!-- Primário -->
+    <div className="space-y-8">
+      <ComponentPreview
+        title="Variantes de botão"
+        description="Botões primários, secundários, outline, ghost e destructive em múltiplos tamanhos."
+        whenToUse={["Ações principais e secundárias", "Submissão de formulários", "Navegação importante"]}
+        whenNotToUse={["Navegação simples (use links)", "Ações dentro de texto corrido"]}
+        accessibility={["Sempre ter texto acessível ou aria-label", "Foco visível em navegação por teclado", "Estados disabled com opacity e pointer-events-none"]}
+        code={`<!-- Primário -->
 <button class="btn btn-primary">Confirmar</button>
 
 <!-- Secundário -->
@@ -159,56 +160,98 @@ function ButtonSection() {
 <!-- Destructive -->
 <button class="btn btn-destructive">Excluir</button>
 
-<!-- Com ícone -->
-<button class="btn btn-primary">
-  <svg>...</svg> Download
-</button>
-
 <!-- Desabilitado -->
 <button class="btn btn-primary" disabled>Aguarde</button>`}
-    >
-      <div className="space-y-4">
-        <div className="flex flex-wrap gap-3">
-          <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity">
-            Primário
-          </button>
-          <button className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity">
-            Secundário
-          </button>
-          <button className="inline-flex items-center gap-2 border border-border bg-background text-foreground px-4 py-2 rounded text-sm font-medium hover:bg-muted transition-colors">
-            Outline
-          </button>
-          <button className="inline-flex items-center gap-2 text-foreground px-4 py-2 rounded text-sm font-medium hover:bg-muted transition-colors">
-            Ghost
-          </button>
-          <button className="inline-flex items-center gap-2 bg-destructive text-destructive-foreground px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity">
-            Excluir
-          </button>
+      >
+        <div className="space-y-4">
+          <div className="flex flex-wrap gap-3">
+            <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity">
+              Primário
+            </button>
+            <button className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity">
+              Secundário
+            </button>
+            <button className="inline-flex items-center gap-2 border border-border bg-background text-foreground px-4 py-2 rounded text-sm font-medium hover:bg-muted transition-colors">
+              Outline
+            </button>
+            <button className="inline-flex items-center gap-2 text-foreground px-4 py-2 rounded text-sm font-medium hover:bg-muted transition-colors">
+              Ghost
+            </button>
+            <button className="inline-flex items-center gap-2 bg-destructive text-destructive-foreground px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity">
+              Excluir
+            </button>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-3 py-1.5 rounded text-xs font-medium">
+              Pequeno
+            </button>
+            <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium">
+              Médio
+            </button>
+            <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 rounded text-base font-medium">
+              Grande
+            </button>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium opacity-50 cursor-not-allowed" disabled>
+              Desabilitado
+            </button>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-3">
-          <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-3 py-1.5 rounded text-xs font-medium">
-            Pequeno
-          </button>
-          <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium">
-            Médio
-          </button>
-          <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 rounded text-base font-medium">
-            Grande
-          </button>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium">
-            <Download size={16} /> Download
-          </button>
-          <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium">
-            <Loader2 size={16} className="animate-spin" /> Carregando...
-          </button>
-          <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium opacity-50 cursor-not-allowed" disabled>
-            Desabilitado
-          </button>
-        </div>
+      </ComponentPreview>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <ComponentPreview
+          title="Botão com ícone à esquerda"
+          description="Utilizado para reforçar o significado da ação com um ícone de suporte no início."
+          code={`<button class="btn btn-primary">
+  <svg class="icon-left">...</svg>
+  Download
+</button>`}
+        >
+          <div className="flex justify-center">
+            <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity">
+              <Download size={18} /> Download
+            </button>
+          </div>
+        </ComponentPreview>
+
+        <ComponentPreview
+          title="Botão com ícone à direita"
+          description="Utilizado em fluxos de continuidade ou quando a ação sugere um próximo passo."
+          code={`<button class="btn btn-primary">
+  Próximo
+  <svg class="icon-right">...</svg>
+</button>`}
+        >
+          <div className="flex justify-center">
+            <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity">
+              Próximo <ArrowRight size={18} />
+            </button>
+          </div>
+        </ComponentPreview>
+
+        <ComponentPreview
+          title="Botão somente ícone (Icon Button)"
+          description="Utilizado em interfaces densas ou ações secundárias. Requer aria-label para acessibilidade."
+          code={`<button class="btn btn-icon" aria-label="Excluir item">
+  <svg>...</svg>
+</button>`}
+        >
+          <div className="flex justify-center gap-4">
+            <button className="p-2 bg-primary text-primary-foreground rounded hover:opacity-90 transition-opacity" aria-label="Download">
+              <Download size={18} />
+            </button>
+            <button className="p-2 border border-border bg-background text-foreground rounded hover:bg-muted transition-colors" aria-label="Editar">
+              <Edit size={18} />
+            </button>
+            <button className="p-2 bg-destructive text-destructive-foreground rounded hover:opacity-90 transition-opacity" aria-label="Excluir">
+              <Trash2 size={18} />
+            </button>
+          </div>
+        </ComponentPreview>
       </div>
-    </ComponentPreview>
+    </div>
   );
 }
 
