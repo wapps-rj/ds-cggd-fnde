@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { PageHeader, SectionHeader, CodeBlock } from "@/components/DSComponents";
 import ColorSection from "@/components/ColorSection";
 import GridSection from "@/components/GridSection";
 import {
   ArrowRight, Bell, Check, ChevronRight, Download, Eye,
-  Heart, Home, Mail, Search, Settings, Star, User, AlertTriangle, Info
+  Heart, Home, Mail, Search, Settings, Star, User, AlertTriangle, Info,
+  Plus, Minus, RotateCcw
 } from "lucide-react";
 
 const colorScale = (name: string, colors: { label: string; token: string }[]) => (
@@ -22,6 +24,19 @@ const colorScale = (name: string, colors: { label: string; token: string }[]) =>
 );
 
 export default function FundamentosPage() {
+  const [fontSizeOffset, setFontSizeOffset] = useState(0);
+
+  const typographyScale = [
+    { name: "text-4xl", baseSize: 2.25, weight: "Bold (700)", example: "Título principal", cls: "text-4xl font-bold" },
+    { name: "text-3xl", baseSize: 1.875, weight: "Bold (700)", example: "Título de seção", cls: "text-3xl font-bold" },
+    { name: "text-2xl", baseSize: 1.5, weight: "Semibold (600)", example: "Subtítulo", cls: "text-2xl font-semibold" },
+    { name: "text-xl", baseSize: 1.25, weight: "Semibold (600)", example: "Heading menor", cls: "text-xl font-semibold" },
+    { name: "text-lg", baseSize: 1.125, weight: "Medium (500)", example: "Lead text", cls: "text-lg font-medium" },
+    { name: "text-base", baseSize: 1, weight: "Regular (400)", example: "Corpo de texto padrão do sistema", cls: "text-base" },
+    { name: "text-sm", baseSize: 0.875, weight: "Regular (400)", example: "Texto auxiliar e labels", cls: "text-sm" },
+    { name: "text-xs", baseSize: 0.75, weight: "Medium (500)", example: "Legendas e captions", cls: "text-xs font-medium" },
+  ];
+
   return (
     <div>
       <PageHeader
@@ -33,24 +48,60 @@ export default function FundamentosPage() {
       <SectionHeader id="tipografia" title="Tipografia" description="A família tipográfica Poppins é utilizada em todas as aplicações do Design System FNDE." />
 
       <div className="fnde-card mb-6">
-        <h4 className="text-sm font-semibold mb-4">Escala tipográfica</h4>
-        <div className="space-y-4">
-          {[
-            { size: "text-4xl (2.25rem)", weight: "Bold (700)", example: "Título principal", cls: "text-4xl font-bold" },
-            { size: "text-3xl (1.875rem)", weight: "Bold (700)", example: "Título de seção", cls: "text-3xl font-bold" },
-            { size: "text-2xl (1.5rem)", weight: "Semibold (600)", example: "Subtítulo", cls: "text-2xl font-semibold" },
-            { size: "text-xl (1.25rem)", weight: "Semibold (600)", example: "Heading menor", cls: "text-xl font-semibold" },
-            { size: "text-lg (1.125rem)", weight: "Medium (500)", example: "Lead text", cls: "text-lg font-medium" },
-            { size: "text-base (1rem)", weight: "Regular (400)", example: "Corpo de texto padrão do sistema", cls: "text-base" },
-            { size: "text-sm (0.875rem)", weight: "Regular (400)", example: "Texto auxiliar e labels", cls: "text-sm" },
-            { size: "text-xs (0.75rem)", weight: "Medium (500)", example: "Legendas e captions", cls: "text-xs font-medium" },
-          ].map(t => (
-            <div key={t.size} className="flex flex-col sm:flex-row sm:items-baseline gap-2 pb-3 border-b border-border last:border-0">
-              <div className="sm:w-48 shrink-0">
-                <p className="text-xs text-muted-foreground">{t.size}</p>
-                <p className="text-xs text-muted-foreground">{t.weight}</p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-border">
+          <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Escala tipográfica dinâmica</h4>
+          <div className="flex items-center gap-2 bg-muted/50 p-1 rounded-lg border border-border">
+            <button 
+              onClick={() => setFontSizeOffset(prev => Math.max(prev - 0.125, -0.5))}
+              className="p-1.5 hover:bg-background rounded shadow-sm transition-all"
+              title="Diminuir tamanho"
+            >
+              <Minus size={16} />
+            </button>
+            <div className="px-3 text-xs font-mono font-bold min-w-[60px] text-center">
+              {fontSizeOffset > 0 ? `+${fontSizeOffset.toFixed(3)}` : fontSizeOffset.toFixed(3)}rem
+            </div>
+            <button 
+              onClick={() => setFontSizeOffset(prev => Math.min(prev + 0.125, 1))}
+              className="p-1.5 hover:bg-background rounded shadow-sm transition-all"
+              title="Aumentar tamanho"
+            >
+              <Plus size={16} />
+            </button>
+            <div className="w-px h-4 bg-border mx-1" />
+            <button 
+              onClick={() => setFontSizeOffset(0)}
+              className="p-1.5 hover:bg-background rounded shadow-sm transition-all text-muted-foreground hover:text-foreground"
+              title="Resetar para o padrão"
+            >
+              <RotateCcw size={16} />
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          {typographyScale.map(t => (
+            <div key={t.name} className="flex flex-col sm:flex-row sm:items-start gap-4 pb-4 border-b border-border last:border-0 last:pb-0">
+              <div className="sm:w-48 shrink-0 space-y-1">
+                <p className="text-xs font-bold text-primary">{t.name}</p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded border border-border">
+                    Base: {t.baseSize}rem
+                  </span>
+                  <span className="text-[10px] bg-primary/10 text-primary font-bold px-1.5 py-0.5 rounded border border-primary/20">
+                    Atual: {(t.baseSize + fontSizeOffset).toFixed(3)}rem
+                  </span>
+                </div>
+                <p className="text-[10px] text-muted-foreground italic">{t.weight}</p>
               </div>
-              <p className={t.cls}>{t.example}</p>
+              <div className="flex-1 overflow-hidden">
+                <p 
+                  className={t.cls} 
+                  style={{ fontSize: `${t.baseSize + fontSizeOffset}rem`, lineHeight: '1.2' }}
+                >
+                  {t.example}
+                </p>
+              </div>
             </div>
           ))}
         </div>
