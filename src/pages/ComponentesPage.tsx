@@ -1498,16 +1498,6 @@ function PaginationSection() {
           </button>
         </nav>
       </ComponentPreview>
-    </div>
-          onClick={() => setPage(Math.min(5, page + 1))}
-          disabled={page === 5}
-          className="p-2 rounded hover:bg-muted transition-colors disabled:opacity-30"
-          aria-label="Próxima página"
-        >
-          <ArrowRight size={16} />
-        </button>
-      </nav>
-    </ComponentPreview>
   );
 }
 
