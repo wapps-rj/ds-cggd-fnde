@@ -26,6 +26,8 @@ const colorScale = (name: string, colors: { label: string; token: string }[]) =>
 
 export default function FundamentosPage() {
   const [fontSizeOffset, setFontSizeOffset] = useState(0);
+  const [key1, setKey1] = useState(0);
+  const [key3, setKey3] = useState(0);
 
   const typographyScale = [
     { name: "text-4xl", baseSize: 2.25, weight: "Bold (700)", example: "Título principal", cls: "text-4xl font-bold" },
