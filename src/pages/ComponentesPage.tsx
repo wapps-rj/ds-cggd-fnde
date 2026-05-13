@@ -1498,6 +1498,7 @@ function PaginationSection() {
           </button>
         </nav>
       </ComponentPreview>
+    </div>
   );
 }
 
