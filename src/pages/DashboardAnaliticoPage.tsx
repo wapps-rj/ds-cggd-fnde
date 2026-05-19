@@ -8,7 +8,7 @@ import {
   Globe, LayoutGrid, Clock, ArrowUpRight, ArrowDownRight
 } from "lucide-react";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer, PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, ComposedChart
 } from "recharts";
 import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
@@ -29,10 +29,10 @@ const trendData = [
 ];
 
 const quarterlyData = [
-  { name: "1º Trim", repasse: 14500, meta: 13000 },
-  { name: "2º Trim", repasse: 19200, meta: 18000 },
-  { name: "3º Trim", repasse: 16800, meta: 17000 },
-  { name: "4º Trim", repasse: 22100, meta: 20000 },
+  { name: "1º Trim", receita: 14500, custo: 11000, lucro: 3500 },
+  { name: "2º Trim", receita: 19200, custo: 15000, lucro: 4200 },
+  { name: "3º Trim", receita: 16800, custo: 14000, lucro: 2800 },
+  { name: "4º Trim", receita: 22100, custo: 18000, lucro: 4100 },
 ];
 
 const seasonalityData = [
@@ -265,25 +265,59 @@ export default function DashboardAnaliticoPage() {
               <h4 className="font-bold text-[#0d3857] dark:text-white mb-6">Comparativo Trimestral</h4>
               <div className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <ComposedChart data={quarterlyData}>
+                  <LineChart data={quarterlyData}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                    <XAxis dataKey="name" tick={{ fontSize: 10, fontWeight: 'bold' }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
-                    <Tooltip cursor={{ fill: 'rgba(0,0,0,0.05)' }} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                    <Bar dataKey="repasse" fill="#0D3857" radius={[4, 4, 0, 0]} barSize={40} />
-                    <Line type="monotone" dataKey="meta" stroke="#D98217" strokeWidth={3} dot={{ r: 4, fill: '#D98217' }} />
-                  </ComposedChart>
+                    <XAxis 
+                      dataKey="name" 
+                      tick={{ fontSize: 10, fontWeight: 'bold' }} 
+                      axisLine={false} 
+                      tickLine={false} 
+                    />
+                    <YAxis 
+                      tick={{ fontSize: 10 }} 
+                      axisLine={false} 
+                      tickLine={false} 
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        borderRadius: '8px', 
+                        border: 'none', 
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                        fontSize: '12px'
+                      }} 
+                    />
+                    <Legend 
+                      verticalAlign="top" 
+                      align="right" 
+                      iconType="circle"
+                      wrapperStyle={{ fontSize: '10px', fontWeight: 'bold', paddingBottom: '20px' }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="receita"
+                      stroke="#0D3857" 
+                      strokeWidth={3} 
+                      dot={{ r: 4, fill: '#0D3857' }} 
+                      activeDot={{ r: 6 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="custo"
+                      stroke="#D98217" 
+                      strokeWidth={3} 
+                      dot={{ r: 4, fill: '#D98217' }} 
+                      activeDot={{ r: 6 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="lucro"
+                      stroke="#16A34A" 
+                      strokeWidth={3} 
+                      dot={{ r: 4, fill: '#16A34A' }} 
+                      activeDot={{ r: 6 }}
+                    />
+                  </LineChart>
                 </ResponsiveContainer>
-              </div>
-              <div className="flex justify-center gap-6 mt-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded bg-[#0D3857]" />
-                  <span className="text-[10px] font-bold text-muted-foreground">Repasse Realizado</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded bg-[#D98217]" />
-                  <span className="text-[10px] font-bold text-muted-foreground">Meta Estipulada</span>
-                </div>
               </div>
             </div>
           </div>
