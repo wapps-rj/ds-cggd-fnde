@@ -245,7 +245,7 @@ export default function DashboardAnaliticoPage() {
                 </div>
                 <div className="w-full md:w-64 space-y-4">
                   <p className="text-[10px] font-bold text-muted-foreground uppercase border-b pb-2">Top 5 Estados</p>
-                  {statesData.map((state, idx) => (
+                  {statesData.slice(0, 5).map((state, idx) => (
                     <div key={idx} className="space-y-1.5">
                       <div className="flex justify-between text-[11px] font-bold">
                         <span>{state.id}</span>
