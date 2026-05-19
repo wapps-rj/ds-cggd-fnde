@@ -44,7 +44,7 @@ const navItems: NavItem[] = [
   {
     label: "Componentes", path: "/componentes", icon: <Component size={18} />,
     children: [
-      { label: "Botão", path: "/componentes#botao" },
+      { label: "Botão Templates", path: "/componentes#botao" },
       { label: "Campo de Texto", path: "/componentes#input" },
       { label: "Select", path: "/componentes#select" },
       { label: "Checkbox e Radio", path: "/componentes#checkbox" },

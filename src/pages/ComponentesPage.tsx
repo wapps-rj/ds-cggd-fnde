@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { PageHeader, SectionHeader, ComponentPreview, CodeBlock } from "@/components/DSComponents";
 import ChartsSection from "@/components/ChartsSection";
 import {
@@ -18,7 +19,7 @@ export default function ComponentesPage() {
       />
 
       {/* BUTTON */}
-      <SectionHeader id="botao" title="Botão" description="Elemento interativo para ações primárias, secundárias e terciárias." />
+      <SectionHeader id="botao" title="Botão Templates" description="Elemento interativo para ações primárias, secundárias e terciárias." />
       <ButtonSection />
 
       {/* INPUT */}
