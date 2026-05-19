@@ -202,10 +202,10 @@ function ButtonSection() {
           <div className="pt-4 mt-4 border-t border-border/50">
             <Link 
               to="/templates#catalogo" 
-              className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline"
+              className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline group"
             >
-              <ArrowRight size={14} />
-              Ver em Templates &gt; Catálogo de Componentes
+              <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+              Templates &gt; Catálogo de Componentes
             </Link>
           </div>
         </div>

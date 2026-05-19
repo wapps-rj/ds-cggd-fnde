@@ -104,7 +104,17 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
 
-  useEffect(() => { setMobileOpen(false); }, [location.pathname]);
+  useEffect(() => {
+    setMobileOpen(false);
+    
+    // Auto-expand the section containing the current path
+    const activeParent = navItems.find(item => 
+      item.children?.some(c => location.pathname === c.path.split("#")[0])
+    );
+    if (activeParent) {
+      setExpanded(prev => ({ ...prev, [activeParent.label]: true }));
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -114,7 +124,8 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener("keydown", handleKey);
   }, [mobileOpen]);
 
-  const toggleExpand = useCallback((label: string) => {
+  const toggleExpand = useCallback((label: string, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     setExpanded(prev => ({ ...prev, [label]: !prev[label] }));
   }, []);
 
@@ -123,12 +134,19 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
     if (route && route !== location.pathname) {
       navigate(route + (hash ? `#${hash}` : ""));
     } else if (hash) {
-      document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
     setMobileOpen(false);
   };
 
-  const isActive = (path: string) => location.pathname === path.split("#")[0];
+  const isActive = (path: string) => {
+    const [route, hash] = path.split("#");
+    if (hash && location.hash === `#${hash}`) return true;
+    return location.pathname === route && !location.hash && !hash;
+  };
 
   const query = searchQuery.toLowerCase().trim();
 
@@ -235,9 +253,9 @@ export default function DSLayout({ children }: { children: React.ReactNode }) {
         {filteredItems.map((item) => (
           <div key={item.label}>
             <button
-              onClick={() => {
-                if (isCollapsed) { setCollapsed(false); handleNav(item.path); if (item.children) toggleExpand(item.label); }
-                else { if (item.children) toggleExpand(item.label); handleNav(item.path); }
+              onClick={(e) => {
+                if (isCollapsed) { setCollapsed(false); handleNav(item.path); if (item.children) toggleExpand(item.label, e); }
+                else { if (item.children) toggleExpand(item.label, e); handleNav(item.path); }
               }}
               title={isCollapsed ? item.label : undefined}
               aria-label={isCollapsed ? item.label : undefined}
