@@ -795,7 +795,7 @@ export default function TemplatesPage() {
                 : isFormulario 
                   ? thumbTelaFormulario 
                   : isErro
-                    ? thumbPaginaAutenticacao
+                    ? null
                     : thumbPaginaAutenticacao;
           const thumbAlt = isDashboard
             ? "Thumbnail do Dashboard Institucional com KPIs, gráfico donut e barras"
