@@ -51,6 +51,10 @@ const statesData = [
   { id: "MG", value: 320, color: "#0891B2" },
   { id: "BA", value: 280, color: "#D98217" },
   { id: "PR", value: 250, color: "#F0C06D" },
+  { id: "RS", value: 210, color: "#0D3857" },
+  { id: "SC", value: 190, color: "#164E63" },
+  { id: "PE", value: 180, color: "#0891B2" },
+  { id: "CE", value: 170, color: "#D98217" },
 ];
 
 /* ─── Components ─── */
