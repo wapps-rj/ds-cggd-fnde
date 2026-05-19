@@ -31,6 +31,7 @@ const App = () => (
           {/* Standalone template page (sem DSLayout) */}
           <Route path="/templates/dashboard-institucional" element={<DashboardInstitucionalPage />} />
           <Route path="/templates/dashboard-bi" element={<DashboardBIPage />} />
+          <Route path="/templates/dashboard-analitico" element={<DashboardAnaliticoPage />} />
           <Route path="/templates/tela-listagem" element={<TelaListagemPage />} />
           <Route path="/templates/tela-formulario" element={<TelaFormularioPage />} />
           <Route path="/templates/pagina-autenticacao" element={<PaginaAutenticacaoPage />} />
