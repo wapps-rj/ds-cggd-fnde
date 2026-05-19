@@ -205,7 +205,7 @@ function ButtonSection() {
               className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline"
             >
               <ArrowRight size={14} />
-              Ver em Templates > Catálogo de Componentes
+              Ver em Templates &gt; Catálogo de Componentes
             </Link>
           </div>
         </div>
