@@ -453,19 +453,46 @@ export default function TemplatesPage() {
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                     Posicionamento de Ícones
                   </h5>
-                  <div className="flex flex-wrap items-center gap-4 p-4 bg-muted/20 rounded-lg border border-border/50">
-                    <button className="bg-primary text-primary-foreground px-4 py-2 rounded text-xs font-bold flex items-center gap-2 hover:brightness-110 transition-all">
-                      <Send size={14} /> Ícone à Esquerda
-                    </button>
-                    <button className="bg-primary text-primary-foreground px-4 py-2 rounded text-xs font-bold flex items-center gap-2 hover:brightness-110 transition-all">
-                      Ícone à Direita <Send size={14} />
-                    </button>
-                    <button className="border border-input bg-background hover:bg-muted px-4 py-2 rounded text-xs font-bold flex items-center gap-2 transition-all">
-                      <Download size={14} /> Baixar Arquivo
-                    </button>
-                    <button className="border border-input bg-background hover:bg-muted px-4 py-2 rounded text-xs font-bold flex items-center gap-2 transition-all">
-                      Acessar Sistema <ExternalLink size={14} />
-                    </button>
+                  <div className="space-y-4 p-4 bg-muted/20 rounded-lg border border-border/50">
+                    {/* Primário */}
+                    <div className="flex flex-wrap items-center gap-3">
+                      <button className="bg-primary text-primary-foreground px-4 py-2 rounded text-xs font-bold flex items-center gap-2 hover:brightness-110 transition-all">
+                        <Send size={14} /> Primário
+                      </button>
+                      <button className="bg-primary text-primary-foreground px-4 py-2 rounded text-xs font-bold flex items-center gap-2 hover:brightness-110 transition-all">
+                        Primário <Send size={14} />
+                      </button>
+                    </div>
+                    
+                    {/* Secundário */}
+                    <div className="flex flex-wrap items-center gap-3">
+                      <button className="bg-secondary text-secondary-foreground px-4 py-2 rounded text-xs font-bold flex items-center gap-2 hover:brightness-110 transition-all">
+                        <Download size={14} /> Secundário
+                      </button>
+                      <button className="bg-secondary text-secondary-foreground px-4 py-2 rounded text-xs font-bold flex items-center gap-2 hover:brightness-110 transition-all">
+                        Secundário <Download size={14} />
+                      </button>
+                    </div>
+
+                    {/* Outline */}
+                    <div className="flex flex-wrap items-center gap-3">
+                      <button className="border border-input bg-background hover:bg-muted px-4 py-2 rounded text-xs font-bold flex items-center gap-2 transition-all">
+                        <ExternalLink size={14} /> Outline
+                      </button>
+                      <button className="border border-input bg-background hover:bg-muted px-4 py-2 rounded text-xs font-bold flex items-center gap-2 transition-all">
+                        Outline <ExternalLink size={14} />
+                      </button>
+                    </div>
+
+                    {/* Link */}
+                    <div className="flex flex-wrap items-center gap-3">
+                      <button className="text-primary hover:underline px-2 py-1 rounded text-xs font-bold flex items-center gap-1.5 transition-all">
+                        <ArrowRight size={14} /> Link
+                      </button>
+                      <button className="text-primary hover:underline px-2 py-1 rounded text-xs font-bold flex items-center gap-1.5 transition-all">
+                        Link <ArrowRight size={14} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
