@@ -802,8 +802,10 @@ export default function TemplatesPage() {
               : isListagem
                 ? "Thumbnail da Tela de Listagem com filtros, cards estatísticos e tabela aninhada"
                 : isAutenticacao
-                  ? "Thumbnail da Página de Autenticação com login institucional e Gov.br"
-                  : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
+            ? "Thumbnail da Página de Autenticação com login institucional e Gov.br"
+            : isErro
+              ? "Thumbnail da Página de Erro com estados de 404, 500 e erro genérico"
+              : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
           const cardInner = (
             <>
               {isInteractive ? (
