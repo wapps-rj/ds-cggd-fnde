@@ -846,9 +846,11 @@ export default function TemplatesPage() {
                     <div className="h-3 bg-primary/10 rounded w-2/3" />
                   </div>
                 </div>
-              )
+                </div>
+              )}
 
               <div className="flex items-start justify-between gap-2">
+
                 <div>
                   <h3 className="font-semibold text-sm mb-1">{t.title}</h3>
                   <p className="text-xs text-muted-foreground">{t.desc}</p>
