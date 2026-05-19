@@ -821,6 +821,20 @@ export default function TemplatesPage() {
                     className="w-full h-full object-cover"
                   />
                 </div>
+              ) : isErro ? (
+                <div className="h-32 bg-fnde-blue-50 rounded-lg mb-4 flex flex-col items-center justify-center p-4 border border-fnde-blue-100">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
+                      <AlertTriangle size={14} className="text-primary" />
+                    </div>
+                    <div className="h-2 bg-primary/20 rounded w-16" />
+                    <div className="space-y-1 w-full flex flex-col items-center">
+                      <div className="h-1 bg-primary/10 rounded w-24" />
+                      <div className="h-1 bg-primary/10 rounded w-20" />
+                    </div>
+                    <div className="h-4 bg-primary rounded-md w-24 mt-1" />
+                  </div>
+                </div>
               ) : (
                 <div className={`h-32 ${t.preview} rounded-lg mb-4 flex items-center justify-center`}>
                   <div className="w-4/5 space-y-2">
@@ -832,7 +846,8 @@ export default function TemplatesPage() {
                     <div className="h-3 bg-primary/10 rounded w-2/3" />
                   </div>
                 </div>
-              )}
+              )
+
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <h3 className="font-semibold text-sm mb-1">{t.title}</h3>
