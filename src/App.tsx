@@ -19,6 +19,7 @@ import DashboardAnaliticoPage from "@/pages/DashboardAnaliticoPage";
 import PaginaAutenticacaoPage from "@/pages/PaginaAutenticacaoPage";
 import CadastroPage from "@/pages/CadastroPage";
 import TwoFactorPage from "@/pages/TwoFactorPage";
+import ErrorPageTemplate from "@/pages/ErrorPageTemplate";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
