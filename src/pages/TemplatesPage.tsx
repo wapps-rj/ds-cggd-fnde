@@ -810,10 +810,10 @@ export default function TemplatesPage() {
               : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
           const cardInner = (
             <>
-              {isInteractive ? (
+              {isInteractive && !isErro ? (
                 <div className="h-32 rounded-lg mb-4 overflow-hidden bg-[#EFF3F8]">
                   <img
-                    src={thumbSrc}
+                    src={thumbSrc || ""}
                     alt={thumbAlt}
                     loading="lazy"
                     width={1280}
@@ -822,6 +822,7 @@ export default function TemplatesPage() {
                   />
                 </div>
               ) : isErro ? (
+
                 <div className="h-32 bg-fnde-blue-50 rounded-lg mb-4 flex flex-col items-center justify-center p-4 border border-fnde-blue-100">
                   <div className="flex flex-col items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
