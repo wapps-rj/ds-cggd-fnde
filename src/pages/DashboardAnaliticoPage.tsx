@@ -15,6 +15,8 @@ import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
 import marcaGov from "@/assets/marca-gov.png";
 import iconeFndeNegativo from "@/assets/icone-fnde-negativo.svg";
 import { useTheme } from "@/hooks/useTheme";
+import { BrazilMap } from "@/components/BrazilMap";
+import { toast } from "sonner";
 
 /* ─── Mock Data ─── */
 const trendData = [
