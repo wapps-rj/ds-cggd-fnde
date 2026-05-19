@@ -19,6 +19,7 @@ import DashboardAnaliticoPage from "@/pages/DashboardAnaliticoPage";
 import PaginaAutenticacaoPage from "@/pages/PaginaAutenticacaoPage";
 import CadastroPage from "@/pages/CadastroPage";
 import TwoFactorPage from "@/pages/TwoFactorPage";
+import ErrorPageTemplate from "@/pages/ErrorPageTemplate";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/templates/pagina-autenticacao" element={<PaginaAutenticacaoPage />} />
           <Route path="/templates/cadastro" element={<CadastroPage />} />
           <Route path="/templates/autenticacao-2fa" element={<TwoFactorPage />} />
+          <Route path="/templates/pagina-erro" element={<ErrorPageTemplate />} />
 
           {/* Demais rotas dentro do DSLayout */}
           <Route

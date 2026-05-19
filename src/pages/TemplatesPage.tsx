@@ -771,7 +771,8 @@ export default function TemplatesPage() {
           const isListagem = t.title === "Tela de Listagem";
           const isFormulario = t.title === "Tela de Formulário";
           const isAutenticacao = t.title === "Fluxo de Autenticação Completo";
-          const isInteractive = isDashboard || isDashboardBI || isDashboardAnalitico || isListagem || isFormulario || isAutenticacao;
+          const isErro = t.title === "Página de Erro";
+          const isInteractive = isDashboard || isDashboardBI || isDashboardAnalitico || isListagem || isFormulario || isAutenticacao || isErro;
           const route = isDashboard
             ? "/templates/dashboard-institucional"
             : isDashboardBI
@@ -782,7 +783,9 @@ export default function TemplatesPage() {
                   ? "/templates/tela-listagem"
                   : isFormulario
                     ? "/templates/tela-formulario"
-                    : "/templates/pagina-autenticacao";
+                    : isErro
+                      ? "/templates/pagina-erro"
+                      : "/templates/pagina-autenticacao";
           const thumbSrc = isDashboard 
             ? thumbDashboardInstitucional 
             : isDashboardBI || isDashboardAnalitico
@@ -791,7 +794,9 @@ export default function TemplatesPage() {
                 ? thumbTelaListagem 
                 : isFormulario 
                   ? thumbTelaFormulario 
-                  : thumbPaginaAutenticacao;
+                  : isErro
+                    ? thumbPaginaAutenticacao
+                    : thumbPaginaAutenticacao;
           const thumbAlt = isDashboard
             ? "Thumbnail do Dashboard Institucional com KPIs, gráfico donut e barras"
             : isDashboardBI || isDashboardAnalitico
@@ -799,8 +804,10 @@ export default function TemplatesPage() {
               : isListagem
                 ? "Thumbnail da Tela de Listagem com filtros, cards estatísticos e tabela aninhada"
                 : isAutenticacao
-                  ? "Thumbnail da Página de Autenticação com login institucional e Gov.br"
-                  : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
+            ? "Thumbnail da Página de Autenticação com login institucional e Gov.br"
+            : isErro
+              ? "Thumbnail da Página de Erro com estados de 404, 500 e erro genérico"
+              : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
           const cardInner = (
             <>
               {isInteractive ? (
