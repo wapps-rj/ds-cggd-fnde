@@ -4,16 +4,40 @@ import {
   Menu, Sun, Moon, X, Search, ChevronDown, ChevronRight,
   Home, BarChart3, PieChart as PieChartIcon, TrendingUp, 
   Filter, Eye, Download, ArrowLeft, MoreVertical,
-  Calendar, Layers, Target, Info
+  Calendar, Layers, Target, Info, FileText, Bell, Shield, Settings, HelpCircle, Folder, FileCheck, FileX, Clock, ShieldCheck, RefreshCw
 } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, AreaChart, Area
+  ResponsiveContainer, PieChart, Pie, Cell, AreaChart, Area
 } from "recharts";
-import fndeLogoCompleta from "@/assets/logo-fnde-completa.svg";
+import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
 import marcaGov from "@/assets/marca-gov.png";
 import iconeFndeNegativo from "@/assets/icone-fnde-negativo.svg";
 import { useTheme } from "@/hooks/useTheme";
+
+/* ─── Menu items ─── */
+interface MenuItem {
+  label: string;
+  icon: React.ReactNode;
+  children?: { label: string }[];
+}
+
+const menuItems: MenuItem[] = [
+  { label: "Início", icon: <Home size={16} /> },
+  {
+    label: "Análises", icon: <BarChart3 size={16} />,
+    children: [{ label: "Execução Orçamentária" }, { label: "Repasses FNDE" }, { label: "Indicadores de Gestão" }],
+  },
+  {
+    label: "Relatórios", icon: <FileText size={16} />,
+    children: [{ label: "Mensal Consolidado" }, { label: "Relatórios de Auditoria" }, { label: "Exportações" }],
+  },
+  { label: "Metas e KPIs", icon: <Target size={16} /> },
+  { label: "Notificações", icon: <Bell size={16} /> },
+  { label: "Segurança", icon: <Shield size={16} /> },
+  { label: "Configurações", icon: <Settings size={16} /> },
+  { label: "Ajuda", icon: <HelpCircle size={16} /> },
+];
 
 /* ─── Dashboard data ─── */
 const revenueData = [
@@ -32,34 +56,34 @@ const categoryData = [
   { name: "Outros", value: 15, color: "#CBD5E1" },
 ];
 
-const statusData = [
-  { name: "Concluído", valor: 85 },
-  { name: "Em Andamento", valor: 65 },
-  { name: "Pendente", valor: 45 },
-  { name: "Atrasado", valor: 25 },
+const tableRows = [
+  { id: "00001", servidor: "Ana Silva Pereira", diretoria: "Diretoria A", status: "Concluído", prazo: "20 Dias", descontos: "R$ 600,00", modalidade: "40h bimestral", unidade: "CGGD/FNDE", statusTag: "Regular" },
+  { id: "00002", servidor: "Bruno Souza Lima", diretoria: "Diretoria A", status: "Em ajuste", prazo: "15 Dias", descontos: "R$ 450,00", modalidade: "40h bimestral", unidade: "CGGD/FNDE", statusTag: "Atenção" },
+  { id: "00003", servidor: "Carla Mendes Rocha", diretoria: "Diretoria B", status: "Concluído", prazo: "30 Dias", descontos: "R$ 720,00", modalidade: "40h bimestral", unidade: "DIRAE/FNDE", statusTag: "Regular" },
+  { id: "00004", servidor: "Diego Alves Castro", diretoria: "Diretoria C", status: "Em ajuste", prazo: "10 Dias", descontos: "R$ 380,00", modalidade: "40h bimestral", unidade: "DIRAE/FNDE", statusTag: "Em Ajuste" },
 ];
 
-function KPICard({ title, value, change, icon: Icon, trend }: { 
-  title: string; value: string; change: string; icon: any; trend: "up" | "down" 
+function StatusDot({ status }: { status: string }) {
+  const color = status === "Regular" ? "#16A34A" : status === "Atenção" ? "#DC2626" : "#0D3857";
+  return (
+    <span className="flex items-center gap-1.5 text-xs">
+      <span className="w-2 h-2 rounded-full inline-block" style={{ background: color }} />
+      {status}
+    </span>
+  );
+}
+
+function KPICard({ icon: Icon, title, subtitle, value, borderColor }: {
+  icon: React.ElementType; title: string; subtitle: string; value: string; borderColor: string;
 }) {
   return (
-    <div className="bg-card rounded-xl border border-border p-5 shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex justify-between items-start mb-4">
-        <div className="p-2 bg-primary/5 rounded-lg text-primary">
-          <Icon size={20} />
-        </div>
-        <button className="text-muted-foreground hover:text-foreground">
-          <MoreVertical size={16} />
-        </button>
-      </div>
-      <div>
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{title}</p>
-        <h3 className="text-2xl font-bold mt-1 text-foreground">{value}</h3>
-        <p className={`text-xs mt-2 flex items-center gap-1 font-semibold ${trend === "up" ? "text-emerald-600" : "text-rose-600"}`}>
-          {trend === "up" ? <TrendingUp size={12} /> : <TrendingUp size={12} className="rotate-180" />}
-          {change}
-          <span className="text-muted-foreground font-normal ml-1">vs mês anterior</span>
-        </p>
+    <div className="bg-card rounded-lg border border-border p-4 relative overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-1" style={{ background: borderColor }} />
+      <p className="text-xs font-semibold mt-1" style={{ color: borderColor }}>{title}</p>
+      <p className="text-[10px] text-muted-foreground">{subtitle}</p>
+      <div className="flex items-center gap-2 mt-2">
+        <Icon size={20} className="text-muted-foreground" />
+        <span className="text-2xl font-bold text-foreground">{value}</span>
       </div>
     </div>
   );
@@ -68,9 +92,29 @@ function KPICard({ title, value, change, icon: Icon, trend }: {
 export default function DashboardBIPage() {
   const { theme, toggleTheme } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({ Análises: true });
+  const [activeItem, setActiveItem] = useState("Dashboard BI");
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const query = searchQuery.toLowerCase().trim();
+  const filteredItems = query
+    ? menuItems.filter(
+        (item) =>
+          item.label.toLowerCase().includes(query) ||
+          item.children?.some((c) => c.label.toLowerCase().includes(query))
+      )
+    : menuItems;
+
+  const handleItemClick = (item: MenuItem) => {
+    setActiveItem(item.label);
+    if (item.children) {
+      setExpanded((prev) => ({ ...prev, [item.label]: !prev[item.label] }));
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#020617] flex flex-col font-sans">
+    <div className="min-h-screen bg-[#EFF3F8] dark:bg-background flex flex-col font-sans">
       <Link
         to="/templates"
         className="fixed top-3 right-3 z-50 flex items-center gap-1.5 px-3 py-1.5 bg-foreground/90 text-background text-xs rounded-full shadow-lg hover:bg-foreground transition-colors"
@@ -78,127 +122,152 @@ export default function DashboardBIPage() {
         <ArrowLeft size={12} /> Voltar ao DS
       </Link>
 
-      {/* ═══ HEADER (Fundo claro · Marca completa + Gov.br) ═══ */}
-      <header className="bg-[#FBDFA2] border-b border-[#0d3857]/10 flex items-center px-6 py-3 gap-6 min-h-[72px] shrink-0 sticky top-0 z-40">
+      {/* ═══ HEADER (Fundo claro · Marca reduzida + Gov.br) ═══ */}
+      <header className="bg-[#FBDFA2] flex items-center px-5 py-3 gap-4 min-h-[64px] shrink-0 sticky top-0 z-40">
         <button
           onClick={() => setSidebarOpen((o) => !o)}
-          className="p-2 hover:bg-[#0d3857]/10 rounded-lg transition-colors text-[#0d3857]"
+          className="p-2 hover:bg-[#0d3857]/10 rounded transition-colors flex items-center gap-1.5 shrink-0"
         >
-          <Menu size={22} />
+          <Menu size={20} className="text-[#0d3857]" />
+          <span className="text-xs text-[#0d3857]/70 hidden sm:inline font-semibold">Menu</span>
         </button>
 
-        <div className="flex items-center gap-4 shrink-0">
-          <img src={fndeLogoCompleta} alt="FNDE" className="h-10 w-auto" />
-        </div>
+        <img src={fndeLogoReduzida} alt="FNDE" className="h-9 w-auto shrink-0" />
 
-        <div className="w-px h-10 bg-[#0d3857]/20 shrink-0 hidden md:block" />
-        
-        <div className="flex-1 hidden md:block">
-          <h1 className="text-lg font-bold text-[#0d3857] leading-tight">Painel Executivo de BI</h1>
-          <p className="text-xs text-[#0d3857]/70 font-medium">Análise de Indicadores e Performance Institucional</p>
+        <div className="w-px h-8 bg-[#0d3857]/30 shrink-0" />
+        <div className="flex-1 min-w-0 hidden md:block">
+          <p className="text-sm font-bold text-[#0d3857] leading-tight">
+            Painel Executivo de BI
+          </p>
+          <p className="text-xs text-[#0d3857]/70 leading-tight font-medium">
+            Análise de Indicadores e Performance Institucional
+          </p>
         </div>
+        <div className="flex-1 md:hidden" />
 
-        <div className="flex items-center gap-4">
-          <div className="relative hidden lg:block">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#0d3857]/50" />
-            <input 
-              type="text" 
-              placeholder="Pesquisar métricas..." 
-              className="bg-white/40 border-none rounded-full pl-10 pr-4 py-2 text-sm w-64 focus:ring-2 ring-[#0d3857]/20 transition-all placeholder:text-[#0d3857]/40"
-            />
-          </div>
-          
-          <button
-            onClick={toggleTheme}
-            className="p-2.5 hover:bg-[#0d3857]/10 rounded-full transition-colors text-[#0d3857]"
-          >
-            {theme === "dark" ? <Moon size={20} /> : <Sun size={20} />}
-          </button>
+        <button
+          onClick={toggleTheme}
+          className="p-1.5 hover:bg-[#0d3857]/10 rounded transition-colors shrink-0"
+        >
+          {theme === "dark" ? <Moon size={16} className="text-[#0d3857]/70" /> : <Sun size={16} className="text-[#0d3857]/70" />}
+        </button>
 
-          <div className="w-px h-10 bg-[#0d3857]/20 shrink-0" />
-          <img src={marcaGov} alt="Gov.br" className="h-10 w-auto" />
-        </div>
+        <img src={marcaGov} alt="Gov.br" className="h-10 w-auto shrink-0" />
       </header>
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex min-h-0">
         {/* ─── Sidebar ─── */}
-        <aside className={`${sidebarOpen ? "w-64" : "w-0"} bg-[#0d3857] text-white transition-all duration-300 flex flex-col overflow-hidden`}>
-          <div className="p-6 border-b border-white/10 flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#D98217] rounded-lg flex items-center justify-center font-bold text-white shadow-inner">BI</div>
-            <span className="font-bold tracking-tight text-lg">Analytics</span>
-          </div>
-          
-          <nav className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
-            <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest px-4 mb-2">Principal</div>
-            <button className="w-full flex items-center gap-3 px-4 py-3 bg-white/10 rounded-xl text-sm font-semibold transition-all">
-              <BarChart3 size={18} /> Dashboard BI
-            </button>
-            <button className="w-full flex items-center gap-3 px-4 py-3 text-white/60 hover:text-white hover:bg-white/5 rounded-xl text-sm transition-all">
-              <Layers size={18} /> Exploração de Dados
-            </button>
-            <button className="w-full flex items-center gap-3 px-4 py-3 text-white/60 hover:text-white hover:bg-white/5 rounded-xl text-sm transition-all">
-              <Target size={18} /> Metas e KPIs
-            </button>
-            
-            <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest px-4 mt-8 mb-2">Relatórios</div>
-            <button className="w-full flex items-center gap-3 px-4 py-3 text-white/60 hover:text-white hover:bg-white/5 rounded-xl text-sm transition-all">
-              <Calendar size={18} /> Mensal Consolidado
-            </button>
-            <button className="w-full flex items-center gap-3 px-4 py-3 text-white/60 hover:text-white hover:bg-white/5 rounded-xl text-sm transition-all">
-              <Info size={18} /> Relatórios de Auditoria
-            </button>
-          </nav>
-          
-          <div className="p-6 border-t border-white/10">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#FBDFA2] flex items-center justify-center text-[#0d3857] font-bold border-2 border-white/20">US</div>
-              <div className="overflow-hidden">
-                <p className="text-sm font-bold truncate">Usuário Admin</p>
-                <p className="text-xs text-white/50 truncate text-ellipsis">admin@fnde.gov.br</p>
+        {sidebarOpen && (
+          <aside className="w-[260px] bg-[#0d3857] text-white flex flex-col shrink-0 border-r border-[#0d3857]">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <img src={iconeFndeNegativo} alt="FNDE" className="h-5 w-5" />
+                <span className="text-sm font-semibold tracking-tight">BI ANALYTICS</span>
+              </div>
+              <button onClick={() => setSidebarOpen(false)} className="p-1 rounded hover:bg-white/10 transition-colors">
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="px-3 py-2">
+              <div className="relative">
+                <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-white/40" />
+                <input
+                  ref={searchRef}
+                  type="text"
+                  placeholder="Buscar no menu..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-white/10 text-white text-xs rounded pl-8 pr-8 py-2 placeholder:text-white/40 border border-white/10 focus:outline-none focus:ring-1 focus:ring-[#D98217]/50"
+                />
               </div>
             </div>
-          </div>
-        </aside>
+
+            <nav className="flex-1 overflow-y-auto px-2 pb-4">
+              {filteredItems.map((item) => (
+                <div key={item.label}>
+                  <button
+                    onClick={() => handleItemClick(item)}
+                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded text-sm transition-colors ${
+                      activeItem === item.label ? "bg-white/15 text-white font-medium" : "text-white/70 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    <span className="flex-shrink-0">{item.icon}</span>
+                    <span className="flex-1 text-left text-[13px]">{item.label}</span>
+                    {item.children && (expanded[item.label] ? <ChevronDown size={14} className="text-white/40" /> : <ChevronRight size={14} className="text-white/40" />)}
+                  </button>
+                  {item.children && expanded[item.label] && (
+                    <div className="ml-7 mt-0.5 space-y-0.5 mb-1">
+                      {item.children.map((child) => (
+                        <button
+                          key={child.label}
+                          onClick={() => setActiveItem(child.label)}
+                          className={`block w-full text-left text-xs px-3 py-1.5 rounded transition-colors ${
+                            activeItem === child.label ? "text-white bg-white/10 font-medium" : "text-white/50 hover:text-white hover:bg-white/10"
+                          }`}
+                        >
+                          {child.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </nav>
+
+            <div className="border-t border-white/10 px-3 py-2">
+              <div className="flex items-center gap-2 px-2 py-1.5 text-white/50 text-[10px]">
+                <Folder size={12} />
+                <span>UNIDADE · BI/FNDE</span>
+              </div>
+            </div>
+          </aside>
+        )}
 
         {/* ─── Main Content ─── */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-8">
-          <div className="max-w-7xl mx-auto space-y-8">
-            {/* Page Header Actions */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Visão Geral</h2>
-                <p className="text-slate-500 text-sm mt-1">Última atualização: hoje às 14:35</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm">
-                  <Filter size={16} /> Filtros Avançados
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-[#D98217] text-white rounded-lg text-sm font-semibold hover:bg-[#c27415] transition-colors shadow-sm">
-                  <Download size={16} /> Exportar PDF
-                </button>
-              </div>
-            </div>
+        <main className="flex-1 min-w-0 overflow-x-auto">
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-1.5 px-5 py-2.5 bg-card border-b border-border text-xs">
+            <a href="#" className="flex items-center gap-1 text-muted-foreground hover:text-[#D98217]">
+              <Home size={12} />
+              <span>Início</span>
+            </a>
+            <ChevronRight size={12} className="text-muted-foreground/50" />
+            <a href="#" className="text-muted-foreground hover:text-[#D98217]">Painéis de BI</a>
+            <ChevronRight size={12} className="text-muted-foreground/50" />
+            <span className="font-semibold text-[#0d3857] dark:text-white">Dashboard BI</span>
+          </nav>
 
+          {/* Filter Bar */}
+          <div className="flex items-center gap-2 px-5 py-2 bg-card border-b border-border">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0d3857] text-white text-xs rounded">
+              <Filter size={12} /> Filtros Avançados
+            </button>
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#D98217] text-white text-xs rounded">
+              <Download size={12} /> Exportar PDF
+            </button>
+          </div>
+
+          <div className="p-5 space-y-4">
             {/* KPIs */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <KPICard title="Repasse Total" value="R$ 12.4M" change="+12.5%" icon={BarChart3} trend="up" />
-              <KPICard title="Projetos Ativos" value="342" change="+4.3%" icon={Layers} trend="up" />
-              <KPICard title="Taxa de Execução" value="78.4%" change="-2.1%" icon={Target} trend="down" />
-              <KPICard title="Novas Demandas" value="1.2k" change="+18.7%" icon={TrendingUp} trend="up" />
+            <div className="bg-card rounded-lg border border-border p-3">
+              <p className="text-xs font-semibold text-foreground mb-3 uppercase tracking-wider">
+                <span className="font-bold italic">Visão Geral:</span> Principais Métricas de Performance
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <KPICard icon={BarChart3} title="Repasse Total" subtitle="vs mês anterior (+12.5%)" value="R$ 12.4M" borderColor="#0D3857" />
+                <KPICard icon={Layers} title="Projetos Ativos" subtitle="Novos projetos (+4.3%)" value="342" borderColor="#D98217" />
+                <KPICard icon={Target} title="Taxa de Execução" subtitle="Meta mensal (-2.1%)" value="78.4%" borderColor="#16A34A" />
+                <KPICard icon={TrendingUp} title="Novas Demandas" subtitle="Crescimento (+18.7%)" value="1.2k" borderColor="#D98217" />
+              </div>
             </div>
 
             {/* Charts Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Main Line Chart */}
-              <div className="lg:col-span-2 bg-card rounded-xl border border-border p-6 shadow-sm">
-                <div className="flex items-center justify-between mb-8">
-                  <h4 className="font-bold text-slate-800 dark:text-white">Evolução dos Repasses</h4>
-                  <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
-                    <button className="px-3 py-1 text-xs font-bold rounded-md bg-white dark:bg-slate-700 shadow-sm">Mensal</button>
-                    <button className="px-3 py-1 text-xs font-semibold text-slate-500">Anual</button>
-                  </div>
-                </div>
-                <div className="h-[300px]">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              {/* Area Chart */}
+              <div className="lg:col-span-2 bg-card rounded-lg border border-border p-4">
+                <p className="text-sm font-bold text-[#D98217] mb-4">Evolução dos Repasses</p>
+                <div className="h-[280px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={revenueData}>
                       <defs>
@@ -207,71 +276,87 @@ export default function DashboardBIPage() {
                           <stop offset="95%" stopColor="#0D3857" stopOpacity={0}/>
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                      <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12, fill: '#64748b'}} />
-                      <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12, fill: '#64748b'}} />
-                      <Tooltip 
-                        contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'}}
-                      />
-                      <Area type="monotone" dataKey="valor" stroke="#0D3857" strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                      <XAxis dataKey="name" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
+                      <YAxis tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
+                      <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                      <Area type="monotone" dataKey="valor" stroke="#0D3857" strokeWidth={2} fillOpacity={1} fill="url(#colorValue)" />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
               </div>
 
               {/* Pie Chart */}
-              <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h4 className="font-bold text-slate-800 dark:text-white mb-8">Distribuição por Programa</h4>
-                <div className="h-[240px]">
+              <div className="bg-card rounded-lg border border-border p-4">
+                <p className="text-sm font-bold text-[#D98217] mb-4">Distribuição por Programa</p>
+                <div className="h-[200px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                      <Pie
-                        data={categoryData}
-                        innerRadius={60}
-                        outerRadius={80}
-                        paddingAngle={5}
-                        dataKey="value"
-                      >
-                        {categoryData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
+                      <Pie data={categoryData} dataKey="value" innerRadius={40} outerRadius={65} paddingAngle={4} strokeWidth={0}>
+                        {categoryData.map((d, i) => <Cell key={i} fill={d.color} />)}
                       </Pie>
                       <Tooltip />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="space-y-3 mt-4">
+                <div className="space-y-2 mt-2">
                   {categoryData.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between">
+                    <div key={index} className="flex items-center justify-between text-xs">
                       <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-                        <span className="text-sm text-slate-600 dark:text-slate-400 font-medium">{item.name}</span>
+                        <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
+                        <span className="text-muted-foreground font-medium">{item.name}</span>
                       </div>
-                      <span className="text-sm font-bold text-slate-800 dark:text-white">{item.value}%</span>
+                      <span className="font-bold text-foreground">{item.value}%</span>
                     </div>
                   ))}
                 </div>
               </div>
+            </div>
 
-              {/* Bar Chart */}
-              <div className="lg:col-span-3 bg-card rounded-xl border border-border p-6 shadow-sm">
-                <div className="flex items-center justify-between mb-8">
-                  <h4 className="font-bold text-slate-800 dark:text-white">Status de Execução dos Convênios</h4>
-                  <button className="text-primary text-sm font-semibold hover:underline">Ver tudo</button>
-                </div>
-                <div className="h-[250px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={statusData} layout="vertical">
-                      <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#e2e8f0" />
-                      <XAxis type="number" hide />
-                      <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 500, fill: '#334155'}} width={100} />
-                      <Tooltip cursor={{fill: 'transparent'}} />
-                      <Bar dataKey="valor" fill="#D98217" radius={[0, 4, 4, 0]} barSize={32} />
-                    </BarChart>
-                  </ResponsiveContainer>
+            {/* Table */}
+            <div className="bg-card rounded-lg border border-border p-4">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-bold text-[#D98217]">Detalhamento de Execução</p>
+                <div className="flex items-center gap-3">
+                  <StatusDot status="Atenção" />
+                  <StatusDot status="Regular" />
                 </div>
               </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs" style={{ minWidth: 800 }}>
+                  <thead>
+                    <tr className="bg-[#0d3857] text-white">
+                      <th className="px-3 py-2 text-left font-medium">ID</th>
+                      <th className="px-3 py-2 text-left font-medium">Servidor Responsável</th>
+                      <th className="px-3 py-2 text-left font-medium">Diretoria</th>
+                      <th className="px-3 py-2 text-left font-medium">Status de Fluxo</th>
+                      <th className="px-3 py-2 text-left font-medium">Prazo Estimado</th>
+                      <th className="px-3 py-2 text-left font-medium">Unidade Gestora</th>
+                      <th className="px-3 py-2 text-left font-medium">Status Final</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableRows.map((r, i) => (
+                      <tr key={i} className={i % 2 === 0 ? "bg-card" : "bg-muted/30"}>
+                        <td className="px-3 py-2 text-muted-foreground">{r.id}</td>
+                        <td className="px-3 py-2 font-medium">{r.servidor}</td>
+                        <td className="px-3 py-2">{r.diretoria}</td>
+                        <td className="px-3 py-2">{r.status}</td>
+                        <td className="px-3 py-2">{r.prazo}</td>
+                        <td className="px-3 py-2">{r.unidade}</td>
+                        <td className="px-3 py-2"><StatusDot status={r.statusTag} /></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
+          </div>
+
+          {/* Institutional Footer */}
+          <div className="flex items-center justify-end gap-3 px-5 py-3 border-t border-border bg-muted/30">
+            <img src={fndeLogoReduzida} alt="FNDE" className="h-5 w-auto opacity-60" />
+            <span className="text-[10px] text-muted-foreground">Dashboard BI · Analytics v.2.0</span>
           </div>
         </main>
       </div>
