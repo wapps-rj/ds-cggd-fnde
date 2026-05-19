@@ -198,6 +198,16 @@ function ButtonSection() {
               Desabilitado
             </button>
           </div>
+          
+          <div className="pt-4 mt-4 border-t border-border/50">
+            <Link 
+              to="/templates#catalogo" 
+              className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline"
+            >
+              <ArrowRight size={14} />
+              Ver em Templates > Catálogo de Componentes
+            </Link>
+          </div>
         </div>
       </ComponentPreview>
 
