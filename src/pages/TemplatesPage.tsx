@@ -6,7 +6,7 @@ import {
   AlertTriangle, ChevronDown, Calendar, 
   Eye, EyeOff, Loader2, Download, Send,
   Layout, Type, MousePointer2, Box,
-  MessageSquare, FormInput
+  MessageSquare, FormInput, ArrowRight
 } from "lucide-react";
 import thumbDashboardInstitucional from "@/assets/thumb-dashboard-institucional.jpg";
 import thumbTelaListagem from "@/assets/thumb-tela-listagem.jpg";
