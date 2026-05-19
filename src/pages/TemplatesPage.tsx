@@ -771,7 +771,8 @@ export default function TemplatesPage() {
           const isListagem = t.title === "Tela de Listagem";
           const isFormulario = t.title === "Tela de Formulário";
           const isAutenticacao = t.title === "Fluxo de Autenticação Completo";
-          const isInteractive = isDashboard || isDashboardBI || isDashboardAnalitico || isListagem || isFormulario || isAutenticacao;
+          const isErro = t.title === "Página de Erro";
+          const isInteractive = isDashboard || isDashboardBI || isDashboardAnalitico || isListagem || isFormulario || isAutenticacao || isErro;
           const route = isDashboard
             ? "/templates/dashboard-institucional"
             : isDashboardBI
