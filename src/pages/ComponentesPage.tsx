@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { PageHeader, SectionHeader, ComponentPreview, CodeBlock } from "@/components/DSComponents";
 import ChartsSection from "@/components/ChartsSection";
 import {
@@ -18,7 +19,7 @@ export default function ComponentesPage() {
       />
 
       {/* BUTTON */}
-      <SectionHeader id="botao" title="Botão" description="Elemento interativo para ações primárias, secundárias e terciárias." />
+      <SectionHeader id="botao" title="Botão Templates" description="Elemento interativo para ações primárias, secundárias e terciárias." />
       <ButtonSection />
 
       {/* INPUT */}
@@ -196,6 +197,16 @@ function ButtonSection() {
             <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium opacity-50 cursor-not-allowed" disabled>
               Desabilitado
             </button>
+          </div>
+          
+          <div className="pt-4 mt-4 border-t border-border/50">
+            <Link 
+              to="/templates#catalogo" 
+              className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline"
+            >
+              <ArrowRight size={14} />
+              Ver em Templates &gt; Catálogo de Componentes
+            </Link>
           </div>
         </div>
       </ComponentPreview>
