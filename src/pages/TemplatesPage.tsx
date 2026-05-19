@@ -795,7 +795,7 @@ export default function TemplatesPage() {
                 : isFormulario 
                   ? thumbTelaFormulario 
                   : isErro
-                    ? thumbPaginaAutenticacao
+                    ? null
                     : thumbPaginaAutenticacao;
           const thumbAlt = isDashboard
             ? "Thumbnail do Dashboard Institucional com KPIs, gráfico donut e barras"
@@ -810,10 +810,10 @@ export default function TemplatesPage() {
               : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
           const cardInner = (
             <>
-              {isInteractive ? (
+              {isInteractive && !isErro ? (
                 <div className="h-32 rounded-lg mb-4 overflow-hidden bg-[#EFF3F8]">
                   <img
-                    src={thumbSrc}
+                    src={thumbSrc || ""}
                     alt={thumbAlt}
                     loading="lazy"
                     width={1280}
@@ -822,20 +822,30 @@ export default function TemplatesPage() {
                   />
                 </div>
               ) : isErro ? (
-                <div className="h-32 bg-fnde-blue-50 rounded-lg mb-4 flex flex-col items-center justify-center p-4 border border-fnde-blue-100">
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
-                      <AlertTriangle size={14} className="text-primary" />
+                <div className="h-32 bg-fnde-blue-50 rounded-lg mb-4 flex flex-col items-center justify-center p-4 border border-fnde-blue-100 relative overflow-hidden group">
+                  {/* Decorative background elements */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-primary/5 rounded-full -mr-8 -mt-8" />
+                  <div className="absolute bottom-0 left-0 w-12 h-12 bg-primary/5 rounded-full -ml-6 -mb-6" />
+                  
+                  <div className="flex flex-col items-center gap-2 relative z-10 transition-transform duration-300 group-hover:scale-110">
+                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-primary/10">
+                      <AlertCircle size={20} className="text-primary" />
                     </div>
-                    <div className="h-2 bg-primary/20 rounded w-16" />
+                    <div className="h-2 bg-primary/20 rounded w-20" />
                     <div className="space-y-1 w-full flex flex-col items-center">
-                      <div className="h-1 bg-primary/10 rounded w-24" />
-                      <div className="h-1 bg-primary/10 rounded w-20" />
+                      <div className="h-1.5 bg-primary/10 rounded w-28" />
+                      <div className="h-1.5 bg-primary/10 rounded w-24" />
                     </div>
-                    <div className="h-4 bg-primary rounded-md w-24 mt-1" />
+                    <div className="h-5 bg-primary rounded-lg w-28 mt-2 shadow-sm" />
+                  </div>
+                  
+                  {/* Status code pill */}
+                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-primary/10 rounded text-[8px] font-bold text-primary uppercase tracking-wider">
+                    Status 404
                   </div>
                 </div>
               ) : (
+
                 <div className={`h-32 ${t.preview} rounded-lg mb-4 flex items-center justify-center`}>
                   <div className="w-4/5 space-y-2">
                     <div className="h-3 bg-primary/10 rounded w-1/3" />
