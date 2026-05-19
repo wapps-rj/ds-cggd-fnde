@@ -783,7 +783,9 @@ export default function TemplatesPage() {
                   ? "/templates/tela-listagem"
                   : isFormulario
                     ? "/templates/tela-formulario"
-                    : "/templates/pagina-autenticacao";
+                    : isErro
+                      ? "/templates/pagina-erro"
+                      : "/templates/pagina-autenticacao";
           const thumbSrc = isDashboard 
             ? thumbDashboardInstitucional 
             : isDashboardBI || isDashboardAnalitico
