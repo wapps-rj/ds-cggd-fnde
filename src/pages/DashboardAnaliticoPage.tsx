@@ -15,6 +15,8 @@ import fndeLogoReduzida from "@/assets/logo-fnde-reduzida.png";
 import marcaGov from "@/assets/marca-gov.png";
 import iconeFndeNegativo from "@/assets/icone-fnde-negativo.svg";
 import { useTheme } from "@/hooks/useTheme";
+import { BrazilMap } from "@/components/BrazilMap";
+import { toast } from "sonner";
 
 /* ─── Mock Data ─── */
 const trendData = [
@@ -49,6 +51,10 @@ const statesData = [
   { id: "MG", value: 320, color: "#0891B2" },
   { id: "BA", value: 280, color: "#D98217" },
   { id: "PR", value: 250, color: "#F0C06D" },
+  { id: "RS", value: 210, color: "#0D3857" },
+  { id: "SC", value: 190, color: "#164E63" },
+  { id: "PE", value: 180, color: "#0891B2" },
+  { id: "CE", value: 170, color: "#D98217" },
 ];
 
 /* ─── Components ─── */
@@ -223,20 +229,23 @@ export default function DashboardAnaliticoPage() {
                 </div>
               </div>
               <div className="flex flex-col md:flex-row gap-8 items-center">
-                <div className="flex-1 w-full flex justify-center py-4 bg-muted/10 rounded-xl relative min-h-[300px]">
-                  {/* Simplified Brazil Map Illustration with SVGs */}
-                  <svg viewBox="0 0 500 500" className="w-full max-w-[400px] h-auto drop-shadow-lg">
-                    {/* Placeholder shapes for regions to simulate a map */}
-                    <path d="M150 100 Q 250 50 350 100 Q 400 200 350 350 Q 250 450 150 350 Z" fill="#0D3857" fillOpacity="0.8" className="hover:fill-primary transition-colors cursor-pointer" />
-                    <path d="M350 120 Q 450 150 480 250 Q 450 350 380 320 Z" fill="#D98217" fillOpacity="0.8" className="hover:fill-primary transition-colors cursor-pointer" />
-                    <circle cx="250" cy="250" r="150" fill="none" stroke="white" strokeWidth="2" strokeDasharray="5,5" />
-                    <text x="250" y="240" fill="white" className="text-[10px] font-bold pointer-events-none" textAnchor="middle">MAPA INTERATIVO</text>
-                    <text x="250" y="260" fill="white" className="text-[8px] font-medium opacity-70 pointer-events-none" textAnchor="middle">VISUALIZAÇÃO POR UF</text>
-                  </svg>
+                <div className="flex-1 w-full flex justify-center py-4 bg-muted/10 rounded-xl relative min-h-[400px]">
+                  <BrazilMap 
+                    data={statesData} 
+                    onStateClick={(id) => {
+                      const state = statesData.find(s => s.id === id);
+                      if (state) {
+                        toast.info(`Estado: ${id} - Repasse: R$ ${state.value}M`);
+                      } else {
+                        toast.info(`Estado: ${id} - Sem dados registrados`);
+                      }
+                    }}
+                    className="max-w-[450px]" 
+                  />
                 </div>
                 <div className="w-full md:w-64 space-y-4">
                   <p className="text-[10px] font-bold text-muted-foreground uppercase border-b pb-2">Top 5 Estados</p>
-                  {statesData.map((state, idx) => (
+                  {statesData.slice(0, 5).map((state, idx) => (
                     <div key={idx} className="space-y-1.5">
                       <div className="flex justify-between text-[11px] font-bold">
                         <span>{state.id}</span>
