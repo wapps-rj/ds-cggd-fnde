@@ -12,6 +12,7 @@ import ConteudoPage from "@/pages/ConteudoPage";
 import AcessibilidadePage from "@/pages/AcessibilidadePage";
 import AutorPage from "@/pages/AutorPage";
 import DashboardInstitucionalPage from "@/pages/DashboardInstitucionalPage";
+import DashboardBIPage from "@/pages/DashboardBIPage";
 import TelaListagemPage from "@/pages/TelaListagemPage";
 import TelaFormularioPage from "@/pages/TelaFormularioPage";
 import PaginaAutenticacaoPage from "@/pages/PaginaAutenticacaoPage";
@@ -28,6 +29,7 @@ const App = () => (
         <Routes>
           {/* Standalone template page (sem DSLayout) */}
           <Route path="/templates/dashboard-institucional" element={<DashboardInstitucionalPage />} />
+          <Route path="/templates/dashboard-bi" element={<DashboardBIPage />} />
           <Route path="/templates/tela-listagem" element={<TelaListagemPage />} />
           <Route path="/templates/tela-formulario" element={<TelaFormularioPage />} />
           <Route path="/templates/pagina-autenticacao" element={<PaginaAutenticacaoPage />} />
