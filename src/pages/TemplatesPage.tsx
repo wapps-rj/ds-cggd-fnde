@@ -349,9 +349,9 @@ export default function TemplatesPage() {
 
   const templates = [
     { title: "Dashboard Institucional", desc: "Painel com indicadores, gráficos e resumos executivos.", preview: "bg-fnde-blue-50" },
+    { title: "Dashboard BI", desc: "Painel executivo com análise profunda de dados, indicadores de performance (KPIs) e gráficos avançados.", preview: "bg-fnde-orange-50" },
     { title: "Tela de Listagem", desc: "Tabela com filtros dinâmicos, busca, cards estatísticos avançados, tabela aninhada (nesting) e paginação.", preview: "bg-fnde-orange-50" },
     { title: "Tela de Formulário", desc: "Formulário com validação, steps e feedback.", preview: "bg-fnde-blue-50" },
-    { title: "Tela de Detalhe", desc: "Visualização detalhada de um registro.", preview: "bg-fnde-orange-50" },
     { title: "Fluxo de Autenticação Completo", desc: "Login, Cadastro e 2FA com branding FNDE e Gov.br.", preview: "bg-fnde-blue-50" },
     { title: "Página de Erro", desc: "404, 500 e erros genéricos com ação de retorno.", preview: "bg-fnde-orange-50" },
     { title: "Página com Filtros e Tabela", desc: "Combinação de sidebar de filtros com tabela de resultados.", preview: "bg-fnde-blue-50" },
@@ -765,31 +765,38 @@ export default function TemplatesPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {templates.map(t => {
           const isDashboard = t.title === "Dashboard Institucional";
+          const isDashboardBI = t.title === "Dashboard BI";
           const isListagem = t.title === "Tela de Listagem";
           const isFormulario = t.title === "Tela de Formulário";
           const isAutenticacao = t.title === "Fluxo de Autenticação Completo";
-          const isInteractive = isDashboard || isListagem || isFormulario || isAutenticacao;
+          const isInteractive = isDashboard || isDashboardBI || isListagem || isFormulario || isAutenticacao;
           const route = isDashboard
             ? "/templates/dashboard-institucional"
-            : isListagem
-              ? "/templates/tela-listagem"
-              : isFormulario
-                ? "/templates/tela-formulario"
-                : "/templates/pagina-autenticacao";
+            : isDashboardBI
+              ? "/templates/dashboard-bi"
+              : isListagem
+                ? "/templates/tela-listagem"
+                : isFormulario
+                  ? "/templates/tela-formulario"
+                  : "/templates/pagina-autenticacao";
           const thumbSrc = isDashboard 
             ? thumbDashboardInstitucional 
-            : isListagem 
-              ? thumbTelaListagem 
-              : isFormulario 
-                ? thumbTelaFormulario 
-                : thumbPaginaAutenticacao;
+            : isDashboardBI
+              ? thumbDashboardInstitucional
+              : isListagem 
+                ? thumbTelaListagem 
+                : isFormulario 
+                  ? thumbTelaFormulario 
+                  : thumbPaginaAutenticacao;
           const thumbAlt = isDashboard
             ? "Thumbnail do Dashboard Institucional com KPIs, gráfico donut e barras"
-            : isListagem
-              ? "Thumbnail da Tela de Listagem com filtros, cards estatísticos e tabela aninhada"
-              : isAutenticacao
-                ? "Thumbnail da Página de Autenticação com login institucional e Gov.br"
-                : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
+            : isDashboardBI
+              ? "Thumbnail do Dashboard BI com indicadores de performance e gráficos executivos"
+              : isListagem
+                ? "Thumbnail da Tela de Listagem com filtros, cards estatísticos e tabela aninhada"
+                : isAutenticacao
+                  ? "Thumbnail da Página de Autenticação com login institucional e Gov.br"
+                  : "Thumbnail da Tela de Formulário com stepper, campos validados e lista descritiva";
           const cardInner = (
             <>
               {isInteractive ? (
