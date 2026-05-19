@@ -44,7 +44,7 @@ export function BrazilMap({ data = [], onStateClick, className = "" }: BrazilMap
   };
 
   return (
-    <svg viewBox="0 0 500 500" className={}>
+    <svg viewBox="0 0 500 500" className={`w-full h-auto ${className}`}>
       {BRAZIL_PATHS.map((state) => (
         <path
           key={state.name}
