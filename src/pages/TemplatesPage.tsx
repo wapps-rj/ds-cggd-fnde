@@ -350,6 +350,7 @@ export default function TemplatesPage() {
   const templates = [
     { title: "Dashboard Institucional", desc: "Painel com indicadores, gráficos e resumos executivos.", preview: "bg-fnde-blue-50" },
     { title: "Dashboard BI", desc: "Painel executivo com análise profunda de dados, indicadores de performance (KPIs) e gráficos avançados.", preview: "bg-fnde-orange-50" },
+    { title: "Dashboard BI Analítico", desc: "Painel de BI estratégico com filtros superiores, mapa interativo, comparativos trimestrais e análise de sazonalidade.", preview: "bg-fnde-blue-50" },
     { title: "Tela de Listagem", desc: "Tabela com filtros dinâmicos, busca, cards estatísticos avançados, tabela aninhada (nesting) e paginação.", preview: "bg-fnde-orange-50" },
     { title: "Tela de Formulário", desc: "Formulário com validação, steps e feedback.", preview: "bg-fnde-blue-50" },
     { title: "Fluxo de Autenticação Completo", desc: "Login, Cadastro e 2FA com branding FNDE e Gov.br.", preview: "bg-fnde-blue-50" },
@@ -766,22 +767,25 @@ export default function TemplatesPage() {
         {templates.map(t => {
           const isDashboard = t.title === "Dashboard Institucional";
           const isDashboardBI = t.title === "Dashboard BI";
+          const isDashboardAnalitico = t.title === "Dashboard BI Analítico";
           const isListagem = t.title === "Tela de Listagem";
           const isFormulario = t.title === "Tela de Formulário";
           const isAutenticacao = t.title === "Fluxo de Autenticação Completo";
-          const isInteractive = isDashboard || isDashboardBI || isListagem || isFormulario || isAutenticacao;
+          const isInteractive = isDashboard || isDashboardBI || isDashboardAnalitico || isListagem || isFormulario || isAutenticacao;
           const route = isDashboard
             ? "/templates/dashboard-institucional"
             : isDashboardBI
               ? "/templates/dashboard-bi"
-              : isListagem
-                ? "/templates/tela-listagem"
-                : isFormulario
-                  ? "/templates/tela-formulario"
-                  : "/templates/pagina-autenticacao";
+              : isDashboardAnalitico
+                ? "/templates/dashboard-analitico"
+                : isListagem
+                  ? "/templates/tela-listagem"
+                  : isFormulario
+                    ? "/templates/tela-formulario"
+                    : "/templates/pagina-autenticacao";
           const thumbSrc = isDashboard 
             ? thumbDashboardInstitucional 
-            : isDashboardBI
+            : isDashboardBI || isDashboardAnalitico
               ? thumbDashboardInstitucional
               : isListagem 
                 ? thumbTelaListagem 
@@ -790,7 +794,7 @@ export default function TemplatesPage() {
                   : thumbPaginaAutenticacao;
           const thumbAlt = isDashboard
             ? "Thumbnail do Dashboard Institucional com KPIs, gráfico donut e barras"
-            : isDashboardBI
+            : isDashboardBI || isDashboardAnalitico
               ? "Thumbnail do Dashboard BI com indicadores de performance e gráficos executivos"
               : isListagem
                 ? "Thumbnail da Tela de Listagem com filtros, cards estatísticos e tabela aninhada"

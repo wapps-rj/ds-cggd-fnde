@@ -15,6 +15,7 @@ import DashboardInstitucionalPage from "@/pages/DashboardInstitucionalPage";
 import DashboardBIPage from "@/pages/DashboardBIPage";
 import TelaListagemPage from "@/pages/TelaListagemPage";
 import TelaFormularioPage from "@/pages/TelaFormularioPage";
+import DashboardAnaliticoPage from "@/pages/DashboardAnaliticoPage";
 import PaginaAutenticacaoPage from "@/pages/PaginaAutenticacaoPage";
 import CadastroPage from "@/pages/CadastroPage";
 import TwoFactorPage from "@/pages/TwoFactorPage";
@@ -30,6 +31,7 @@ const App = () => (
           {/* Standalone template page (sem DSLayout) */}
           <Route path="/templates/dashboard-institucional" element={<DashboardInstitucionalPage />} />
           <Route path="/templates/dashboard-bi" element={<DashboardBIPage />} />
+          <Route path="/templates/dashboard-analitico" element={<DashboardAnaliticoPage />} />
           <Route path="/templates/tela-listagem" element={<TelaListagemPage />} />
           <Route path="/templates/tela-formulario" element={<TelaFormularioPage />} />
           <Route path="/templates/pagina-autenticacao" element={<PaginaAutenticacaoPage />} />
