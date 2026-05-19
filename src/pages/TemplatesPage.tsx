@@ -341,7 +341,7 @@ export default function TemplatesPage() {
   const [activeTab, setActiveTab] = useState<string>("botoes");
 
   const componentTabs = [
-    { id: "botoes", label: "Botões", icon: <MousePointer2 size={14} /> },
+    { id: "botoes", label: "Botão Templates", icon: <MousePointer2 size={14} /> },
     { id: "inputs", label: "Inputs & Selects", icon: <Type size={14} /> },
     { id: "formularios", label: "Formulários", icon: <FormInput size={14} /> },
     { id: "alertas", label: "Alertas & Toast", icon: <MessageSquare size={14} /> },
@@ -408,7 +408,7 @@ export default function TemplatesPage() {
                 <div>
                   <h5 className="text-sm font-bold mb-3 flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Variações de Estilo
+                    Variantes de botão
                   </h5>
                   <div className="flex flex-wrap gap-3 p-4 bg-muted/20 rounded-lg border border-border/50">
                     <button className="bg-primary text-primary-foreground px-4 py-2 rounded text-xs font-bold hover:brightness-110 transition-all">Primário</button>
