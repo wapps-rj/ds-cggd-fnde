@@ -350,6 +350,7 @@ export default function TemplatesPage() {
   const templates = [
     { title: "Dashboard Institucional", desc: "Painel com indicadores, gráficos e resumos executivos.", preview: "bg-fnde-blue-50" },
     { title: "Dashboard BI", desc: "Painel executivo com análise profunda de dados, indicadores de performance (KPIs) e gráficos avançados.", preview: "bg-fnde-orange-50" },
+    { title: "Dashboard BI Analítico", desc: "Painel de BI estratégico com filtros superiores, mapa interativo, comparativos trimestrais e análise de sazonalidade.", preview: "bg-fnde-blue-50" },
     { title: "Tela de Listagem", desc: "Tabela com filtros dinâmicos, busca, cards estatísticos avançados, tabela aninhada (nesting) e paginação.", preview: "bg-fnde-orange-50" },
     { title: "Tela de Formulário", desc: "Formulário com validação, steps e feedback.", preview: "bg-fnde-blue-50" },
     { title: "Fluxo de Autenticação Completo", desc: "Login, Cadastro e 2FA com branding FNDE e Gov.br.", preview: "bg-fnde-blue-50" },
