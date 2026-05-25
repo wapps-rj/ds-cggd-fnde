@@ -1,0 +1,96 @@
+import { useState, useEffect } from "react";
+
+interface PasswordProtectProps {
+  children: React.ReactNode;
+}
+
+const PasswordProtect = ({ children }: PasswordProtectProps) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  // A senha pode ser alterada aqui
+  const ACCESS_PASSWORD = "fnde-protegido";
+
+  useEffect(() => {
+    const authStatus = localStorage.getItem("app_authenticated");
+    if (authStatus === "true") {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === ACCESS_PASSWORD) {
+      localStorage.setItem("app_authenticated", "true");
+      setIsAuthenticated(true);
+      setError(false);
+    } else {
+      setError(true);
+      setPassword("");
+    }
+  };
+
+  if (isAuthenticated) {
+    return <>{children}</>;
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#0d3857] p-4 font-sans text-white">
+      <div className="max-w-md w-full space-y-8 bg-white/10 p-8 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl">
+        <div className="text-center">
+          <div className="bg-white p-4 rounded-full inline-block mb-4 shadow-lg">
+            <img 
+              src="/logo-fnde-reduzida.png" 
+              alt="FNDE Logo" 
+              className="h-12 w-auto"
+              onError={(e) => {
+                // Fallback caso a imagem não carregue
+                (e.target as HTMLImageElement).src = "https://www.fnde.gov.br/templates/padraogov/images/logo-fnde.png";
+              }}
+            />
+          </div>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight">
+            Acesso Restrito
+          </h2>
+          <p className="mt-2 text-sm text-white/70">
+            Este projeto é protegido. Por favor, insira a senha de acesso.
+          </p>
+        </div>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <input
+                type="password"
+                required
+                className={`appearance-none rounded-lg relative block w-full px-4 py-3 border ${
+                  error ? "border-red-500 bg-red-50" : "border-white/20 bg-white/5"
+                } placeholder-white/40 text-white focus:outline-none focus:ring-2 focus:ring-[#FBDFA2] focus:z-10 sm:text-sm transition-all`}
+                placeholder="Digite a senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {error && (
+            <p className="text-red-400 text-xs text-center animate-pulse">
+              Senha incorreta. Tente novamente.
+            </p>
+          )}
+
+          <div>
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-[#0d3857] bg-[#FBDFA2] hover:bg-[#F0C06D] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FBDFA2] transition-colors shadow-lg"
+            >
+              Entrar no Projeto
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default PasswordProtect;
