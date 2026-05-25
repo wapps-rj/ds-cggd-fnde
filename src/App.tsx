@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import DSLayout from "@/components/DSLayout";
+import PasswordProtect from "@/components/PasswordProtect";
 import HomePage from "@/pages/HomePage";
 import FundamentosPage from "@/pages/FundamentosPage";
 import TokensPage from "@/pages/TokensPage";
@@ -28,7 +29,8 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
-        <Routes>
+        <PasswordProtect>
+          <Routes>
           {/* Standalone template page (sem DSLayout) */}
           <Route path="/templates/dashboard-institucional" element={<DashboardInstitucionalPage />} />
           <Route path="/templates/dashboard-bi" element={<DashboardBIPage />} />
@@ -60,7 +62,8 @@ const App = () => (
               </DSLayout>
             }
           />
-        </Routes>
+          </Routes>
+        </PasswordProtect>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
