@@ -37,7 +37,7 @@ const PasswordProtect = ({ children }: PasswordProtectProps) => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0d3857] p-4 font-sans text-white">
+    <div className="min-h-screen flex items-center justify-center p-4 font-sans text-white" style={{ background: 'linear-gradient(135deg, #04192A 0%, #0D3857 50%, #1E5F8C 100%)' }}>
       <div className="max-w-md w-full space-y-8 bg-white/10 p-8 rounded-xl backdrop-blur-md border border-white/20 shadow-2xl">
         <div className="text-center">
           <div className="bg-white p-4 rounded-full inline-block mb-4 shadow-lg">
@@ -79,7 +79,7 @@ const PasswordProtect = ({ children }: PasswordProtectProps) => {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-[#0d3857] bg-[#FBDFA2] hover:bg-[#F0C06D] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FBDFA2] transition-colors shadow-lg"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-[#F5A623] hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#F5A623] transition-all shadow-lg"
             >
               Entrar no Projeto
             </button>
