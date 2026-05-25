@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import logoReduzida from "@/assets/logo-fnde-reduzida.png";
+import logoReduzida from "@/assets/icone-fnde-colorido.svg";
 
 interface PasswordProtectProps {
   children: React.ReactNode;
