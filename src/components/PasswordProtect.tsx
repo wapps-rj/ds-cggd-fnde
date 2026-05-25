@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import logoReduzida from "@/assets/logo-fnde-reduzida.png";
 
 interface PasswordProtectProps {
   children: React.ReactNode;
@@ -41,13 +42,9 @@ const PasswordProtect = ({ children }: PasswordProtectProps) => {
         <div className="text-center">
           <div className="bg-white p-4 rounded-full inline-block mb-4 shadow-lg">
             <img 
-              src="/logo-fnde-reduzida.png" 
+              src={logoReduzida} 
               alt="FNDE Logo" 
               className="h-12 w-auto"
-              onError={(e) => {
-                // Fallback caso a imagem não carregue
-                (e.target as HTMLImageElement).src = "https://www.fnde.gov.br/templates/padraogov/images/logo-fnde.png";
-              }}
             />
           </div>
           <h2 className="mt-2 text-3xl font-bold tracking-tight">
