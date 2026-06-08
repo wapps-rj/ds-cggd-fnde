@@ -29,8 +29,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
-        <PasswordProtect>
-          <Routes>
+        <Routes>
           {/* Standalone template page (sem DSLayout) */}
           <Route path="/templates/dashboard-institucional" element={<DashboardInstitucionalPage />} />
           <Route path="/templates/dashboard-bi" element={<DashboardBIPage />} />
@@ -62,8 +61,7 @@ const App = () => (
               </DSLayout>
             }
           />
-          </Routes>
-        </PasswordProtect>
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
