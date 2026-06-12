@@ -29,39 +29,41 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
-        <Routes>
-          {/* Standalone template page (sem DSLayout) */}
-          <Route path="/templates/dashboard-institucional" element={<DashboardInstitucionalPage />} />
-          <Route path="/templates/dashboard-bi" element={<DashboardBIPage />} />
-          <Route path="/templates/dashboard-analitico" element={<DashboardAnaliticoPage />} />
-          <Route path="/templates/tela-listagem" element={<TelaListagemPage />} />
-          <Route path="/templates/tela-formulario" element={<TelaFormularioPage />} />
-          <Route path="/templates/pagina-autenticacao" element={<PaginaAutenticacaoPage />} />
-          <Route path="/templates/cadastro" element={<CadastroPage />} />
-          <Route path="/templates/autenticacao-2fa" element={<TwoFactorPage />} />
-          <Route path="/templates/pagina-erro" element={<ErrorPageTemplate />} />
+        <PasswordProtect>
+          <Routes>
+            {/* Standalone template page (sem DSLayout) */}
+            <Route path="/templates/dashboard-institucional" element={<DashboardInstitucionalPage />} />
+            <Route path="/templates/dashboard-bi" element={<DashboardBIPage />} />
+            <Route path="/templates/dashboard-analitico" element={<DashboardAnaliticoPage />} />
+            <Route path="/templates/tela-listagem" element={<TelaListagemPage />} />
+            <Route path="/templates/tela-formulario" element={<TelaFormularioPage />} />
+            <Route path="/templates/pagina-autenticacao" element={<PaginaAutenticacaoPage />} />
+            <Route path="/templates/cadastro" element={<CadastroPage />} />
+            <Route path="/templates/autenticacao-2fa" element={<TwoFactorPage />} />
+            <Route path="/templates/pagina-erro" element={<ErrorPageTemplate />} />
 
-          {/* Demais rotas dentro do DSLayout */}
-          <Route
-            path="*"
-            element={
-              <DSLayout>
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/fundamentos" element={<FundamentosPage />} />
-                  <Route path="/tokens" element={<TokensPage />} />
-                  <Route path="/componentes" element={<ComponentesPage />} />
-                  <Route path="/templates" element={<TemplatesPage />} />
-                  <Route path="/marca" element={<MarcaPage />} />
-                  <Route path="/conteudo" element={<ConteudoPage />} />
-                  <Route path="/acessibilidade" element={<AcessibilidadePage />} />
-                  <Route path="/autor" element={<AutorPage />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </DSLayout>
-            }
-          />
-        </Routes>
+            {/* Demais rotas dentro do DSLayout */}
+            <Route
+              path="*"
+              element={
+                <DSLayout>
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/fundamentos" element={<FundamentosPage />} />
+                    <Route path="/tokens" element={<TokensPage />} />
+                    <Route path="/componentes" element={<ComponentesPage />} />
+                    <Route path="/templates" element={<TemplatesPage />} />
+                    <Route path="/marca" element={<MarcaPage />} />
+                    <Route path="/conteudo" element={<ConteudoPage />} />
+                    <Route path="/acessibilidade" element={<AcessibilidadePage />} />
+                    <Route path="/autor" element={<AutorPage />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </DSLayout>
+              }
+            />
+          </Routes>
+        </PasswordProtect>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
